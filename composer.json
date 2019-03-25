@@ -1,0 +1,19 @@
+
+{"name": "eloquent-php",
+  "description": "Ejemplo de utilizar php sin laravel",
+  "type": "project",
+  "authors":[
+   {
+    "name":"Armando Enrique Pisfil Puemape",
+    "email": "armandoaepp@gmail.com",
+    "homepage":"http://armandoaepp.blogspot.com",
+    "role":"development"
+   }
+  ],
+  "autoload": {
+      "psr-4": {"App\\": "App/"}
+  },
+  "require": {
+    "illuminate/database": "*"
+  }
+}
