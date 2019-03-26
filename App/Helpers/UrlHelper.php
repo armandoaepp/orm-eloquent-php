@@ -1,4 +1,6 @@
 <?php
+namespace App\Helpers;
+
 class UrlHelper {
 
   // function urls_amigables($url) {

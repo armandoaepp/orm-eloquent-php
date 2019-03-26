@@ -1,4 +1,6 @@
 <?php
+namespace App\Helpers;
+
 class Validation {
 
 	static public function validate($cadena){

@@ -1,4 +1,5 @@
 <?php
+namespace App\Helpers;
 
 class UploadFiles {
 
@@ -64,7 +65,7 @@ class UploadFiles {
   //  static public function uploadMultiFiles(&$files_arry, $path_url_img = 'img_admin/',$path_root = '../../')
   static public function uploadMultiFiles(&$files_arry, $path_relative = '', $pre_name = "")
   {
-   
+
     #Verify directory name
     if (!file_exists(IMAGES)) {
       mkdir(IMAGES, 0777);
@@ -77,14 +78,14 @@ class UploadFiles {
     $imagenes =  [];
 
     $total = count($files_arry['name']);
-    
+
     if( $total > 0)
     {
         $img_desc = UploadFiles::reArrayFiles($files_arry);
 
         if(count($img_desc) > 0)
         {
-       
+
           foreach($img_desc as $file)
           {
             if (!empty($file['tmp_name']) &&  $file['tmp_name'] != "" )
@@ -135,7 +136,7 @@ class UploadFiles {
     $file_count = count($file_post['name']);
     $file_keys = array_keys($file_post);
 
-    for ($i=0; $i < $file_count; $i++) 
+    for ($i=0; $i < $file_count; $i++)
     {
       if($file_post['tmp_name'][$i] != '')
       {

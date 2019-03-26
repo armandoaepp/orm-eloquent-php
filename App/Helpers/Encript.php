@@ -1,4 +1,6 @@
 <?php
+namespace App\Helpers;
+
 class Encript {
 
   static public function md5($value)

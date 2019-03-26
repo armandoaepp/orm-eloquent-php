@@ -1,4 +1,6 @@
 <?php
+namespace App\Helpers;
+
 class Serialize {
 
 	public function __construct() { }
