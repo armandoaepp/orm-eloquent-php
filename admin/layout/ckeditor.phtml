@@ -1,0 +1,32 @@
+<script src="admin/plugins/ckeditor5/ckeditor.js"></script>
+<script src="admin/plugins/ckeditor5/translations/es.js"></script>
+<script>
+    /* ClassicEditor
+        .create(document.querySelectorAll('.ckeditor'), {
+            language: 'es'
+        })
+        .then(editor => {
+            // console.log( editor );
+        })
+        .catch(error => {
+            console.error(error);
+        }); */
+
+    var allEditors = document.querySelectorAll('.ckeditor');
+    if (allEditors) {
+        for (var i = 0; i < allEditors.length; ++i) {
+            // ClassicEditor.create(allEditors[i]);
+            ClassicEditor
+                .create(allEditors[i], {
+                    language: 'es'
+                })
+                .then(editor => {
+                    // console.log( editor );
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }
+
+</script>

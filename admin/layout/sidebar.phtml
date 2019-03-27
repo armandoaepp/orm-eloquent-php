@@ -1,0 +1,130 @@
+<?php
+$sidebar = !empty($sidebar) ? $sidebar : [];
+extract($sidebar);
+
+$sidebar_class = !empty($sidebar_class) ? $sidebar_class : "sidebar";
+$sidebar_toggle = !empty($sidebar_toggle) ? $sidebar_toggle : "all";
+$sidebar_active = !empty($sidebar_active) ? $sidebar_active : [0, 0];
+
+?>
+<nav class="sidebar <?php echo $sidebar_class; ?> scroll-item" data-sidebar="menu" data-menu-toggle="<?php echo $sidebar_toggle; ?>">
+  <!-- <div class="sidebar-header">
+    <span> Planeatec </span>
+  </div> -->
+  <span class="heading">Opciones</span>
+  <ul class="sidenav">
+    <li>
+      <a class="menu <?php if ($sidebar_active[0] == 1) {echo 'active';}?>" href="#" role="button">
+        <i class="fas fa-cogs"></i>
+        Configuración Global
+      </a>
+      <ul class="menu-items">
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 1 && $sidebar_active[1] == 1) {echo 'active';}?>" href="admin/configuracion/configuracion.php">
+            <i class="icofont icofont-curved-right"></i> Configuración
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li>
+      <a class="menu <?php if ($sidebar_active[0] == 2) {echo 'active';}?>" href="#" role="button">
+        <i class="fa fa-list"></i> Personal
+      </a>
+      <ul class="menu-items">
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 2 && $sidebar_active[1] == 1) {echo 'active';}?>" href="admin/chef/chef.php">
+            <i class="icofont icofont-curved-right"></i> Chefs
+          </a>
+        </li>
+
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 2 && $sidebar_active[1] == 2) {echo 'active';}?>" href="admin/user/user.php">
+            <i class="icofont icofont-curved-right"></i> Usuarios
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li>
+      <a class="<?php if ($sidebar_active[0] == 4) {echo 'active';}?>" href="admin/taller/taller.php" role="button">
+        <i class="fas fa-list-ul"></i> Talleres
+      </a>
+    </li>
+
+    <!-- <li>
+      <a class="<?php if ($sidebar_active[0] == 3) {echo 'active';}?>" href="admin/noticia/noticia.php" role="button">
+        <i class="far fa-newspaper"></i>
+        Noticias
+      </a>
+    </li>  -->
+
+    <li>
+      <a class="menu <?php if ($sidebar_active[0] == 3) {echo 'active';}?>" href="#" role="button">
+        <i class="far fa-newspaper"></i>
+        Noticias / Eventos
+      </a>
+      <ul class="menu-items">
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 3 && $sidebar_active[1] == 1) {echo 'active';}?>" href="admin/tipo-noticia/tipo-noticia.php">
+            <i class="far fa-newspaper"></i>
+            Tipo Noticias
+          </a>
+        </li>
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 3 && $sidebar_active[1] == 2) {echo 'active';}?>" href="admin/noticia/noticia.php">
+            <i class="far fa-newspaper"></i>
+            Noticias
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <!-- <li>
+      <a class="<?php if ($sidebar_active[0] == 5) {echo 'active';}?>" href="admin/red/red.php" role="button">
+        <i class="fas fa-user-graduate"></i>
+        Red Egresados
+      </a>
+    </li> -->
+
+    <li>
+      <a class="<?php if ($sidebar_active[0] == 6) {echo 'active';}?>" href="admin/carrera/carrera.php" role="button">
+        <i class="fas fa-graduation-cap"></i>
+        Carreras
+      </a>
+    </li>
+
+    <li>
+      <a class="menu <?php if ($sidebar_active[0] == 7) {echo 'active';}?>" href="#" role="button">
+        <i class="fa fa-list"></i> Oportunidades Lab.
+      </a>
+      <ul class="menu-items">
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 7 && $sidebar_active[1] == 1) {echo 'active';}?>" href="admin/tipo-empresa/tipo-empresa.php">
+            <i class="fa fa-list"></i>
+            Tipos Empresas
+          </a>
+        </li>
+
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 7 && $sidebar_active[1] == 2) {echo 'active';}?>" href="admin/empresa/empresa.php">
+            <i class="far fa-building"></i>
+            Empresas
+          </a>
+        </li>
+
+        <li>
+          <a class="<?php if ($sidebar_active[0] == 7 && $sidebar_active[1] == 3) {echo 'active';}?>" href="admin/oportunidad-laboral/oportunidad-laboral.php">
+            <i class="fas fa-business-time"></i>
+            Oportunidad Laboral
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+  </ul>
+</nav>

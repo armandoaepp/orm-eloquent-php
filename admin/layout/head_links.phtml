@@ -1,0 +1,30 @@
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<?php
+// extraemos todas la variables
+extract($setvar);
+
+$titulo      = !empty($titulo ) ? $titulo : "Admin | Escuela Cumbre" ;
+$follow      = !empty($follow ) ? $follow : "follow" ;
+$description = !empty($description ) ? $description : "Escuela Cumbres Adminstrador" ;
+$keywords    = !empty($keywords ) ? $keywords : "Escuela Cumbre" ;
+
+$path = !empty($path) ? $path : 'admin/';
+
+?>
+
+<title><?php echo $titulo; ?></title>
+<link rel="icon" href="<?php echo $path;?>favicon.ico" sizes="32x32" />
+<meta name="robots" content="<?php echo $follow; ?>" />
+
+<meta name="description" content="<?php echo $description; ?>" />
+<meta name="keywords" content="<?php echo $keywords; ?>" />
+<meta name="robots" content="<?php echo $setvar['follow']; ?>" />
+<base href="http://localhost/php-generate/public/" />
+
+<!-- <base href="/" /> -->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+
+<link rel="stylesheet" href="<?php echo $path;?>css/app.admin.css">

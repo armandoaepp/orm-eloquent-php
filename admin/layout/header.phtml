@@ -1,0 +1,80 @@
+
+<!-- header -->
+<header>
+
+  <nav data-navbar="fixed-top" class="navbar navbar-theme navbar-sidebar navbar-expand-md navbar-dark bg-primary">
+
+    <a class="toggler-icon-siderbar toggler-full d-md-none position-relative" data-sidebar="toggle">
+      <i class="fas fa-bars"></i>
+    </a>
+    <a class="navbar-brand" href="#">
+      <img class="img-fluid logo-admin" src="img/instituto-superior-de-gastronomia-cumbre-logo-white.svg" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item d-none d-md-block">
+          <a class="toggler-icon-siderbar nav-link" data-sidebar="toggle">
+            <i class="fas fa-bars"></i>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <!-- <li class="nav-item p-0">
+          <a class="nav-link" href="#">
+            <span class="badge-icon">
+              <i class="far fa-bell"></i>
+              <label class="badge badge-danger badge-top-right">9</label>
+            </span>
+          </a>
+        </li>
+        <li class="nav-link p-0">
+          <a class="nav-link" href="#">
+            <span class="badge-icon">
+              <i class="far fa-envelope"></i>
+              <label class="badge badge-danger badge-top-right">9</label>
+            </span>
+          </a>
+        </li> -->
+        <li class="nav-item dropdown dropdown-user">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="px-2"><?php echo $_SESSION['USER']->nombre . " " . $_SESSION['USER']->apellidos ?> </span>
+            <span>
+              <img class="img-avatar " src="./img/avatar.png" alt="User">
+            </span>
+          </a>
+          <div class="dropdown-menu dropdown-right mb-2 " aria-labelledby="navbarDropdown">
+            <span class="triangulo-border d-none d-md-block"> </span>
+
+            <a class="dropdown-item" href="./admin">
+              <i class="far fa-paper-plane"></i>
+              Home Admin
+            </a>
+            <a class="dropdown-item" href="#" id="logout">
+              <i class="fas fa-sign-out-alt"></i>
+              Cerrar Sessión
+            </a>
+
+            <form id="formLogout" style="display: none;">
+              <input type="hidden" value="43378389-1111985-958478073">
+            </form>
+
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+</header>

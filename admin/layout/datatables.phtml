@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="admin/plugins/datatables/css/dataTables.bootstrap4.min.css">
+
+
+  <script src="admin/plugins/datatables/js/jquery.dataTables.min.js"></script>
+  <script src="admin/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+  <script src="admin/plugins/datatables/js/data-table-ES.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#dataTableList").DataTable({
+        "language": language,
+        "order": [[ 0, "desc" ]]
+      });
+    });
+  </script>
