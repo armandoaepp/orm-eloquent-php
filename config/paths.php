@@ -16,7 +16,7 @@ if (!defined('DS')) {
 /**
 * The full path to the directory which holds "src", WITHOUT a trailing DS.
 */
-define('ROOT', dirname(dirname(__DIR__)));
+define('ROOT', dirname(__DIR__));
 
 /**
 * The actual directory name for the application directory. Normally
@@ -49,7 +49,7 @@ define('IMAGES_DIR',   'images');
 * Path to the application's directory.
 */
 // define('IMAGES', ROOT . DS . IMAGES_DIR . DS);
-define('IMAGES', ROOT . DS . IMAGES_DIR .DS );
+define('PATH_IMAGES', ROOT . DS . IMAGES_DIR .DS );
 
 
 

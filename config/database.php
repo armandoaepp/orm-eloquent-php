@@ -8,14 +8,14 @@ $capsule = new Capsule;
 
 //Indicamos en el siguiente array los datos de configuración de la BD
 $capsule->addConnection([
- 'driver' =>'mysql',
- 'host' => 'localhost',
- 'database' => 'db_admin_prod',
- 'username' => 'root',
- 'password' => '',
- 'charset' => 'utf8',
+ 'driver'    => 'mysql',
+ 'host'      => 'localhost',
+ 'database'  => 'db_admin',
+ 'username'  => 'root',
+ 'password'  => '',
+ 'charset'   => 'utf8',
  'collation' => 'utf8_unicode_ci',
- 'prefix' => '',
+ 'prefix'    => '',
 ]);
 
 // Set the event dispatcher used by Eloquent models... (optional)
