@@ -1,14 +1,19 @@
 <?php
 
-    require_once "../sesion_admin.php";
 
-    loginRedirect("../login.php");
+    // require_once "../../app/autoload.php";
 
-    require_once "../../app/autoload.php";
+    require __DIR__.'/../../bootstrap/autoload.php';
 
-    $categoria_controller = new CategoriaController();
+    use App\Controllers\CategoriasController ;
+
+
+    $categoria_controller = new CategoriasController();
 
     $data = $categoria_controller->getAll();
+
+    // var_dump($data);
+    // return ;
 
     $title_page = "Categorias";
 
@@ -81,7 +86,7 @@
 
           <div class="col-12">
             <div class="table-responsive">
-            
+
             <table id="dataTableList" class="table table-striped table-bordered" style="width:100%">
               <thead>
                 <tr>
@@ -132,7 +137,7 @@
                   ?>
 
                 <tr class="<?php echo $class_estado ;?>" >
-                
+
                   <td> <?php echo $row->id ?> </td>
                   <td> <?php echo $row->nombre ?> </td>
                   <td> <?php echo $row->url ?> </td>
@@ -143,7 +148,7 @@
                     <?php echo $icon_pub ;?>
                     </button>
                   </td>
-            
+
 
                   <td class="text-center">
                     <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled ; ?>" href="admin/categoria/editar.php?id=<?php echo $row->id ?>" title="Editar">
@@ -158,7 +163,7 @@
                 <?php }?>
               </tbody>
 
-            </table> 
+            </table>
             </div>
           </div>
 
