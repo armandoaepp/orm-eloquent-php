@@ -30,6 +30,21 @@ define('APP_DIR', 'app');
 define('APP', ROOT . DS . APP_DIR . DS);
 
 /**
+* Directory and path to the Models directory.
+*/
+define('MODELS_DIR', 'Models');
+
+define('MODELS', APP . DS . MODELS_DIR . DS);
+
+/**
+* Directory and path to the Controllers directory.
+*/
+define('CONTROLLERS_DIR', 'Controllers');
+
+define('CONTROLLERS', APP . DS . CONTROLLERS_DIR . DS);
+
+
+/**
 * Path to the config directory.
 */
 define('CONFIG', ROOT . DS . 'config' . DS);

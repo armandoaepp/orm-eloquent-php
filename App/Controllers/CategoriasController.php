@@ -7,9 +7,7 @@ use App\Models\Categoria;
 
 class CategoriasController
 {
-  public function __construct()
-  {
-  }
+  public function __construct() { }
 
   public function getAll()
   {
@@ -36,7 +34,7 @@ class CategoriasController
       $status  = false;
       $message = "";
 
-      $categoria = Categoria::where(['nombre' => $nombre])->first();
+      $categoria = Categoria::where(["nombre" => $nombre])->first();
 
       if (empty($categoria))
       {
@@ -58,9 +56,9 @@ class CategoriasController
       }
 
       $data = [
-              'message' => $message,
-              'status' => $status,
-              'data' => $id,
+              "message" => $message,
+              "status"  => $status,
+              "data"    => $id,
             ];
 
       return $data ;
@@ -99,9 +97,9 @@ class CategoriasController
       }
 
       $data = [
-            'message' => $message,
-            'status' => $status,
-            'data' => [],
+            "message" => $message,
+            "status" => $status,
+            "data" => [],
           ];
 
       return $data ;
@@ -117,7 +115,7 @@ class CategoriasController
     try
     {
 
-      $data = Categoria::where('id', $id)
+      $data = Categoria::where("id", $id)
                         ->get();
 
       return $data ;
@@ -170,9 +168,9 @@ class CategoriasController
         }
 
         $data = [
-          'message' => $message,
-          'status' => $status,
-          'data' => [],
+          "message" => $message,
+          "status" => $status,
+          "data" => [],
         ];
 
     }
@@ -189,7 +187,7 @@ class CategoriasController
     {
       extract($params) ;
 
-      $data = Categoria::where('state', $state)
+      $data = Categoria::where("state", $state)
               ->get();
 
       return $data ;
@@ -225,9 +223,9 @@ class CategoriasController
       }
 
       $data = [
-        'message' => $message,
-        'status' => $status,
-        'data' => [],
+        "message" => $message,
+        "status" => $status,
+        "data" => [],
       ];
 
       return $data;
@@ -244,7 +242,7 @@ class CategoriasController
     try
     {
 
-      $data = Categoria::where('publish', $publish)
+      $data = Categoria::where("publish", $publish)
                       ->get();
 
       return $data ;
