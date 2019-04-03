@@ -1,5 +1,6 @@
 <?php
 require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__.'/functions.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -56,60 +57,11 @@ class '.$class_controller.' {
       throw new Exception($e->getMessage());
     }
   }
-
-  public function save( $params = array() )
-  {
-    extract($params) ;
-
-    try
-    {
-      $id      = null ;
-      $status  = false;
-      $message = "";
-
-      $'.$table_name.' = '.$class_name.'::where(["nombre" => $nombre])->first();
-
-      if (empty($'.$table_name.'))
-      {
-        $'.$table_name.' = new '.$class_name.'();
-        '.
-        foreach()
-        {
-
-        }
-
-        .'
-
-        $'.$table_name.'->nombre   = $nombre;
-        $'.$table_name.'->url      = $url;
-        $'.$table_name.'->imagen   = $imagen;
-        $'.$table_name.'->publicar = $publicar;
-
-        $status = $'.$table_name.'->save();
-
-        $id = $'.$table_name.'->id ;
-
-        $message = "Operancion Correcta";
-
-      } else {
-        $message = "¡El Registro ya existe!";
-      }
-
-      $data = [
-              "message" => $message,
-              "status"  => $status,
-              "data"    => $id,
-            ];
-
-      return $data ;
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-  }
+  ';
+$str .=  save();
 
 
+$str .= '
 }
 ';
 
