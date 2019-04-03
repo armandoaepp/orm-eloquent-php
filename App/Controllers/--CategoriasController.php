@@ -115,8 +115,10 @@ class CategoriasController
     try
     {
 
-      $data = Categoria::where("id", $id)
-                        ->get();
+      $data = Categoria::find($id);
+
+      /* $data = Categoria::where("id", $id)
+                        ->get(); */
 
       return $data ;
     }
@@ -126,16 +128,55 @@ class CategoriasController
     }
   }
 
+  public function updateEstado( $params = array() )
+  {
+
+    try
+    {
+      extract($params) ;
+
+      $status  = false;
+      $message = "";
+
+      if (!empty($id))
+      {
+
+        $categoria = Categoria::find($id);
+        $categoria->estado = $estado;
+
+        $status = $categoria->save();
+
+        $message = "Operancion Correcta";
+
+      } else {
+        $message = "¡El Registro No exite!";
+      }
+
+      $data = [
+            "message" => $message,
+            "status" => $status,
+            "data" => [],
+          ];
+
+      return $data ;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception($e->getMessage());
+    }
+  }
+
   public function delete( $params = array() )
   {
     try {
         extract($params) ;
 
-        $id        = $id;
-        $state    = $state;
-        $historial = !empty($historial) ? $historial: "";
-
         $status = false;
+        $message = "";
+
+        $id        = $id;
+        $historial = !empty($historial) ? $historial: "si";
+
         $categoria = Categoria::find($id);
 
         if ($categoria)
@@ -143,36 +184,29 @@ class CategoriasController
           #conservar en base de datos
           if ( $historial == "si" )
           {
-            if ($state == 1)
-            {
-              $state = 0;
-            } else {
-              $state = 1;
-            }
-
-            $categoria->state = $state;
+            $categoria->estado = 1;
             $categoria->save();
 
             $status = true;
+            $message = "Registro Eliminado";
 
           } elseif( $historial == "no"  ) {
             $categoria->forceDelete();
 
             $status = true;
-          }
-          else
-          {
-            $status = false;
+            $message = "Registro eliminado de la base de datos";
           }
 
         }
+        else
+        {
+          $message = "El registro no exite o el identificador es incorrecto";
 
-        $data = [
-          "message" => $message,
-          "status" => $status,
-          "data" => [],
-        ];
+        }
 
+        $data = [ "message" => $message, "status" => $status, "data" => [], ];
+
+        return $data ;
     }
     catch (Exception $e)
     {
@@ -180,6 +214,8 @@ class CategoriasController
     }
 
   }
+
+
 
   public function getByState( $params = array() )
   {

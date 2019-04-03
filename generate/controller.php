@@ -1,6 +1,7 @@
 <?php
 require __DIR__.'/../bootstrap/autoload.php';
 require __DIR__.'/functions.php';
+require __DIR__.'/fieldsTable.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -59,6 +60,10 @@ class '.$class_controller.' {
   }
   ';
 $str .=  save();
+$str .=  update();
+$str .=  find();
+$str .=  updateEstado();
+$str .=  delete();
 
 
 $str .= '
