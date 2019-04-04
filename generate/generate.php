@@ -2,13 +2,38 @@
 
 require __DIR__.'/../bootstrap/autoload.php';
 
-// use Illuminate\Database\Capsule\Manager as Capsule;
-
-// $tables = Capsule::select('SHOW TABLES');
-
-$fields = $_POST['fields'] ;
+require __DIR__.'/createFolders.php';
+require __DIR__.'/functions.php';
+require __DIR__.'/fieldsTable.php';
 
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+use Illuminate\Support\Str;
+use Doctrine\Common\Inflector\Inflector;
+
+// $fields = $_POST['fields'] ;
+// $table_name = $_POST["table"] ;
+$table_name ='marca' ;
+
+if( empty( $table_name ) )
+{
+  echo "Table Name not found! <br>";
+  return ;
+}
+
+# crear folder de APP
+echo createFoldersApp() ;
+
+$entities = [] ;
+
+// entities de table
+$entities = Capsule::select("describe ".$table_name);
+
+// names all fields
+$fields_col = array_column($entities, 'Field');
+
+$class_name = Inflector::classify($table_name);
 
 ?>
 
@@ -34,7 +59,7 @@ $fields = $_POST['fields'] ;
       <div class="col-md-3">
         <pre>
           <?php
-            print_r($fields);
+            // print_r($fields);
           ?>
         </pre>
       </div>

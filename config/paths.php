@@ -45,6 +45,21 @@ define('CONTROLLERS', APP . DS . CONTROLLERS_DIR . DS);
 
 
 /**
+* Directory and path to the Api directory.
+*/
+define('API_DIR', 'api');
+
+define('API', APP . DS . API_DIR . DS);
+
+/**
+* Directory and path to the Api directory.
+*/
+define('HELPERS_DIR', 'Helpers');
+
+define('HELPERS', APP . DS . API_DIR . DS);
+
+
+/**
 * Path to the config directory.
 */
 define('CONFIG', ROOT . DS . 'config' . DS);
