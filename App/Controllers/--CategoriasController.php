@@ -215,8 +215,6 @@ class CategoriasController
 
   }
 
-
-
   public function getByState( $params = array() )
   {
     try

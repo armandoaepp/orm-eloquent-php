@@ -1,6 +1,13 @@
 <?php
 namespace App\Controllers;
 
+/**
+ * [Class Controller]
+ * Autor: Armando E. Pisfil Puemape
+ * twitter: @armandoaepp
+ * email: armandoaepp@gmail.com
+*/
+
 use App\Models\Marca;
 
 class MarcaController {
@@ -21,7 +28,7 @@ class MarcaController {
       throw new Exception($e->getMessage());
     }
   }
-
+  
   public function save( $params = array() )
   {
     extract($params) ;
@@ -40,13 +47,13 @@ class MarcaController {
         $marca->nombre = $nombre;
         $marca->publish = $publish;
         $marca->estado = $estado;
-
+        
         $status = $marca->save();
-
+        
         $id = $marca->idmarca;
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
@@ -54,9 +61,9 @@ class MarcaController {
       }
 
       $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-
+    
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -64,7 +71,6 @@ class MarcaController {
     }
 
   }
-
 
   public function update( $params = array() )
   {
@@ -81,11 +87,11 @@ class MarcaController {
         $marca->idmarca = $idmarca;
         $marca->nombre = $nombre;
         $marca->publish = $publish;
-
+        
         $status = $marca->save();
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
@@ -93,9 +99,9 @@ class MarcaController {
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-
+    
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -103,7 +109,6 @@ class MarcaController {
     }
 
   }
-
 
   public function find( $idmarca )
   {
@@ -113,7 +118,7 @@ class MarcaController {
       $data = Marca::find($idmarca);
 
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -121,44 +126,6 @@ class MarcaController {
     }
 
   }
-
-
-  public function updateEstado( $params = array() )
-  {
-    try
-    {
-      extract($params) ;
-
-      $status  = false;
-      $message = "";
-
-      if (empty($idmarca))
-      {
-        $marca = Marca::find($idmarca);
-        $marca->estado = $estado;
-
-        $status = $marca->save();
-
-        $message = "Operancion Correcta";
-
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-      }
-
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-
-      return $data;
-
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
 
   public function delete( $params = array() )
   {
@@ -177,28 +144,29 @@ class MarcaController {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $categoria->estado = 1;
-          $categoria->save();
+          $marca->estado = 1;
+          $marca->save();
+            
           $status = true;
           $message = "Registro Eliminado";
-
+            
+        }elseif( $historial == "no"  ) {
+          $marca->forceDelete();
+        
+          $status = true;
+          $message = "Registro eliminado de la base de datos";
         }
-        $status = $marca->save();
-
-        $id = $marca->idmarca;
-
-        $message = "Operancion Correcta";
-
+        
       }
       else
       {
-        $message = "¡El registro ya existe!";
+        $message = "¡El registro no exite o el identificador es incorrecto!";
       }
 
       $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-
+    
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -207,5 +175,117 @@ class MarcaController {
 
   }
 
+  public function updateStatus( $params = array() )
+  {
+    try
+    {
+      extract($params) ;
+
+      $status  = false;
+      $message = "";
+
+      if (empty($idmarca))
+      {
+        $marca = Marca::find($idmarca);
+        $marca->estado = $estado;
+        
+        $status = $marca->save();
+        
+        $message = "Operancion Correcta";
+        
+      }
+      else
+      {
+        $message = "¡El identificador es incorrecto!";
+      }
+
+      $data = ["message" => $message, "status" => $status, "data" =>[],];
+    
+      return $data;
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function getByStatus( $params = array()  )
+  {
+    try
+    {
+      extract($params) ;
+
+      $data = Marca::where("estado", $estado)->get();
+
+      return $data;
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function updatePublish( $params = array() )
+  {
+    try
+    {
+      extract($params) ;
+
+      $status  = false;
+      $message = "";
+
+      if (empty($idmarca))
+      {
+        $marca = Marca::find($idmarca);
+        if ($marca)
+        {
+          $marca->publish = $publish;
+          $marca->save();
+
+          $status = true;
+          $message = "Operación Correcta" ;
+        }else{
+          $message = "¡El identificador no exite!" ; ;
+        }
+        
+      }
+      else
+      {
+        $message = "¡El identificador es incorrecto!";
+      }
+
+      $data = ["message" => $message, "status" => $status, "data" =>[],];
+    
+      return $data;
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function getPublished(  $params = array()  )
+  {
+    try
+    {
+      extract($params) ;
+
+      $data = Marca::where("publish", $publish)->get();
+
+      return $data;
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
 
 }

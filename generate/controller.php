@@ -21,6 +21,9 @@ $table_name = $_GET["table"];
 // entities de table
 $entities = Capsule::select("describe ".$table_name);
 
+// var_dump($entities);
+$fields_col = array_column($entities, 'Field');
+
 
 $class_name = Inflector::classify($table_name);
 $class_controller = $class_name.'Controller' ;
@@ -37,6 +40,13 @@ $file_open      = fopen($file_name . $ext, "w");
 
 $str = '<?php
 namespace App\Controllers;
+
+/**
+ * [Class Controller]
+ * Autor: Armando E. Pisfil Puemape
+ * twitter: @armandoaepp
+ * email: armandoaepp@gmail.com
+*/
 
 use App\Models\\'.$class_name.';
 
@@ -62,9 +72,19 @@ class '.$class_controller.' {
 $str .=  save();
 $str .=  update();
 $str .=  find();
-$str .=  updateEstado();
 $str .=  delete();
 
+if ( in_array('estado', $fields_col) )
+{
+  $str .=  updateStatus();
+  $str .=  getByStatus();
+}
+
+if ( in_array('publish', $fields_col) )
+{
+  $str .=  updatePublish();
+  $str .=  getPublished();
+}
 
 $str .= '
 }
