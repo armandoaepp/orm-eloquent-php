@@ -1,11 +1,8 @@
 <?php
 
 # Method save for controllers
-function save()
+function save($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function save( $params = array() )' . PHP_EOL;
@@ -61,11 +58,8 @@ function save()
 }
 
 # Method update for controllers
-function update()
+function update($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function update( $params = array() )' . PHP_EOL;
@@ -118,11 +112,8 @@ function update()
 }
 
 # Method find for controllers
-function find()
+function find($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function find( $'.$entities[0]->Field.' )' . PHP_EOL;
@@ -147,11 +138,8 @@ function find()
 }
 
 # Method delete for controllers
-function delete()
+function delete($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function delete( $params = array() )' . PHP_EOL;
@@ -208,11 +196,8 @@ function delete()
 }
 
 # Method updateStatus for controllers
-function updateStatus()
+function updateStatus($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function updateStatus( $params = array() )' . PHP_EOL;
@@ -257,11 +242,8 @@ function updateStatus()
 }
 
 # Method getByStatus for controllers
-function getByStatus()
+function getByStatus($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function getByStatus( $params = array()  )' . PHP_EOL;
@@ -287,11 +269,8 @@ function getByStatus()
 }
 
 # Method updatePublish for controllers
-function updatePublish()
+function updatePublish($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function updatePublish( $params = array() )' . PHP_EOL;
@@ -341,11 +320,8 @@ function updatePublish()
 }
 
 # Method getPublished for controllers
-function getPublished()
+function getPublished($table_name, $class_name, $entities = array())
 {
-  global $table_name ;
-  global $class_name ;
-  global $entities ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function getPublished(  $params = array()  )' . PHP_EOL;

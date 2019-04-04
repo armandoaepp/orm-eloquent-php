@@ -3,9 +3,12 @@
 require __DIR__.'/../bootstrap/autoload.php';
 
 require __DIR__.'/createFolders.php';
+
+require __DIR__.'/model.php';
+require __DIR__.'/controller.php';
+
 require __DIR__.'/functions.php';
 require __DIR__.'/fieldsTable.php';
-
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -14,7 +17,7 @@ use Doctrine\Common\Inflector\Inflector;
 
 // $fields = $_POST['fields'] ;
 // $table_name = $_POST["table"] ;
-$table_name ='marca' ;
+$table_name ='user' ;
 
 if( empty( $table_name ) )
 {
@@ -22,8 +25,6 @@ if( empty( $table_name ) )
   return ;
 }
 
-# crear folder de APP
-echo createFoldersApp() ;
 
 $entities = [] ;
 
@@ -34,6 +35,15 @@ $entities = Capsule::select("describe ".$table_name);
 $fields_col = array_column($entities, 'Field');
 
 $class_name = Inflector::classify($table_name);
+
+# crear folder de APP
+echo createFoldersApp()."<br>" ;
+
+// Generation Model
+echo generateModel($table_name, $class_name, $entities ) ."<br>" ;
+
+// Generation Controller
+echo generateController($table_name, $class_name, $entities ) ."<br>" ;
 
 ?>
 

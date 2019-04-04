@@ -1,34 +1,34 @@
 <?php
-namespace App\Controllers;
+  namespace App\Controllers;
 
-/**
- * [Class Controller]
- * Autor: Armando E. Pisfil Puemape
- * twitter: @armandoaepp
- * email: armandoaepp@gmail.com
-*/
+  /**
+   * [Class Controller]
+   * Autor: Armando E. Pisfil Puemape
+   * twitter: @armandoaepp
+   * email: armandoaepp@gmail.com
+  */
 
-use App\Models\Marca;
+  use App\Models\User;
 
-class MarcaController {
+  class UserController {
 
-  public function __construct() {}
+    public function __construct() {}
 
-  public function getAll()
-  {
-    try
+    public function getAll()
     {
+      try
+      {
 
-      $data = Marca::get();
+        $data = User::get();
 
-      return $data ;
+        return $data ;
+      }
+      catch (Exception $e)
+      {
+        throw new Exception($e->getMessage());
+      }
     }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-  }
-  
+    
   public function save( $params = array() )
   {
     extract($params) ;
@@ -38,19 +38,21 @@ class MarcaController {
       $status  = false;
       $message = "";
 
-      $marca = Marca::where(["nombre" => $nombre])->first();
+      $user = User::where(["nombre" => $nombre])->first();
 
-      if (empty($marca))
+      if (empty($user))
       {
-        $marca = new Marca();
-        $marca->idmarca = $idmarca;
-        $marca->nombre = $nombre;
-        $marca->publish = $publish;
-        $marca->estado = $estado;
+        $user = new User();
+        $user->user_id = $user_id;
+        $user->nombre = $nombre;
+        $user->apellidos = $apellidos;
+        $user->email = $email;
+        $user->password = $password;
+        $user->estado = $estado;
         
-        $status = $marca->save();
+        $status = $user->save();
         
-        $id = $marca->idmarca;
+        $id = $user->user_id;
         
         $message = "Operancion Correcta";
         
@@ -81,14 +83,16 @@ class MarcaController {
       $status  = false;
       $message = "";
 
-      if (empty($idmarca))
+      if (empty($user_id))
       {
-        $marca = Marca::find($idmarca);
-        $marca->idmarca = $idmarca;
-        $marca->nombre = $nombre;
-        $marca->publish = $publish;
+        $user = User::find($user_id);
+        $user->user_id = $user_id;
+        $user->nombre = $nombre;
+        $user->apellidos = $apellidos;
+        $user->email = $email;
+        $user->password = $password;
         
-        $status = $marca->save();
+        $status = $user->save();
         
         $message = "Operancion Correcta";
         
@@ -110,12 +114,12 @@ class MarcaController {
 
   }
 
-  public function find( $idmarca )
+  public function find( $user_id )
   {
     try
     {
 
-      $data = Marca::find($idmarca);
+      $data = User::find($user_id);
 
       return $data;
     
@@ -136,22 +140,22 @@ class MarcaController {
       $message = "";
 
       $historial = !empty($historial) ? $historial: "si";
-      $marca = Marca::find( idmarca ) ;
+      $user = User::find( user_id ) ;
 
-      if (empty($marca))
+      if (empty($user))
       {
-        $marca = new Marca();
+        $user = new User();
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $marca->estado = 1;
-          $marca->save();
+          $user->estado = 1;
+          $user->save();
             
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $marca->forceDelete();
+          $user->forceDelete();
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -184,12 +188,12 @@ class MarcaController {
       $status  = false;
       $message = "";
 
-      if (empty($idmarca))
+      if (empty($user_id))
       {
-        $marca = Marca::find($idmarca);
-        $marca->estado = $estado;
+        $user = User::find($user_id);
+        $user->estado = $estado;
         
-        $status = $marca->save();
+        $status = $user->save();
         
         $message = "Operancion Correcta";
         
@@ -217,7 +221,7 @@ class MarcaController {
     {
       extract($params) ;
 
-      $data = Marca::where("estado", $estado)->get();
+      $data = User::where("estado", $estado)->get();
 
       return $data;
     
@@ -228,64 +232,4 @@ class MarcaController {
     }
 
   }
-
-  public function updatePublish( $params = array() )
-  {
-    try
-    {
-      extract($params) ;
-
-      $status  = false;
-      $message = "";
-
-      if (empty($idmarca))
-      {
-        $marca = Marca::find($idmarca);
-        if ($marca)
-        {
-          $marca->publish = $publish;
-          $marca->save();
-
-          $status = true;
-          $message = "Operación Correcta" ;
-        }else{
-          $message = "¡El identificador no exite!" ; ;
-        }
-        
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-      }
-
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function getPublished(  $params = array()  )
-  {
-    try
-    {
-      extract($params) ;
-
-      $data = Marca::where("publish", $publish)->get();
-
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
 }

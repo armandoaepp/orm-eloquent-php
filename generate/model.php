@@ -1,50 +1,33 @@
 <?php
-require __DIR__.'/../bootstrap/autoload.php';
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-
-use Illuminate\Support\Str;
-use Doctrine\Common\Inflector\Inflector;
-
-$entities = [] ;
-
-if(empty($_GET["table"]) )
+function generateModel($table_name, $class_name, $entities = array() )
 {
+  $folder = MODELS;
 
-  return "Table Name not found!";
+  $file_name = $folder.$class_name ;
 
-}
+  $ext = ".php" ;
+  $file_open = fopen($file_name . $ext, "w");
 
-$table_name = $_GET["table"];
-$entities = Capsule::select("describe ".$table_name);
+  $str = '<?php
+  namespace App\Models;
 
-$class_name = Inflector::classify($table_name);
+  use Illuminate\Database\Eloquent\Model;
 
-// $folder   = "./app/Models/";
-$folder   = MODELS;
+  class '.$class_name.' extends Model {
 
-$file_name = $folder.$class_name ;
+    protected $table = "'.$table_name.'";
 
-$ext = ".php" ;
+    public $timestamps = false;
 
-$file_open      = fopen($file_name . $ext, "w");
+    protected $guarded = [\'id\'];
 
-$str = '<?php
-namespace App\Models;
+  }
+  ';
 
-use Illuminate\Database\Eloquent\Model;
+  fwrite($file_open, $str);
+  fclose($file_open);
 
-class '.$class_name.' extends Model {
-
-  protected $table = "'.$table_name.'";
-
-  public $timestamps = false;
-
-  protected $guarded = [\'id\'];
+  return "Class Model Generated OK";
 
 }
-';
-
-fwrite($file_open, $str);
-fclose($file_open);
-echo "Class Generation OK";
