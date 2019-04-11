@@ -15,9 +15,9 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;
 use Doctrine\Common\Inflector\Inflector;
 
-// $fields = $_POST['fields'] ;
-// $table_name = $_POST["table"] ;
-$table_name ='user' ;
+$fields = $_POST['fields'] ;
+$table_name = $_POST["table_name"] ;
+// $table_name ='user' ;
 
 if( empty( $table_name ) )
 {
