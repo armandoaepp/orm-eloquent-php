@@ -8,12 +8,14 @@
    * email: armandoaepp@gmail.com
   */
 
-  use App\Models\Plan;
+  use App\Models\Plan; 
 
-  class PlanController {
+class PlanController
+{
+  public function __construct()
+  {    $this->middleware('auth');
+  }
 
-    public function __construct() {}
-  
   public function getAll( $id )
   {
     try
@@ -21,7 +23,7 @@
 
       $data = Plan::get();
 
-       return view('admin.plans.list-plans')->with(compact('data'));
+      return view('admin.plans.list-plans')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -31,28 +33,44 @@
 
   }
 
-  public function save( $params = array() )
+  public function newRegister( Request $request )
   {
-    extract($params) ;
     try
     {
-      $id      = null;
+
+       return view('admin.plans.new-plan');
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function save( Request $request )
+  {
+    try
+    {
       $status  = false;
       $message = "";
+
+      $nombre = $request->input('nombre');
+      $espacio = $request->input('espacio');
+      $num_databases = $request->input('num_databases');
+      $num_mails = $request->input('num_mails');
+      $estado = $request->input('estado');
 
       $plan = Plan::where(["nombre" => $nombre])->first();
 
       if (empty($plan))
       {
         $plan = new Plan();
-        $plan->id = $id;
         $plan->nombre = $nombre;
         $plan->espacio = $espacio;
         $plan->num_databases = $num_databases;
         $plan->num_mails = $num_mails;
         $plan->estado = $estado;
-        $plan->created_at = $created_at;
-        $plan->updated_at = $updated_at;
         
         $status = $plan->save();
         
@@ -66,9 +84,9 @@
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
+      $data = ["message" => $message, "status" => $status, "data" => [$plan],];
     
-      return $data;
+      return redirect()->route('admin-plans');
     
     }
     catch (Exception $e)
@@ -78,14 +96,36 @@
 
   }
 
-  public function update( $params = array() )
+  public function edit( $id )
   {
     try
     {
-      extract($params) ;
+
+       $data = Plan::find($id);
+
+       return view('admin.plans.edit-plan')->with(compact('data'));
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function update( Request $request )
+  {
+    try
+    {
 
       $status  = false;
       $message = "";
+
+        $id = $request->input(id);
+        $nombre = $request->input(nombre);
+        $espacio = $request->input(espacio);
+        $num_databases = $request->input(num_databases);
+        $num_mails = $request->input(num_mails);
 
       if (empty($id))
       {
@@ -95,8 +135,6 @@
         $plan->espacio = $espacio;
         $plan->num_databases = $num_databases;
         $plan->num_mails = $num_mails;
-        $plan->created_at = $created_at;
-        $plan->updated_at = $updated_at;
         
         $status = $plan->save();
         
@@ -110,7 +148,7 @@
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return $data;
+      return redirect()->route('admin-plans');;
     
     }
     catch (Exception $e)
@@ -137,20 +175,27 @@
 
   }
 
-  public function delete( $params = array() )
+  public function delete( Request $request )
   {
-    extract($params) ;
     try
     {
       $status  = false;
       $message = "";
 
-      $historial = !empty($historial) ? $historial: "si";
-      $plan = Plan::find( id ) ;
+      $id = $request->input('id');
+      $estado = $request->input('estado');
+      $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
+
+      if ($estado == 1) {
+        $estado = 0;
+      } else {
+        $estado = 1;
+      }
+
+      $plan = Plan::find( $id ) ;
 
       if (empty($plan))
       {
-        $plan = new Plan();
         #conservar en base de datos
         if ( $historial == "si" )
         {
@@ -167,20 +212,31 @@
           $message = "Registro eliminado de la base de datos";
         }
         
+         $data = $plan;
+        
       }
       else
       {
         $message = "¡El registro no exite o el identificador es incorrecto!";
+        $data = $request->all();
       }
-
-      $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
     
-      return $data;
+      return \Response::json([
+                "message" => $message,
+                "status"  => $status,
+                "errors"  => [],
+                "data"    => [$data],
+              ]);
     
     }
-    catch (Exception $e)
+    catch (\Throwable $e) 
     {
-      throw new Exception($e->getMessage());
+      return \Response::json([
+                "message" => "Operación fallida en el servidor",
+                "status"  => $status,
+                "errors"  =>  [$e->getMessage(), ],
+                "data"    => [],
+              ]);
     }
 
   }

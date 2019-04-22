@@ -8,42 +8,67 @@
    * email: armandoaepp@gmail.com
   */
 
-  use App\Models\CuentaHost;
+  use App\Models\CuentaHost; 
 
-class CuentaHostController {
+class CuentaHostController
+{
+  public function __construct()
+  {    $this->middleware('auth');
+  }
 
-  public function __construct() {}
-
-  public function getAll()
+  public function getAll( $id )
   {
     try
     {
 
       $data = CuentaHost::get();
 
-      return $data ;
+      return view('admin.cuenta_hosts.list-cuenta_hosts')->with(compact('data'));
+    
     }
     catch (Exception $e)
     {
       throw new Exception($e->getMessage());
     }
+
   }
 
-  public function save( $params = array() )
+  public function newRegister( Request $request )
   {
-    extract($params) ;
     try
     {
-      $id      = null;
+
+       return view('admin.cuenta_hosts.new-cuenta_host');
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function save( Request $request )
+  {
+    try
+    {
       $status  = false;
       $message = "";
+
+      $propietario_id = $request->input('propietario_id');
+      $plan_id = $request->input('plan_id');
+      $dominio = $request->input('dominio');
+      $descripcion = $request->input('descripcion');
+      $solo_host = $request->input('solo_host');
+      $tiempo_alq = $request->input('tiempo_alq');
+      $facturado = $request->input('facturado');
+      $estado = $request->input('estado');
 
       $cuenta_host = CuentaHost::where(["propietario_id" => $propietario_id])->first();
 
       if (empty($cuenta_host))
       {
         $cuenta_host = new CuentaHost();
-        $cuenta_host->id = $id;
         $cuenta_host->propietario_id = $propietario_id;
         $cuenta_host->plan_id = $plan_id;
         $cuenta_host->dominio = $dominio;
@@ -52,25 +77,23 @@ class CuentaHostController {
         $cuenta_host->tiempo_alq = $tiempo_alq;
         $cuenta_host->facturado = $facturado;
         $cuenta_host->estado = $estado;
-        $cuenta_host->created_at = $created_at;
-        $cuenta_host->updated_at = $updated_at;
-
+        
         $status = $cuenta_host->save();
-
+        
         $id = $cuenta_host->id;
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-
-      return $data;
-
+      $data = ["message" => $message, "status" => $status, "data" => [$cuenta_host],];
+    
+      return redirect()->route('admin-cuenta_hosts');
+    
     }
     catch (Exception $e)
     {
@@ -79,14 +102,39 @@ class CuentaHostController {
 
   }
 
-  public function update( $params = array() )
+  public function edit( $id )
   {
     try
     {
-      extract($params) ;
+
+       $data = CuentaHost::find($id);
+
+       return view('admin.cuenta_hosts.edit-cuenta_host')->with(compact('data'));
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function update( Request $request )
+  {
+    try
+    {
 
       $status  = false;
       $message = "";
+
+        $id = $request->input(id);
+        $propietario_id = $request->input(propietario_id);
+        $plan_id = $request->input(plan_id);
+        $dominio = $request->input(dominio);
+        $descripcion = $request->input(descripcion);
+        $solo_host = $request->input(solo_host);
+        $tiempo_alq = $request->input(tiempo_alq);
+        $facturado = $request->input(facturado);
 
       if (empty($id))
       {
@@ -99,13 +147,11 @@ class CuentaHostController {
         $cuenta_host->solo_host = $solo_host;
         $cuenta_host->tiempo_alq = $tiempo_alq;
         $cuenta_host->facturado = $facturado;
-        $cuenta_host->created_at = $created_at;
-        $cuenta_host->updated_at = $updated_at;
-
+        
         $status = $cuenta_host->save();
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
@@ -113,9 +159,9 @@ class CuentaHostController {
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-
-      return $data;
-
+    
+      return redirect()->route('admin-cuenta_hosts');;
+    
     }
     catch (Exception $e)
     {
@@ -132,7 +178,7 @@ class CuentaHostController {
       $data = CuentaHost::find($id);
 
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -141,50 +187,68 @@ class CuentaHostController {
 
   }
 
-  public function delete( $params = array() )
+  public function delete( Request $request )
   {
-    extract($params) ;
     try
     {
       $status  = false;
       $message = "";
 
-      $historial = !empty($historial) ? $historial: "si";
-      $cuenta_host = CuentaHost::find( id ) ;
+      $id = $request->input('id');
+      $estado = $request->input('estado');
+      $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
+
+      if ($estado == 1) {
+        $estado = 0;
+      } else {
+        $estado = 1;
+      }
+
+      $cuenta_host = CuentaHost::find( $id ) ;
 
       if (empty($cuenta_host))
       {
-        $cuenta_host = new CuentaHost();
         #conservar en base de datos
         if ( $historial == "si" )
         {
           $cuenta_host->estado = 1;
           $cuenta_host->save();
-
+            
           $status = true;
           $message = "Registro Eliminado";
-
+            
         }elseif( $historial == "no"  ) {
           $cuenta_host->forceDelete();
-
+        
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
-
+        
+         $data = $plan;
+        
       }
       else
       {
         $message = "¡El registro no exite o el identificador es incorrecto!";
+        $data = $request->all();
       }
-
-      $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-
-      return $data;
-
+    
+      return \Response::json([
+                "message" => $message,
+                "status"  => $status,
+                "errors"  => [],
+                "data"    => [$data],
+              ]);
+    
     }
-    catch (Exception $e)
+    catch (\Throwable $e) 
     {
-      throw new Exception($e->getMessage());
+      return \Response::json([
+                "message" => "Operación fallida en el servidor",
+                "status"  => $status,
+                "errors"  => [$e->getMessage(), ],
+                "data"    => [],
+              ]);
     }
 
   }
@@ -202,11 +266,11 @@ class CuentaHostController {
       {
         $cuenta_host = CuentaHost::find($id);
         $cuenta_host->estado = $estado;
-
+        
         $status = $cuenta_host->save();
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
@@ -214,9 +278,9 @@ class CuentaHostController {
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-
+    
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -234,7 +298,7 @@ class CuentaHostController {
       $data = CuentaHost::where("estado", $estado)->get();
 
       return $data;
-
+    
     }
     catch (Exception $e)
     {

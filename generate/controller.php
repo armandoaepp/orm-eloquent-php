@@ -24,17 +24,21 @@ function generateController($table_name, $class_name, $entities = array() )
    * email: armandoaepp@gmail.com
   */
 
-  use App\Models\\'.$class_name.'; ';
+  use App\Models\\'.$class_name.'; '. PHP_EOL ;
 
-  $str .= 'class '.$class_controller.' {' ;
-  $str .= '  public function __construct()' ;
+  $str .= ''. PHP_EOL ;
+  $str .= 'class '.$class_controller.''. PHP_EOL ;
+  $str .= '{'. PHP_EOL ;
+  $str .= '  public function __construct()'. PHP_EOL ;
   $str .= '  {' ;
-  $str .= '    $this->middleware(\'auth\');' ;
-  $str .= '  }' ;
+  $str .= '    $this->middleware(\'auth\');'. PHP_EOL ;
+  $str .= '  }'. PHP_EOL  ;
 
 
   $str .=  getAll($table_name, $class_name, $entities);
+  $str .=  newRegister($table_name, $class_name, $entities);
   $str .=  save($table_name, $class_name, $entities);
+  $str .=  edit($table_name, $class_name, $entities);
   $str .=  update($table_name, $class_name, $entities);
   $str .=  find($table_name, $class_name, $entities);
   $str .=  delete($table_name, $class_name, $entities);

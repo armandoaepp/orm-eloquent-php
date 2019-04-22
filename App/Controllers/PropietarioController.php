@@ -8,67 +8,88 @@
    * email: armandoaepp@gmail.com
   */
 
-  use App\Models\Propietario;
+  use App\Models\Propietario; 
 
-class PropietarioController {
+class PropietarioController
+{
+  public function __construct()
+  {    $this->middleware('auth');
+  }
 
-  public function __construct() {}
-
-  public function getAll()
+  public function getAll( $id )
   {
     try
     {
 
       $data = Propietario::get();
 
-      return $data ;
+      return view('admin.propietarios.list-propietarios')->with(compact('data'));
+    
     }
     catch (Exception $e)
     {
       throw new Exception($e->getMessage());
     }
+
   }
 
-  public function save( $params = array() )
+  public function newRegister( Request $request )
   {
-    extract($params) ;
     try
     {
-      $id      = null;
+
+       return view('admin.propietarios.new-propietario');
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function save( Request $request )
+  {
+    try
+    {
       $status  = false;
       $message = "";
+
+      $nombre = $request->input('nombre');
+      $apellidos = $request->input('apellidos');
+      $email = $request->input('email');
+      $celular = $request->input('celular');
+      $glosa = $request->input('glosa');
+      $estado = $request->input('estado');
 
       $propietario = Propietario::where(["nombre" => $nombre])->first();
 
       if (empty($propietario))
       {
         $propietario = new Propietario();
-        $propietario->id = $id;
         $propietario->nombre = $nombre;
         $propietario->apellidos = $apellidos;
         $propietario->email = $email;
         $propietario->celular = $celular;
         $propietario->glosa = $glosa;
         $propietario->estado = $estado;
-        $propietario->created_at = $created_at;
-        $propietario->updated_at = $updated_at;
-
+        
         $status = $propietario->save();
-
+        
         $id = $propietario->id;
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-
-      return $data;
-
+      $data = ["message" => $message, "status" => $status, "data" => [$propietario],];
+    
+      return redirect()->route('admin-propietarios');
+    
     }
     catch (Exception $e)
     {
@@ -77,14 +98,37 @@ class PropietarioController {
 
   }
 
-  public function update( $params = array() )
+  public function edit( $id )
   {
     try
     {
-      extract($params) ;
+
+       $data = Propietario::find($id);
+
+       return view('admin.propietarios.edit-propietario')->with(compact('data'));
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
+  public function update( Request $request )
+  {
+    try
+    {
 
       $status  = false;
       $message = "";
+
+        $id = $request->input(id);
+        $nombre = $request->input(nombre);
+        $apellidos = $request->input(apellidos);
+        $email = $request->input(email);
+        $celular = $request->input(celular);
+        $glosa = $request->input(glosa);
 
       if (empty($id))
       {
@@ -95,13 +139,11 @@ class PropietarioController {
         $propietario->email = $email;
         $propietario->celular = $celular;
         $propietario->glosa = $glosa;
-        $propietario->created_at = $created_at;
-        $propietario->updated_at = $updated_at;
-
+        
         $status = $propietario->save();
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
@@ -109,9 +151,9 @@ class PropietarioController {
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-
-      return $data;
-
+    
+      return redirect()->route('admin-propietarios');;
+    
     }
     catch (Exception $e)
     {
@@ -128,7 +170,7 @@ class PropietarioController {
       $data = Propietario::find($id);
 
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -137,50 +179,68 @@ class PropietarioController {
 
   }
 
-  public function delete( $params = array() )
+  public function delete( Request $request )
   {
-    extract($params) ;
     try
     {
       $status  = false;
       $message = "";
 
-      $historial = !empty($historial) ? $historial: "si";
-      $propietario = Propietario::find( id ) ;
+      $id = $request->input('id');
+      $estado = $request->input('estado');
+      $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
+
+      if ($estado == 1) {
+        $estado = 0;
+      } else {
+        $estado = 1;
+      }
+
+      $propietario = Propietario::find( $id ) ;
 
       if (empty($propietario))
       {
-        $propietario = new Propietario();
         #conservar en base de datos
         if ( $historial == "si" )
         {
           $propietario->estado = 1;
           $propietario->save();
-
+            
           $status = true;
           $message = "Registro Eliminado";
-
+            
         }elseif( $historial == "no"  ) {
           $propietario->forceDelete();
-
+        
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
-
+        
+         $data = $plan;
+        
       }
       else
       {
         $message = "¡El registro no exite o el identificador es incorrecto!";
+        $data = $request->all();
       }
-
-      $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-
-      return $data;
-
+    
+      return \Response::json([
+                "message" => $message,
+                "status"  => $status,
+                "errors"  => [],
+                "data"    => [$data],
+              ]);
+    
     }
-    catch (Exception $e)
+    catch (\Throwable $e) 
     {
-      throw new Exception($e->getMessage());
+      return \Response::json([
+                "message" => "Operación fallida en el servidor",
+                "status"  => $status,
+                "errors"  => [$e->getMessage(), ],
+                "data"    => [],
+              ]);
     }
 
   }
@@ -198,11 +258,11 @@ class PropietarioController {
       {
         $propietario = Propietario::find($id);
         $propietario->estado = $estado;
-
+        
         $status = $propietario->save();
-
+        
         $message = "Operancion Correcta";
-
+        
       }
       else
       {
@@ -210,9 +270,9 @@ class PropietarioController {
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-
+    
       return $data;
-
+    
     }
     catch (Exception $e)
     {
@@ -230,7 +290,7 @@ class PropietarioController {
       $data = Propietario::where("estado", $estado)->get();
 
       return $data;
-
+    
     }
     catch (Exception $e)
     {
