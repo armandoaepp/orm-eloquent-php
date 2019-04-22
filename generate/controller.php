@@ -24,27 +24,16 @@ function generateController($table_name, $class_name, $entities = array() )
    * email: armandoaepp@gmail.com
   */
 
-  use App\Models\\'.$class_name.';
+  use App\Models\\'.$class_name.'; ';
 
-  class '.$class_controller.' {
+  $str .= 'class '.$class_controller.' {' ;
+  $str .= '  public function __construct()' ;
+  $str .= '  {' ;
+  $str .= '    $this->middleware(\'auth\');' ;
+  $str .= '  }' ;
 
-    public function __construct() {}
 
-    public function getAll()
-    {
-      try
-      {
-
-        $data = '.$class_name.'::get();
-
-        return $data ;
-      }
-      catch (Exception $e)
-      {
-        throw new Exception($e->getMessage());
-      }
-    }
-    ';
+  $str .=  getAll($table_name, $class_name, $entities);
   $str .=  save($table_name, $class_name, $entities);
   $str .=  update($table_name, $class_name, $entities);
   $str .=  find($table_name, $class_name, $entities);

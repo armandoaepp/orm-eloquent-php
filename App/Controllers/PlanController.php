@@ -13,22 +13,24 @@
   class PlanController {
 
     public function __construct() {}
-
-    public function getAll()
+  
+  public function getAll( $id )
+  {
+    try
     {
-      try
-      {
 
-        $data = Plan::get();
+      $data = Plan::get();
 
-        return $data ;
-      }
-      catch (Exception $e)
-      {
-        throw new Exception($e->getMessage());
-      }
-    }
+       return view('admin.plans.list-plans')->with(compact('data'));
     
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+
+  }
+
   public function save( $params = array() )
   {
     extract($params) ;

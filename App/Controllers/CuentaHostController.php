@@ -10,25 +10,25 @@
 
   use App\Models\CuentaHost;
 
-  class CuentaHostController {
+class CuentaHostController {
 
-    public function __construct() {}
+  public function __construct() {}
 
-    public function getAll()
+  public function getAll()
+  {
+    try
     {
-      try
-      {
 
-        $data = CuentaHost::get();
+      $data = CuentaHost::get();
 
-        return $data ;
-      }
-      catch (Exception $e)
-      {
-        throw new Exception($e->getMessage());
-      }
+      return $data ;
     }
-    
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+  }
+
   public function save( $params = array() )
   {
     extract($params) ;
@@ -54,13 +54,13 @@
         $cuenta_host->estado = $estado;
         $cuenta_host->created_at = $created_at;
         $cuenta_host->updated_at = $updated_at;
-        
+
         $status = $cuenta_host->save();
-        
+
         $id = $cuenta_host->id;
-        
+
         $message = "Operancion Correcta";
-        
+
       }
       else
       {
@@ -68,9 +68,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -101,11 +101,11 @@
         $cuenta_host->facturado = $facturado;
         $cuenta_host->created_at = $created_at;
         $cuenta_host->updated_at = $updated_at;
-        
+
         $status = $cuenta_host->save();
-        
+
         $message = "Operancion Correcta";
-        
+
       }
       else
       {
@@ -113,9 +113,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -132,7 +132,7 @@
       $data = CuentaHost::find($id);
 
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -160,17 +160,17 @@
         {
           $cuenta_host->estado = 1;
           $cuenta_host->save();
-            
+
           $status = true;
           $message = "Registro Eliminado";
-            
+
         }elseif( $historial == "no"  ) {
           $cuenta_host->forceDelete();
-        
+
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
-        
+
       }
       else
       {
@@ -178,9 +178,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -202,11 +202,11 @@
       {
         $cuenta_host = CuentaHost::find($id);
         $cuenta_host->estado = $estado;
-        
+
         $status = $cuenta_host->save();
-        
+
         $message = "Operancion Correcta";
-        
+
       }
       else
       {
@@ -214,9 +214,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -234,7 +234,7 @@
       $data = CuentaHost::where("estado", $estado)->get();
 
       return $data;
-    
+
     }
     catch (Exception $e)
     {

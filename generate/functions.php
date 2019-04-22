@@ -1,5 +1,32 @@
 <?php
 
+# Method find for controllers
+function getAll($table_name, $class_name, $entities = array())
+{
+  $table_plural = str_plural($table_name) ;
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function getAll( $'.$entities[0]->Field.' )' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::get();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '       return view(\'admin.'.$table_plural.'.list-'.$table_plural.'\')->with(compact(\'data\'));' . PHP_EOL;
+  // $str  .= '      return $data;' . PHP_EOL;
+  $str  .= '    ' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
 # Method save for controllers
 function save($table_name, $class_name, $entities = array())
 {

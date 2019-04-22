@@ -10,25 +10,25 @@
 
   use App\Models\Propietario;
 
-  class PropietarioController {
+class PropietarioController {
 
-    public function __construct() {}
+  public function __construct() {}
 
-    public function getAll()
+  public function getAll()
+  {
+    try
     {
-      try
-      {
 
-        $data = Propietario::get();
+      $data = Propietario::get();
 
-        return $data ;
-      }
-      catch (Exception $e)
-      {
-        throw new Exception($e->getMessage());
-      }
+      return $data ;
     }
-    
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
+    }
+  }
+
   public function save( $params = array() )
   {
     extract($params) ;
@@ -52,13 +52,13 @@
         $propietario->estado = $estado;
         $propietario->created_at = $created_at;
         $propietario->updated_at = $updated_at;
-        
+
         $status = $propietario->save();
-        
+
         $id = $propietario->id;
-        
+
         $message = "Operancion Correcta";
-        
+
       }
       else
       {
@@ -66,9 +66,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -97,11 +97,11 @@
         $propietario->glosa = $glosa;
         $propietario->created_at = $created_at;
         $propietario->updated_at = $updated_at;
-        
+
         $status = $propietario->save();
-        
+
         $message = "Operancion Correcta";
-        
+
       }
       else
       {
@@ -109,9 +109,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -128,7 +128,7 @@
       $data = Propietario::find($id);
 
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -156,17 +156,17 @@
         {
           $propietario->estado = 1;
           $propietario->save();
-            
+
           $status = true;
           $message = "Registro Eliminado";
-            
+
         }elseif( $historial == "no"  ) {
           $propietario->forceDelete();
-        
+
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
-        
+
       }
       else
       {
@@ -174,9 +174,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" => ["id" => $id],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -198,11 +198,11 @@
       {
         $propietario = Propietario::find($id);
         $propietario->estado = $estado;
-        
+
         $status = $propietario->save();
-        
+
         $message = "Operancion Correcta";
-        
+
       }
       else
       {
@@ -210,9 +210,9 @@
       }
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
+
       return $data;
-    
+
     }
     catch (Exception $e)
     {
@@ -230,7 +230,7 @@
       $data = Propietario::where("estado", $estado)->get();
 
       return $data;
-    
+
     }
     catch (Exception $e)
     {
