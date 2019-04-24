@@ -25,7 +25,7 @@ function generateView($table_name, $class_name, $entities = array() )
 
   fwrite($file_open, $str);
   fclose($file_open);
-  return "Class Controllers Generation OK";
+  return "View List Generation OK";
 
 }
 

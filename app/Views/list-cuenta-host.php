@@ -21,7 +21,7 @@
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <a class="link-white" href="{{ route('admin-cuenta-hosts') }}">
-        Planes
+        cuenta hosts
       </a>
     </li>
   </ol>
@@ -42,7 +42,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de Planes
+          <i class="fa fa-align-justify"></i> Lista de cuenta hosts
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -89,13 +89,10 @@
                   <td> {{ $row->num_mails }} </td>
 
                   <td class="text-center">
-                    <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                      href="{{ url('admin/planes/editar') }}/{{$row->id}}" title="Editar">
+                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route('cuenta-host-edit',['id' => $row->id]) }}" title="Editar">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                      onclick="modalDelete({{$row->id}}, `{{$row->nombre}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);"
-                      title="<?php echo $title_estado; ?>">
+                    <button class="btn btn-outline-danger btn-sm lh-1 btn-table" onclick="modalDelete({{$row->id}}, `{{$row->nombre}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
                       <i class="far fa-trash-alt"></i>
                     </button>
                     <span class="sr-only">

@@ -4,6 +4,8 @@ function generateIndex($table_name, $class_name, $entities = array())
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_plural = str_plural($table_amigable) ;
 
+  $title = str_replace ('-', ' ', $table_plural);
+
 $html = '
 <?php
   $sidebar = array(
@@ -27,7 +29,7 @@ $html = '
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <a class="link-white" href="{{ route(\'admin-'.$table_plural.'\') }}">
-        Planes
+        '.$title.'
       </a>
     </li>
   </ol>
@@ -48,7 +50,7 @@ $html = '
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de Planes
+          <i class="fa fa-align-justify"></i> Lista de '.$title.'
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -95,13 +97,10 @@ $html = '
                   <td> {{ $row->num_mails }} </td>
 
                   <td class="text-center">
-                    <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                      href="{{ url(\'admin/planes/editar\') }}/{{$row->id}}" title="Editar">
+                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->id]) }}" title="Editar">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                      onclick="modalDelete({{$row->id}}, `{{$row->nombre}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);"
-                      title="<?php echo $title_estado; ?>">
+                    <button class="btn btn-outline-danger btn-sm lh-1 btn-table" onclick="modalDelete({{$row->id}}, `{{$row->nombre}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
                       <i class="far fa-trash-alt"></i>
                     </button>
                     <span class="sr-only">
