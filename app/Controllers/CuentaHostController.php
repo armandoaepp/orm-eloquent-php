@@ -171,23 +171,6 @@ class CuentaHostController
 
   }
 
-  public function find( $id )
-  {
-    try
-    {
-
-      $data = CuentaHost::find($id);
-
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
   public function delete( Request $request )
   {
     try
@@ -250,6 +233,23 @@ class CuentaHostController
                 "errors"  => [$e->getMessage(), ],
                 "data"    => [],
               ]);
+    }
+
+  }
+
+  public function find( $id )
+  {
+    try
+    {
+
+      $data = CuentaHost::find($id);
+
+      return $data;
+    
+    }
+    catch (Exception $e)
+    {
+      throw new Exception($e->getMessage());
     }
 
   }

@@ -47,6 +47,12 @@ echo generateModel($table_name, $class_name, $entities ) ."<br>" ;
 // Generation Controller
 echo generateController($table_name, $class_name, $entities ) ."<br>" ;
 
+// Generation VIEWS
+require __DIR__.'/generateViews.php';
+echo generateView($table_name, $class_name, $entities  ) ."<br>"   ;
+
+// include 'views/list.php' ;
+
 ?>
 
 
