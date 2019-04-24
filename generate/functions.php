@@ -3,9 +3,12 @@
 # Method find for controllers
 function getAll($table_name, $class_name, $entities = array())
 {
-  $table_plural = str_plural($table_name) ;
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = str_plural($table_amigable) ;
+  // echo $table_amigable. "<br>" ;
+
   $str  = '' . PHP_EOL;
-  $str  .= '  public function getAll( $'.$entities[0]->Field.' )' . PHP_EOL;
+  $str  .= '  public function getAll()' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -29,14 +32,16 @@ function getAll($table_name, $class_name, $entities = array())
 
 function newRegister($table_name, $class_name, $entities = array())
 {
-  $table_plural = str_plural($table_name) ;
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = str_plural($table_amigable) ;
+
   $str  = '' . PHP_EOL;
   $str  .= '  public function newRegister( Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '       return view(\'admin.'.$table_plural.'.new-'.$table_name.'\');' . PHP_EOL;
+  $str  .= '      return view(\'admin.'.$table_plural.'.new-'.$table_amigable.'\');' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (Exception $e)' . PHP_EOL;
@@ -53,7 +58,8 @@ function newRegister($table_name, $class_name, $entities = array())
 # Method save for controllers
 function save($table_name, $class_name, $entities = array())
 {
-  $table_plural = str_plural($table_name) ;
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function save( Request $request )' . PHP_EOL;
@@ -118,16 +124,18 @@ function save($table_name, $class_name, $entities = array())
 # Method edit for controllers
 function edit($table_name, $class_name, $entities = array())
 {
-  $table_plural = str_plural($table_name) ;
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = str_plural($table_amigable) ;
+
   $str  = '' . PHP_EOL;
   $str  .= '  public function edit( $'.$entities[0]->Field.' )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '       $data = '.$class_name.'::find($id);' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::find($id);' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-$str  .= '       return view(\'admin.'.$table_plural.'.edit-'.$table_name.'\')->with(compact(\'data\'));' . PHP_EOL;
+  $str  .= '      return view(\'admin.'.$table_plural.'.edit-'.$table_amigable.'\')->with(compact(\'data\'));' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (Exception $e)' . PHP_EOL;
@@ -140,10 +148,12 @@ $str  .= '       return view(\'admin.'.$table_plural.'.edit-'.$table_name.'\')->
 
   return $str ;
 }
+
 # Method update for controllers
 function update($table_name, $class_name, $entities = array())
 {
-  $table_plural = str_plural($table_name) ;
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function update( Request $request )' . PHP_EOL;
@@ -159,11 +169,11 @@ function update($table_name, $class_name, $entities = array())
   {
     if (!fieldsNotUpdateInController($entity->Field) )
     {
-      $str  .= '        $'.$entity->Field .' = $request->input('.$entity->Field .');'. PHP_EOL;
+      $str  .= '      $'.$entity->Field .' = $request->input(\''.$entity->Field .'\');'. PHP_EOL;
     }
   }
   $str  .= '' . PHP_EOL;
-  $str  .= '      if (empty($'.$entities[0]->Field.'))' . PHP_EOL;
+  $str  .= '      if (!empty($'.$entities[0]->Field.'))' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
   $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
 
@@ -206,6 +216,8 @@ function update($table_name, $class_name, $entities = array())
 # Method delete for controllers
 function delete($table_name, $class_name, $entities = array())
 {
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function delete( Request $request )' . PHP_EOL;
@@ -229,14 +241,14 @@ function delete($table_name, $class_name, $entities = array())
 
   $str  .= '      $'.$table_name.' = '.$class_name.'::find( $'.$entities[0]->Field.' ) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      if (empty($'.$table_name.'))' . PHP_EOL;
+  $str  .= '      if (!empty($'.$table_name.'))' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
   // $str  .= '        $'.$table_name.' = new '.$class_name.'();' . PHP_EOL;
 
   $str  .= '        #conservar en base de datos' . PHP_EOL;
   $str  .= '        if ( $historial == "si" )' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
-  $str  .= '          $'.$table_name.'->estado = 1;' . PHP_EOL;
+  $str  .= '          $'.$table_name.'->estado = $estado;' . PHP_EOL;
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '            ' . PHP_EOL;
   $str  .= '          $status = true;' . PHP_EOL;

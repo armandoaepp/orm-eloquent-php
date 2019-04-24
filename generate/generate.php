@@ -15,6 +15,8 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;
 use Doctrine\Common\Inflector\Inflector;
 
+use App\Helpers\UrlHelper ;
+
 $fields = $_POST['fields'] ;
 $table_name = $_POST["table_name"] ;
 // $table_name ='user' ;

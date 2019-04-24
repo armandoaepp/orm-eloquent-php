@@ -1,29 +1,30 @@
 <?php
-  namespace App\Controllers;
+namespace App\Controllers;
 
-  /**
-   * [Class Controller]
-   * Autor: Armando E. Pisfil Puemape
-   * twitter: @armandoaepp
-   * email: armandoaepp@gmail.com
-  */
+/**
+  * [Class Controller]
+  * Autor: Armando E. Pisfil Puemape
+  * twitter: @armandoaepp
+  * email: armandoaepp@gmail.com
+*/;
 
-  use App\Models\CuentaHost; 
+use App\Models\CuentaHost; 
 
 class CuentaHostController
 {
   public function __construct()
-  {    $this->middleware('auth');
+  {
+    $this->middleware('auth');
   }
 
-  public function getAll( $id )
+  public function getAll()
   {
     try
     {
 
       $data = CuentaHost::get();
 
-      return view('admin.cuenta_hosts.list-cuenta_hosts')->with(compact('data'));
+      return view('admin.cuenta-hosts.list-cuenta-hosts')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -38,7 +39,7 @@ class CuentaHostController
     try
     {
 
-       return view('admin.cuenta_hosts.new-cuenta_host');
+      return view('admin.cuenta-hosts.new-cuenta-host');
     
     }
     catch (Exception $e)
@@ -92,7 +93,7 @@ class CuentaHostController
 
       $data = ["message" => $message, "status" => $status, "data" => [$cuenta_host],];
     
-      return redirect()->route('admin-cuenta_hosts');
+      return redirect()->route('admin-cuenta-hosts');
     
     }
     catch (Exception $e)
@@ -107,9 +108,9 @@ class CuentaHostController
     try
     {
 
-       $data = CuentaHost::find($id);
+      $data = CuentaHost::find($id);
 
-       return view('admin.cuenta_hosts.edit-cuenta_host')->with(compact('data'));
+      return view('admin.cuenta-hosts.edit-cuenta-host')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -127,16 +128,16 @@ class CuentaHostController
       $status  = false;
       $message = "";
 
-        $id = $request->input(id);
-        $propietario_id = $request->input(propietario_id);
-        $plan_id = $request->input(plan_id);
-        $dominio = $request->input(dominio);
-        $descripcion = $request->input(descripcion);
-        $solo_host = $request->input(solo_host);
-        $tiempo_alq = $request->input(tiempo_alq);
-        $facturado = $request->input(facturado);
+      $id = $request->input('id');
+      $propietario_id = $request->input('propietario_id');
+      $plan_id = $request->input('plan_id');
+      $dominio = $request->input('dominio');
+      $descripcion = $request->input('descripcion');
+      $solo_host = $request->input('solo_host');
+      $tiempo_alq = $request->input('tiempo_alq');
+      $facturado = $request->input('facturado');
 
-      if (empty($id))
+      if (!empty($id))
       {
         $cuenta_host = CuentaHost::find($id);
         $cuenta_host->id = $id;
@@ -160,7 +161,7 @@ class CuentaHostController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-cuenta_hosts');;
+      return redirect()->route('admin-cuenta-hosts');;
     
     }
     catch (Exception $e)
@@ -206,12 +207,12 @@ class CuentaHostController
 
       $cuenta_host = CuentaHost::find( $id ) ;
 
-      if (empty($cuenta_host))
+      if (!empty($cuenta_host))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $cuenta_host->estado = 1;
+          $cuenta_host->estado = $estado;
           $cuenta_host->save();
             
           $status = true;

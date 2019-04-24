@@ -1,22 +1,23 @@
 <?php
-  namespace App\Controllers;
+namespace App\Controllers;
 
-  /**
-   * [Class Controller]
-   * Autor: Armando E. Pisfil Puemape
-   * twitter: @armandoaepp
-   * email: armandoaepp@gmail.com
-  */
+/**
+  * [Class Controller]
+  * Autor: Armando E. Pisfil Puemape
+  * twitter: @armandoaepp
+  * email: armandoaepp@gmail.com
+*/;
 
-  use App\Models\Propietario; 
+use App\Models\Propietario; 
 
 class PropietarioController
 {
   public function __construct()
-  {    $this->middleware('auth');
+  {
+    $this->middleware('auth');
   }
 
-  public function getAll( $id )
+  public function getAll()
   {
     try
     {
@@ -38,7 +39,7 @@ class PropietarioController
     try
     {
 
-       return view('admin.propietarios.new-propietario');
+      return view('admin.propietarios.new-propietario');
     
     }
     catch (Exception $e)
@@ -103,9 +104,9 @@ class PropietarioController
     try
     {
 
-       $data = Propietario::find($id);
+      $data = Propietario::find($id);
 
-       return view('admin.propietarios.edit-propietario')->with(compact('data'));
+      return view('admin.propietarios.edit-propietario')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -123,14 +124,14 @@ class PropietarioController
       $status  = false;
       $message = "";
 
-        $id = $request->input(id);
-        $nombre = $request->input(nombre);
-        $apellidos = $request->input(apellidos);
-        $email = $request->input(email);
-        $celular = $request->input(celular);
-        $glosa = $request->input(glosa);
+      $id = $request->input('id');
+      $nombre = $request->input('nombre');
+      $apellidos = $request->input('apellidos');
+      $email = $request->input('email');
+      $celular = $request->input('celular');
+      $glosa = $request->input('glosa');
 
-      if (empty($id))
+      if (!empty($id))
       {
         $propietario = Propietario::find($id);
         $propietario->id = $id;
@@ -198,12 +199,12 @@ class PropietarioController
 
       $propietario = Propietario::find( $id ) ;
 
-      if (empty($propietario))
+      if (!empty($propietario))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $propietario->estado = 1;
+          $propietario->estado = $estado;
           $propietario->save();
             
           $status = true;
