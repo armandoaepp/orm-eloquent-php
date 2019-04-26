@@ -8,9 +8,9 @@
    * email: armandoaepp@gmail.com
   */
 
-  use App\Models\User;
+  use App\Models\Users;
 
-  class UserController {
+  class UsersController {
 
     public function __construct() {}
 
@@ -19,7 +19,7 @@
       try
       {
 
-        $data = User::get();
+        $data = Users::get();
 
         return $data ;
       }
@@ -38,21 +38,22 @@
       $status  = false;
       $message = "";
 
-      $user = User::where(["nombre" => $nombre])->first();
+      $users = Users::where(["nombres" => $nombres])->first();
 
-      if (empty($user))
+      if (empty($users))
       {
-        $user = new User();
-        $user->user_id = $user_id;
-        $user->nombre = $nombre;
-        $user->apellidos = $apellidos;
-        $user->email = $email;
-        $user->password = $password;
-        $user->estado = $estado;
+        $users = new Users();
+        $users->user_id = $user_id;
+        $users->nombres = $nombres;
+        $users->apellidos = $apellidos;
+        $users->email = $email;
+        $users->password = $password;
+        $users->max_sesions = $max_sesions;
+        $users->estado = $estado;
         
-        $status = $user->save();
+        $status = $users->save();
         
-        $id = $user->user_id;
+        $id = $users->user_id;
         
         $message = "Operancion Correcta";
         
@@ -85,14 +86,15 @@
 
       if (empty($user_id))
       {
-        $user = User::find($user_id);
-        $user->user_id = $user_id;
-        $user->nombre = $nombre;
-        $user->apellidos = $apellidos;
-        $user->email = $email;
-        $user->password = $password;
+        $users = Users::find($user_id);
+        $users->user_id = $user_id;
+        $users->nombres = $nombres;
+        $users->apellidos = $apellidos;
+        $users->email = $email;
+        $users->password = $password;
+        $users->max_sesions = $max_sesions;
         
-        $status = $user->save();
+        $status = $users->save();
         
         $message = "Operancion Correcta";
         
@@ -119,7 +121,7 @@
     try
     {
 
-      $data = User::find($user_id);
+      $data = Users::find($user_id);
 
       return $data;
     
@@ -140,22 +142,22 @@
       $message = "";
 
       $historial = !empty($historial) ? $historial: "si";
-      $user = User::find( user_id ) ;
+      $users = Users::find( user_id ) ;
 
-      if (empty($user))
+      if (empty($users))
       {
-        $user = new User();
+        $users = new Users();
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $user->estado = 1;
-          $user->save();
+          $users->estado = 1;
+          $users->save();
             
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $user->forceDelete();
+          $users->forceDelete();
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -190,10 +192,10 @@
 
       if (empty($user_id))
       {
-        $user = User::find($user_id);
-        $user->estado = $estado;
+        $users = Users::find($user_id);
+        $users->estado = $estado;
         
-        $status = $user->save();
+        $status = $users->save();
         
         $message = "Operancion Correcta";
         
@@ -221,7 +223,7 @@
     {
       extract($params) ;
 
-      $data = User::where("estado", $estado)->get();
+      $data = Users::where("estado", $estado)->get();
 
       return $data;
     

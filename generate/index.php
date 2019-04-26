@@ -69,7 +69,7 @@ else{
               <th>Field</th>
               <th>Head Table</th>
               <th>Type Input</th>
-              <th>Input Required</th>
+              <th>NULL</th>
               <th></th>
               </tr>
             </thead>
@@ -116,7 +116,7 @@ else{
                 </td>
                 <td>
                   <label for="input_required_<?php echo $index ;?>">
-                    <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field."/".$index; ?>" <?php if( $entity->Null == 'YES' ){ echo "checked" ; } ?> id="input_required_<?php echo $index ;?>" />
+                    <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field."/".$index; ?>" <?php if( $entity->Null == 'NO' ){ echo "checked" ; } ?> id="input_required_<?php echo $index ;?>" />
                     <?php echo $entity->Null  ?>
                   </label>
                 </td>

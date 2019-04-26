@@ -1,5 +1,31 @@
 <?php
 
+# Method getAll for controllers
+function getAll($table_name, $class_name, $entities = array())
+{
+
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function getAll( $'.$entities[0]->Field.' )' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::get();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      return $data;' . PHP_EOL;
+  $str  .= '    ' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
 # Method save for controllers
 function save($table_name, $class_name, $entities = array())
 {
