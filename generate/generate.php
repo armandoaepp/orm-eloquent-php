@@ -15,7 +15,9 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;
 use Doctrine\Common\Inflector\Inflector;
 
-$fields = $_POST['fields'] ;
+use App\Helpers\UrlHelper ;
+
+$fields_selected = $_POST['fields'] ;
 $table_name = $_POST["table_name"] ;
 // $table_name ='user' ;
 
@@ -44,6 +46,37 @@ echo generateModel($table_name, $class_name, $entities ) ."<br>" ;
 
 // Generation Controller
 echo generateController($table_name, $class_name, $entities ) ."<br>" ;
+
+// Generation VIEWS
+
+$heads_table = [] ;
+$fields_table = [] ;
+$tipo_inputs = [] ;
+for ($i = 0; $i < count($fields_selected); $i++)
+{
+  $item = explode("/", $fields_selected[$i]);
+
+  $fields_table[] = $item[0];
+  $heads_table[] = $_POST["header_table" . $item[1]];
+  $tipo_inputs[] = $_POST["type_input" . $item[1]];
+}
+
+require __DIR__.'/generateViews.php';
+echo generateView($table_name, $class_name, $entities, $fields_table, $heads_table, $tipo_inputs   ) ."<br>"   ;
+
+// echo Str
+
+echo "<pre>";
+print_r($heads_table) ;
+print_r($tipo_inputs) ;
+echo "</pre>";
+
+function toCamelCase($string) {
+
+  $value = ucwords($string, "_");
+  $value = str_replace('_', '', $value);
+  return $value ;
+}
 
 ?>
 

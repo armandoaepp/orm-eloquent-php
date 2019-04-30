@@ -1,9 +1,9 @@
 <?php
 // require_once '../../autoload.php';
-require __DIR__.'/bootstrap/autoload.php';
+require __DIR__.'/../bootstrap/autoload.php';
 
 $router = new AltoRouter();
-// $router->setBasePath('/orm-eloquent-php/public/');
+$router->setBasePath('/orm-eloquent-php/public/');
 
 // var_dump($router);
 

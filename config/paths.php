@@ -51,18 +51,28 @@ define('API_DIR', 'api');
 
 define('API', APP . DS . API_DIR . DS);
 
+
+/**
+* Directory and path to the Views directory.
+*/
+define('VIEWS_DIR', 'views');
+
+define('VIEWS', APP . DS . VIEWS_DIR . DS);
+
+
 /**
 * Directory and path to the Api directory.
 */
 define('HELPERS_DIR', 'Helpers');
 
-define('HELPERS', APP . DS . API_DIR . DS);
+define('HELPERS', APP . DS . HELPERS_DIR . DS);
 
 
 /**
 * Path to the config directory.
 */
 define('CONFIG', ROOT . DS . 'config' . DS);
+
 
 /**
 * File path to the webroot directory.

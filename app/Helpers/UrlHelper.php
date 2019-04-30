@@ -21,7 +21,7 @@ class UrlHelper {
 
     // Añadimos los guiones
 
-    $find = array(' ', '&', '\r\n', '\n', '+');
+    $find = array(' ', '&', '\r\n', '\n', '+','_');
     $url = str_replace ($find, '-', $url);
 
     // Eliminamos y Reemplazamos otros carácteres especiales

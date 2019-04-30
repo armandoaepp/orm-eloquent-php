@@ -59,14 +59,17 @@ else{
 
       <div class="col-md-10">
       <h4> Generate: <strong class="text-primary"><?php echo $table_name; ?></strong> </h4>
-        <form action="generate.php" method="post">
+        <form id="form1" action="generate.php" method="post">
 
         <input type="hidden" name="table_name" value="<?php echo $table_name; ?>">
 
           <table class="table table-sm">
             <thead>
               <tr>
-              <th>Field</th>
+              <th>Field
+              <input type="button" name="bttodo" id="bttodo" value="Seleccionar Todo" onclick="ckb('form1','true')"/>
+                  <input type="button" name="btlimpiar" id="btlimpiar" onclick="ckb('form1','false')" value="Limpiar Seleccion" />
+              </th>
               <th>Head Table</th>
               <th>Type Input</th>
               <th>NULL</th>
@@ -116,7 +119,10 @@ else{
                 </td>
                 <td>
                   <label for="input_required_<?php echo $index ;?>">
+                    <!-- <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field."/".$index; ?>" <?php if( $entity->Null == 'NO' ){ echo "checked" ; } ?> id="input_required_<?php echo $index ;?>" /> -->
                     <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field."/".$index; ?>" <?php if( $entity->Null == 'NO' ){ echo "checked" ; } ?> id="input_required_<?php echo $index ;?>" />
+                    <input type="radio" id="huey" name="drone" value="huey" checked>
+
                     <?php echo $entity->Null  ?>
                   </label>
                 </td>
@@ -140,6 +146,22 @@ else{
   </div>
 
 </main>
+
+<script>
+function ckb(frm,estado){
+    form=document.getElementById(frm);
+    var cant=form.elements.length;
+    for(i=0;i<cant;i++){
+      console.log(form.elements[i]);
+      if(form.elements[i].type == "checkbox"){
+        if(estado=="true"){form.elements[i].checked=true;}
+        if(estado=="false"){form.elements[i].checked=false;}
+
+      }
+    }
+
+  }
+  </script>
 
 </body>
 </html>

@@ -3,9 +3,9 @@
 
   use Illuminate\Database\Eloquent\Model;
 
-  class Users extends Model {
+  class Empresa extends Model {
 
-    protected $table = "users";
+    protected $table = "empresa";
 
     public $timestamps = false;
 
