@@ -23,14 +23,18 @@ function generateController($table_name, $class_name, $entities = array() )
   $str .= '  * Autor: Armando E. Pisfil Puemape'.PHP_EOL;
   $str .= '  * twitter: @armandoaepp'.PHP_EOL;
   $str .= '  * email: armandoaepp@gmail.com'.PHP_EOL;
-  $str .= '*/;'. PHP_EOL ;
+  $str .= '*/'. PHP_EOL ;
   $str .= ''. PHP_EOL ;
 
   $str .= 'use App\Models\\'.$class_name.'; '. PHP_EOL ;
 
+  $str .= 'use App\Traits\BitacoraTrait;'. PHP_EOL ;
+
   $str .= ''. PHP_EOL ;
   $str .= 'class '.$class_controller.''. PHP_EOL ;
   $str .= '{'. PHP_EOL ;
+  $str .= '  use BitacoraTrait;'. PHP_EOL ;
+  $str .= ''. PHP_EOL ;  
   $str .= '  public function __construct()'. PHP_EOL ;
   $str .= '  {'. PHP_EOL  ;
   $str .= '    $this->middleware(\'auth\');'. PHP_EOL ;

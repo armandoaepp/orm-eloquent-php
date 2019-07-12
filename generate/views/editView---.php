@@ -12,7 +12,7 @@ function generateEditView($table_name, $class_name, $entities = array(), $fields
 $html = '
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
+    "sidebar_class" => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -23,31 +23,26 @@ $html = '
 
 @section(\'content\')
 
-<nav class="full-content" aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
-    <li class="breadcrumb-item">
-      <a href="{{ route(\'admin\') }}">
-        <i class="fas fa-home"></i> Home
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+  <div class="kt-subheader__main">
+    <h3 class="kt-subheader__title"> '.$title.'</h3>
+    <span class="kt-subheader__separator kt-hidden"></span>
+    <div class="kt-subheader__breadcrumbs">
+      <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+      <span class="kt-subheader__breadcrumbs-separator"></span>
+      <a href="#" class="kt-subheader__breadcrumbs-link">
+        Maestros </a>
+      <span class="kt-subheader__breadcrumbs-separator"></span>
+      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="kt-subheader__breadcrumbs-link">
+      '.ucwords($table_amigable_no_guion).'
       </a>
-    </li>
+    </div>
+  </div>
+</div>
 
-    <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="">
-      '.$title.'
-      </a>
-    </li>
-
-    <li class="breadcrumb-item active bg-info text-white" aria-current="page">
-      <span>
-      Editar '.ucwords($table_amigable_no_guion).'
-      </span>
-    </li>
-  </ol>
-</nav>
-
-<!-- begin:: Content -->
 <div class="container-fluid">
   <div class="row">
+
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
@@ -56,12 +51,12 @@ $html = '
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route(\''.$table_amigable_no_guion.'-update\') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route(\''.$table_amigable_no_guion.'-update\') }}" method="POST" enctype="multipart/form-data">
               @csrf
-              <input type="hidden" class="form-control" name="id" id="id" value="{{ $data->'.$fields_table[0].' }}">
-              <div class="row">' . PHP_EOL;
+               <input type="hidden" class="form-control" name="id" id="id" value="{{ $data->'.$fields_table[0].' }}">
+              <div class="row"> ' . PHP_EOL;
 
-              for ($i=1; $i < count( $fields_table) ; $i++)
+              for ($i=0; $i < count( $fields_table) ; $i++)
               {
 
                 if ( !verificarItemForm($fields_table[$i]) )
@@ -101,17 +96,28 @@ $html = '
                   }
 
                 }
+
+                // $html .= '
+                //   <div class="col-md-12">
+                //     <div class="form-group">
+                //       <label for="'.$fields_table[$i].'">'.$fields_table[$i].': </label>
+                //       <input type="text" class="form-control" name="'.$fields_table[$i].'" id="'.$fields_table[$i].'" placeholder="'.$fields_table[$i].'"
+                //         value="">
+                //     </div>
+                //   </div>
+                //   ';
               }
 
 
               $html .= '
+
               </div>
 
               <div class="w-100 text-center">
-
-                <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
-                <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
-
+                <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i>
+                  Cancelar</a>
+                <button type="submit" class="btn btn-outline-primary rounded-0"> <i class="fas fa-save"></i>
+                  Guardar</button>
               </div>
 
             </form>
@@ -122,10 +128,8 @@ $html = '
     </div>
 
   </div>
+
 </div>
-
-<!-- end:: Content -->
-
 
 @endsection
 

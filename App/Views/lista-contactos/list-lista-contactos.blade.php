@@ -11,6 +11,7 @@
 @extends('layouts.app-admin')
 
 @section('content')
+
 <nav class="full-content" aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
     <li class="breadcrumb-item">
@@ -20,93 +21,103 @@
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
-      <a class="link-white" href="{{ route('admin-empresas') }}">
-        Empresas
-      </a>
+      <span>
+      Lista Contactos
+      </span>
     </li>
   </ol>
 </nav>
+
+<!-- begin:: Content -->
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route('admin-empresas') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-lista-contactos') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('empresa-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('lista-contacto-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
     </div>
 
+    <?php
+      $status = [
+        "0" => ["title" => "Eliminado", "class" => " badge-danger"],
+        "1" => ["title" => "Activo", "class" => " badge-success"],
+      ];
+    ?>
+
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de Empresas
+          <i class="fa fa-align-justify"></i> Lista de lista-contactos
         </div>
         <div class="card-body">
           <div class="table-responsive">
 
-            <table id="dataTableList" class="table table-striped table-bordered table-hover table-sm"
-              style="width:100%">
-              <thead>
-                <tr>
-                  <th width="50"> empresa_id </th> 
-                  <th width="50"> ruc </th> 
-                  <th width="50"> razonsocial </th> 
-                  <th width="50"> direccion </th> 
-                  <th width="50"> telefono </th> 
-                  <th width="50"> celular </th> 
-                  <th width="50"> paginaweb </th> 
-                  <th width="50"> estado </th> 
-                </tr>
-              </thead>
+          <!--begin: Datatable -->
+          <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
+            <thead>
+              <tr>
+                  <th width="60"> Lista Contacto Id </th> 
+                  <th> Contacto Id </th> 
+                  <th> Lista Id </th> 
+                <th width="80">Estado </th>
+                <th width="50"> Acciones </th>
+              </tr>
+            </thead>
+            <tbody>
+
+            @foreach ($data as $row)
+
+            <?php
+
+              /* estado */
+              $title_estado = "";
+              $class_estado = "";
+              $class_disabled = "";
+
+              if ($row->estado == 0) {
+                $title_estado = "Recuperar";
+                $class_estado = "row-disabled";
+                $class_disabled = "disabled";
+              } else {
+                $title_estado = "Eliminar";
+              }
 
 
-              <tbody>
-                @foreach ($data as $row)
+            ?>
 
-                <?php
+              <tr class="<?php echo $class_estado; ?>">
+              
+                  <td> {{ $row->lista_contacto_id }} </td> 
+                  <td> {{ $row->contacto_id }} </td> 
+                  <td> {{ $row->lista_id }} </td> 
+                <td>
+                  <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
+                </td>
+                <td nowrap>
+                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
+                    href="{{ route('lista-contacto-edit',['id' => $row->lista_contacto_id]) }}" title="Editar">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
+                  onclick="modalDelete({{$row->lista_contacto_id}}, `{{$row->contacto_id}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                  <span class="sr-only">
+                    {{ $row->estado }}
+                  </span>
+                </td>
 
-                  /* estado */
-                  $title_estado = "";
-                  $class_estado = "";
-                  $class_disabled = "";
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
 
-                  if ($row->estado == 1) {
-                    $title_estado = "Eliminar";
-                  } else {
-                    $title_estado = "Recuperar";
-                    $class_estado = "row-disabled";
-                    $class_disabled = "is-disabled";
-                  }
-                ?>
-
-                <tr class="<?php echo $class_estado; ?>">
-                  <td> {{ $row->empresa_id }} </td> 
-                  <td> {{ $row->ruc }} </td> 
-                  <td> {{ $row->razonsocial }} </td> 
-                  <td> {{ $row->direccion }} </td> 
-                  <td> {{ $row->telefono }} </td> 
-                  <td> {{ $row->celular }} </td> 
-                  <td> {{ $row->paginaweb }} </td> 
-                  <td> {{ $row->estado }} </td> 
-                  <td class="text-center">
-                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route('empresa-edit',['id' => $row->empresa_id]) }}" title="Editar">
-                      <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <button class="btn btn-outline-danger btn-sm lh-1 btn-table" onclick="modalDelete({{$row->empresa_id}}, `{{$row->ruc}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
-                      <i class="far fa-trash-alt"></i>
-                    </button>
-                    <span class="sr-only">
-                      {{ $row->estado }}
-                    </span>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-
-            </table>
+          <!--end: Datatable -->
 
           </div>
         </div>
@@ -116,6 +127,11 @@
   </div>
 
 </div>
+
+<!-- end:: Content -->
+
+
+
 
 
 @endsection
@@ -179,6 +195,7 @@
 @section('script')
 
 @include('shared.datatables')
+
 <script>
   // modals
   (function ($) {
@@ -192,7 +209,7 @@
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api = "{{ route('empresa-delete') }}";
+      let url_api = "{{ route('lista-contacto-delete') }}";
 
       axios({
         method: 'post',
@@ -236,7 +253,7 @@
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> el Plan: <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> de lista-contactos: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 

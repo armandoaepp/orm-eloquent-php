@@ -66,15 +66,15 @@ echo generateView($table_name, $class_name, $entities, $fields_table, $heads_tab
 
 // echo Str
 
-echo "<pre>";
-print_r($heads_table) ;
-print_r($tipo_inputs) ;
-echo "</pre>";
+// echo "<pre>";
+// print_r($heads_table) ;
+// print_r($tipo_inputs) ;
+// echo "</pre>";
 
 function toCamelCase($string) {
 
   $value = ucwords($string, "_");
-  $value = str_replace('_', '', $value);
+  $value = str_replace('_', ' ', $value);
   return $value ;
 }
 
@@ -100,11 +100,7 @@ function toCamelCase($string) {
 
     <div class="row">
       <div class="col-md-3">
-        <pre>
-          <?php
-            // print_r($fields);
-          ?>
-        </pre>
+        <a href="./index.php"> Regresar</a>
       </div>
 
 

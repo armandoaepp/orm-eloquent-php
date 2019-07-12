@@ -18,9 +18,10 @@ function generateModel($table_name, $class_name, $entities = array() )
 
     protected $table = "'.$table_name.'";
 
-    public $timestamps = false;
+    protected $primaryKey = ["'.$entities[0]->Field.'"];
 
-    protected $guarded = [\'id\'];
+    // public $timestamps = false;
+
 
   }
   ';

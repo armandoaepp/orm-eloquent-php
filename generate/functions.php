@@ -72,7 +72,7 @@ function save($table_name, $class_name, $entities = array())
   $str  .= '' . PHP_EOL;
   foreach ($entities as $index => $entity)
   {
-    if (!fieldsNotSaveInController($entity->Field) )
+    if (!fieldsNotSaveInController($entity->Field) && $index > 0 )
     {
       $str  .= '      $'.$entity->Field .' = $request->input(\''.$entity->Field .'\');'. PHP_EOL;
     }
@@ -86,7 +86,7 @@ function save($table_name, $class_name, $entities = array())
 
   foreach ($entities as $index => $entity)
   {
-    if (!fieldsNotSaveInController($entity->Field) )
+    if (!fieldsNotSaveInController($entity->Field) && $index > 0)
     {
       $str  .= '        $'.$table_name.'->'.$entity->Field .' = $'.$entity->Field .';'. PHP_EOL;
     }
@@ -95,6 +95,11 @@ function save($table_name, $class_name, $entities = array())
   $str  .= '        ' . PHP_EOL;
   $str  .= '        $status = $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
+
+  $str  .= '        # TABLE BITACORA' . PHP_EOL;
+  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "created") ;' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+
   $str  .= '        $id = $'.$table_name.'->'.$entities[0]->Field.';' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
   $str  .= '        $message = "Operancion Correcta";' . PHP_EOL;
@@ -133,7 +138,7 @@ function edit($table_name, $class_name, $entities = array())
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      $data = '.$class_name.'::find($id);' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::find( $'.$entities[0]->Field.' );' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      return view(\'admin.'.$table_plural.'.edit-'.$table_amigable.'\')->with(compact(\'data\'));' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
@@ -188,6 +193,11 @@ function update($table_name, $class_name, $entities = array())
   $str  .= '        ' . PHP_EOL;
   $str  .= '        $status = $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
+
+  $str  .= '        # TABLE BITACORA' . PHP_EOL;
+  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "update") ;' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+
   $str  .= '        $message = "Operancion Correcta";' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
   $str  .= '      }' . PHP_EOL;
@@ -251,12 +261,21 @@ function delete($table_name, $class_name, $entities = array())
   $str  .= '          $'.$table_name.'->estado = $estado;' . PHP_EOL;
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '            ' . PHP_EOL;
+
+  $str  .= '        # TABLE BITACORA' . PHP_EOL;
+  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "update estado: ".$estado) ;' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+
   $str  .= '          $status = true;' . PHP_EOL;
   $str  .= '          $message = "Registro Eliminado";' . PHP_EOL;
   $str  .= '            ' . PHP_EOL;
   $str  .= '        }elseif( $historial == "no"  ) {' . PHP_EOL;
   $str  .= '          $'.$table_name.'->forceDelete();' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
+  $str  .= '        # TABLE BITACORA' . PHP_EOL;
+  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "delete registro") ;' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+
   $str  .= '          $status = true;' . PHP_EOL;
   $str  .= '          $message = "Registro eliminado de la base de datos";' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;

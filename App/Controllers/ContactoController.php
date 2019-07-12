@@ -6,12 +6,15 @@ namespace App\Controllers;
   * Autor: Armando E. Pisfil Puemape
   * twitter: @armandoaepp
   * email: armandoaepp@gmail.com
-*/;
+*/
 
-use App\Models\Empresa; 
+use App\Models\Contacto; 
+use App\Traits\BitacoraTrait;
 
-class EmpresaController
+class ContactoController
 {
+  use BitacoraTrait;
+
   public function __construct()
   {
     $this->middleware('auth');
@@ -22,9 +25,9 @@ class EmpresaController
     try
     {
 
-      $data = Empresa::get();
+      $data = Contacto::get();
 
-      return view('admin.empresas.list-empresas')->with(compact('data'));
+      return view('admin.contactos.list-contactos')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -39,7 +42,7 @@ class EmpresaController
     try
     {
 
-      return view('admin.empresas.new-empresa');
+      return view('admin.contactos.new-contacto');
     
     }
     catch (Exception $e)
@@ -56,32 +59,29 @@ class EmpresaController
       $status  = false;
       $message = "";
 
-      $empresa_id = $request->input('empresa_id');
-      $ruc = $request->input('ruc');
-      $razonsocial = $request->input('razonsocial');
-      $direccion = $request->input('direccion');
-      $telefono = $request->input('telefono');
-      $celular = $request->input('celular');
-      $paginaweb = $request->input('paginaweb');
+      $per_id_padre = $request->input('per_id_padre');
+      $nombre = $request->input('nombre');
+      $apellidos = $request->input('apellidos');
+      $email = $request->input('email');
       $estado = $request->input('estado');
 
-      $empresa = Empresa::where(["ruc" => $ruc])->first();
+      $contacto = Contacto::where(["per_id_padre" => $per_id_padre])->first();
 
-      if (empty($empresa))
+      if (empty($contacto))
       {
-        $empresa = new Empresa();
-        $empresa->empresa_id = $empresa_id;
-        $empresa->ruc = $ruc;
-        $empresa->razonsocial = $razonsocial;
-        $empresa->direccion = $direccion;
-        $empresa->telefono = $telefono;
-        $empresa->celular = $celular;
-        $empresa->paginaweb = $paginaweb;
-        $empresa->estado = $estado;
+        $contacto = new Contacto();
+        $contacto->per_id_padre = $per_id_padre;
+        $contacto->nombre = $nombre;
+        $contacto->apellidos = $apellidos;
+        $contacto->email = $email;
+        $contacto->estado = $estado;
         
-        $status = $empresa->save();
+        $status = $contacto->save();
         
-        $id = $empresa->empresa_id;
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $contacto, "created") ;
+        
+        $id = $contacto->contacto_id;
         
         $message = "Operancion Correcta";
         
@@ -91,9 +91,9 @@ class EmpresaController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$empresa],];
+      $data = ["message" => $message, "status" => $status, "data" => [$contacto],];
     
-      return redirect()->route('admin-empresas');
+      return redirect()->route('admin-contactos');
     
     }
     catch (Exception $e)
@@ -103,14 +103,14 @@ class EmpresaController
 
   }
 
-  public function edit( $empresa_id )
+  public function edit( $contacto_id )
   {
     try
     {
 
-      $data = Empresa::find($id);
+      $data = Contacto::find( $contacto_id );
 
-      return view('admin.empresas.edit-empresa')->with(compact('data'));
+      return view('admin.contactos.edit-contacto')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -128,26 +128,25 @@ class EmpresaController
       $status  = false;
       $message = "";
 
-      $empresa_id = $request->input('empresa_id');
-      $ruc = $request->input('ruc');
-      $razonsocial = $request->input('razonsocial');
-      $direccion = $request->input('direccion');
-      $telefono = $request->input('telefono');
-      $celular = $request->input('celular');
-      $paginaweb = $request->input('paginaweb');
+      $contacto_id = $request->input('contacto_id');
+      $per_id_padre = $request->input('per_id_padre');
+      $nombre = $request->input('nombre');
+      $apellidos = $request->input('apellidos');
+      $email = $request->input('email');
 
-      if (!empty($empresa_id))
+      if (!empty($contacto_id))
       {
-        $empresa = Empresa::find($empresa_id);
-        $empresa->empresa_id = $empresa_id;
-        $empresa->ruc = $ruc;
-        $empresa->razonsocial = $razonsocial;
-        $empresa->direccion = $direccion;
-        $empresa->telefono = $telefono;
-        $empresa->celular = $celular;
-        $empresa->paginaweb = $paginaweb;
+        $contacto = Contacto::find($contacto_id);
+        $contacto->contacto_id = $contacto_id;
+        $contacto->per_id_padre = $per_id_padre;
+        $contacto->nombre = $nombre;
+        $contacto->apellidos = $apellidos;
+        $contacto->email = $email;
         
-        $status = $empresa->save();
+        $status = $contacto->save();
+        
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $contacto, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -159,7 +158,7 @@ class EmpresaController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-empresas');;
+      return redirect()->route('admin-contactos');;
     
     }
     catch (Exception $e)
@@ -186,21 +185,27 @@ class EmpresaController
         $estado = 1;
       }
 
-      $empresa = Empresa::find( $empresa_id ) ;
+      $contacto = Contacto::find( $contacto_id ) ;
 
-      if (!empty($empresa))
+      if (!empty($contacto))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $empresa->estado = $estado;
-          $empresa->save();
+          $contacto->estado = $estado;
+          $contacto->save();
             
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $contacto, "update estado: ".$estado) ;
+        
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $empresa->forceDelete();
+          $contacto->forceDelete();
+        
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $contacto, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -235,12 +240,12 @@ class EmpresaController
 
   }
 
-  public function find( $empresa_id )
+  public function find( $contacto_id )
   {
     try
     {
 
-      $data = Empresa::find($empresa_id);
+      $data = Contacto::find($contacto_id);
 
       return $data;
     
@@ -261,12 +266,12 @@ class EmpresaController
       $status  = false;
       $message = "";
 
-      if (empty($empresa_id))
+      if (empty($contacto_id))
       {
-        $empresa = Empresa::find($empresa_id);
-        $empresa->estado = $estado;
+        $contacto = Contacto::find($contacto_id);
+        $contacto->estado = $estado;
         
-        $status = $empresa->save();
+        $status = $contacto->save();
         
         $message = "Operancion Correcta";
         
@@ -294,7 +299,7 @@ class EmpresaController
     {
       extract($params) ;
 
-      $data = Empresa::where("estado", $estado)->get();
+      $data = Contacto::where("estado", $estado)->get();
 
       return $data;
     

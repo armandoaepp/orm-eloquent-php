@@ -1,37 +1,28 @@
-<?php
-function generateIndex($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
-{
-  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
 
-  // $title = str_replace ('-', ' ', $table_plural);
-  $title = ucwords(str_replace ('-', ' ', $table_plural));
-
-$html = '
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
+    "sidebar_class" => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
 
 ?>
 
-@extends(\'layouts.app-admin\')
+@extends('layouts.app-admin')
 
-@section(\'content\')
+@section('content')
 
 <nav class="full-content" aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
     <li class="breadcrumb-item">
-      <a href="{{ route(\'admin\') }}">
+      <a href="{{ route('admin') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <span>
-      '.$title.'
+      Mensajes
       </span>
     </li>
   </ol>
@@ -41,11 +32,11 @@ $html = '
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-mensajes') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('mensaje-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -61,7 +52,7 @@ $html = '
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
+          <i class="fa fa-align-justify"></i> Lista de mensajes
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -69,22 +60,14 @@ $html = '
           <!--begin: Datatable -->
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
-              <tr>';
-              for ($i=0; $i < count( $heads_table) ; $i++)
-              {
-                if ( !verificarItemForm($fields_table[$i]) )
-                {
-                  $width = '' ;
-                  if ($i == 0) {
-                    $width = ' width="60"' ;
-                  }
-
-                  $html .= '
-                  <th'.$width.'> '.toCamelCase($heads_table[$i]).' </th> ';
-                }
-              }
-
-    $html .= '
+              <tr>
+                  <th width="60"> Mensaje Id </th> 
+                  <th> Lista Contacto Id </th> 
+                  <th> Email </th> 
+                  <th> Asunto </th> 
+                  <th> Header </th> 
+                  <th> Body </th> 
+                  <th> Glosa </th> 
                 <th width="80">Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -112,28 +95,24 @@ $html = '
             ?>
 
               <tr class="<?php echo $class_estado; ?>">
-              ';
-
-              for ($i=0; $i < count( $fields_table) ; $i++)
-              {
-                if ( !verificarItemForm($fields_table[$i]) )
-                {
-                  $html .= '
-                  <td> {{ $row->'.$fields_table[$i].' }} </td> ';
-                }
-
-              }
-            $html .= '
+              
+                  <td> {{ $row->mensaje_id }} </td> 
+                  <td> {{ $row->lista_contacto_id }} </td> 
+                  <td> {{ $row->email }} </td> 
+                  <td> {{ $row->asunto }} </td> 
+                  <td> {{ $row->header }} </td> 
+                  <td> {{ $row->body }} </td> 
+                  <td> {{ $row->glosa }} </td> 
                 <td>
                   <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
                 </td>
                 <td nowrap>
                   <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                    href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
+                    href="{{ route('mensaje-edit',['id' => $row->mensaje_id]) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                   <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete({{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                  onclick="modalDelete({{$row->mensaje_id}}, `{{$row->lista_contacto_id}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
@@ -165,7 +144,7 @@ $html = '
 
 @endsection
 
-@section(\'modal\')
+@section('modal')
 
 <!-- Modal Delete -->
 <form id="formModal">
@@ -221,9 +200,9 @@ $html = '
 @endsection
 
 
-@section(\'script\')
+@section('script')
 
-@include(\'shared.datatables\')
+@include('shared.datatables')
 
 <script>
   // modals
@@ -231,17 +210,17 @@ $html = '
     function processFormModal(event) {
 
       event.preventDefault();
-      $("#alertModal").html(\'\');
+      $("#alertModal").html('');
 
       let inputs = $("#formModal").serializeFormJSON();
       inputs.id = $("#idRowModal").val();
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api = "{{ route(\''.$table_amigable.'-delete\') }}";
+      let url_api = "{{ route('mensaje-delete') }}";
 
       axios({
-        method: \'post\',
+        method: 'post',
         url: url_api,
         data: params,
       }).then(function (response) {
@@ -282,7 +261,7 @@ $html = '
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> de '.$table_plural .': <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> de mensajes: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 
@@ -301,7 +280,3 @@ $html = '
 </script>
 
 @endsection
-';
-
-return $html ;
-}

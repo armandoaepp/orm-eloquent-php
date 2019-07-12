@@ -10,7 +10,7 @@ function generateIndex($table_name, $class_name, $entities = array(), $fields_ta
 $html = '
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
+    "sidebar_class" => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -30,135 +30,133 @@ $html = '
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
-      <span>
+      <a class="link-white" href="{{ route(\'admin-'.$table_plural.'\') }}">
       '.$title.'
-      </span>
+      </a>
     </li>
   </ol>
 </nav>
 
+
 <!-- begin:: Content -->
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12 mb-3">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+  <!-- begin:: Data List -->
+  <div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head">
+      <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+          Lista de '.$table_plural.'
+        </h3>
+      </div>
+    </div>
+    <div class="kt-portlet__body position-relative">
+
+    <div class="botonera mb-3">
+      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-brand btn-elevate btn-elevate-air btn-sm" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-brand btn-elevate btn-elevate-air btn-sm" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
     </div>
+        <?php
+          $status = [
+            "0" => ["title" => "Eliminado", "class" => " kt-badge--danger"],
+            "1" => ["title" => "Activo", "class" => " kt-badge--success"],
+            "2" => ["title" => "Activo", "class" => " kt-badge--success"],
+          ];
+        ?>
 
-    <?php
-      $status = [
-        "0" => ["title" => "Eliminado", "class" => " badge-danger"],
-        "1" => ["title" => "Activo", "class" => " badge-success"],
-      ];
-    ?>
-
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-
-          <!--begin: Datatable -->
-          <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
-            <thead>
-              <tr>';
-              for ($i=0; $i < count( $heads_table) ; $i++)
-              {
-                if ( !verificarItemForm($fields_table[$i]) )
-                {
-                  $width = '' ;
-                  if ($i == 0) {
-                    $width = ' width="60"' ;
-                  }
-
-                  $html .= '
-                  <th'.$width.'> '.toCamelCase($heads_table[$i]).' </th> ';
-                }
+      <!--begin: Datatable -->
+      <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
+        <thead>
+          <tr>';
+          for ($i=0; $i < count( $heads_table) ; $i++)
+          {
+            if ( !verificarItemForm($fields_table[$i]) )
+            {
+              $width = '' ;
+              if ($i == 0) {
+                $width = ' width="60"' ;
               }
 
-    $html .= '
-                <th width="80">Estado </th>
-                <th width="50"> Acciones </th>
-              </tr>
-            </thead>
-            <tbody>
+              $html .= '
+              <th'.$width.'> '.toCamelCase($heads_table[$i]).' </th> ';
+            }
+          }
 
-            @foreach ($data as $row)
+$html .= '
+            <th width="80">Estado </th>
+            <th width="50"> Acciones </th>
+          </tr>
+        </thead>
+        <tbody>
 
-            <?php
+        @foreach ($data as $row)
 
-              /* estado */
-              $title_estado = "";
-              $class_estado = "";
-              $class_disabled = "";
+        <?php
 
-              if ($row->estado == 0) {
-                $title_estado = "Recuperar";
-                $class_estado = "row-disabled";
-                $class_disabled = "disabled";
-              } else {
-                $title_estado = "Eliminar";
-              }
+          /* estado */
+          $title_estado = "";
+          $class_estado = "";
+          $class_disabled = "";
+
+          if ($row->estado == 0) {
+            $title_estado = "Recuperar";
+            $class_estado = "row-disabled";
+            $class_disabled = "disabled";
+          } else {
+            $title_estado = "Eliminar";
+          }
 
 
-            ?>
+        ?>
 
-              <tr class="<?php echo $class_estado; ?>">
-              ';
+          <tr class="<?php echo $class_estado; ?>">
+          ';
 
-              for ($i=0; $i < count( $fields_table) ; $i++)
-              {
-                if ( !verificarItemForm($fields_table[$i]) )
-                {
-                  $html .= '
-                  <td> {{ $row->'.$fields_table[$i].' }} </td> ';
-                }
+          for ($i=0; $i < count( $fields_table) ; $i++)
+          {
+            if ( !verificarItemForm($fields_table[$i]) )
+            {
+              $html .= '
+              <td> {{ $row->'.$fields_table[$i].' }} </td> ';
+            }
 
-              }
-            $html .= '
-                <td>
-                  <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
-                </td>
-                <td nowrap>
-                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                    href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
-                    <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete({{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                  <span class="sr-only">
-                    {{ $row->estado }}
-                  </span>
-                </td>
+          }
+        $html .= '
+            <td>
+              <span class="kt-badge <?php echo $status[$row->estado]["class"] ?> kt-badge--inline kt-badge--pill"> <?php echo $status[$row->estado]["title"] ?> </span>
+            </td>
+            <td nowrap> <span class="dropdown">
+                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                  <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item <?php echo $class_disabled ?>" href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar"><i class="la la-edit"></i> Editar</a>
+                    <button class="dropdown-item" onclick="modalDelete({{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                      <i class="flaticon-delete"></i> <?php echo $title_estado ?>
+                    </button>
 
-              </tr>
-            @endforeach
-            </tbody>
-          </table>
+                </div>
+            </span>
+            </td>
 
-          <!--end: Datatable -->
+          </tr>
+        @endforeach
+        </tbody>
+      </table>
 
-          </div>
-        </div>
-      </div>
+      <!--end: Datatable -->
     </div>
-
   </div>
 
+  <!-- end:: Data List -->
+
 </div>
-
 <!-- end:: Content -->
-
 
 
 
