@@ -9,6 +9,10 @@ function generateNewView($table_name, $class_name, $entities = array(), $fields_
   // $title = ucwords(str_replace ('-', ' ', $title_lower));
   $title = ucwords($table_plural);
 
+  $prefix =  generatePrefixTable( $table_name ) ;
+  $prefix = !empty($prefix) ? $prefix."_" : "" ;
+
+
 $html = '
 <?php
   $sidebar = array(
@@ -63,15 +67,25 @@ $html = '
 
               for ($i=1; $i < count( $fields_table) ; $i++)
               {
-                if ( !verificarItemForm($fields_table[$i]) )
+                // ==== Start remove prefix
+                $field_item = $heads_table[$i] ;
+                if(!empty($prefix))
+                {
+                  $field_item = revemoPrefix($field_item, $prefix)  ;
+                }
+                $field_item = toCamelCase($field_item);
+
+                // ==== Start remove prefix
+
+                if ( !verificarItemForm($fields_table[$i], $prefix) )
                 {
 
                   if($tipo_inputs[$i] == 'textarea')
                   {
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
-                    $html .= '                    <label for="' . $fields_table[$i] . '">' . toCamelCase($fields_table[$i]) . ': </label>' . PHP_EOL;
-                    $html .= '                    <textarea class="form-control ckeditor" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . toCamelCase($fields_table[$i]) . '" cols="30" rows="6"></textarea>' . PHP_EOL;
+                    $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
+                    $html .= '                    <textarea class="form-control ckeditor" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '" cols="30" rows="6"></textarea>' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
@@ -80,8 +94,8 @@ $html = '
                   {
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
-                    $html .= '                    <label for="' . $fields_table[$i] . '">' . toCamelCase($fields_table[$i]) . ': </label>' . PHP_EOL;
-                    $html .= '                    <select class="custom-select" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . toCamelCase($fields_table[$i]) . '">'.PHP_EOL;
+                    $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item . ': </label>' . PHP_EOL;
+                    $html .= '                    <select class="custom-select" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '">'.PHP_EOL;
                     $html .= '                      <option value="" selected disabled hidden>Seleccionar </option> '.PHP_EOL;
                     $html .= '                      <option value="text">text</option>'.PHP_EOL;
                     $html .= '                    </select>'.PHP_EOL;
@@ -92,12 +106,32 @@ $html = '
                   else{
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
-                    $html .= '                    <label for="' . $fields_table[$i] . '">' . toCamelCase($fields_table[$i]) . ': </label>' . PHP_EOL;
-                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . toCamelCase($fields_table[$i]) .'">' . PHP_EOL;
+                    $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
+                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'">' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
                   }
+
+                }
+                // elseif(strtolower(trim($atributos[$i])) == "publicar")
+                elseif(strpos(strtolower($fields_table[$i]), "publicar") )
+                {
+
+                $html .= '
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="email" class="d-block">Publicar </label>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="publicar" id="si" value="S" checked="checked">
+                                <label class="form-check-label" for="si">SI</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="publicar" id="no" value="N">
+                                <label class="form-check-label" for="no">NO</label>
+                              </div>
+                            </div>
+                          </div>' . PHP_EOL;
 
                 }
 

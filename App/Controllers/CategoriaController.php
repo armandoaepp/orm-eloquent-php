@@ -8,10 +8,10 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Users; 
+use App\Models\Categoria; 
 use App\Traits\BitacoraTrait;
 
-class UsersController
+class CategoriaController
 {
   use BitacoraTrait;
 
@@ -25,9 +25,9 @@ class UsersController
     try
     {
 
-      $data = Users::get();
+      $data = Categoria::get();
 
-      return view('admin.users.list-users')->with(compact('data'));
+      return view('admin.categorias.list-categorias')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -42,7 +42,7 @@ class UsersController
     try
     {
 
-      return view('admin.users.new-users');
+      return view('admin.categorias.new-categoria');
     
     }
     catch (Exception $e)
@@ -59,33 +59,27 @@ class UsersController
       $status  = false;
       $message = "";
 
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
+      $cat_descripcion = $request->input('cat_descripcion');
+      $cat_imagen = $request->input('cat_imagen');
       $estado = $request->input('estado');
-      $remember_token = $request->input('remember_token');
+      $cat_publicar = $request->input('cat_publicar');
 
-      $users = Users::where(["nombre" => $nombre])->first();
+      $categoria = Categoria::where(["cat_descripcion" => $cat_descripcion])->first();
 
-      if (empty($users))
+      if (empty($categoria))
       {
-        $users = new Users();
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->estado = $estado;
-        $users->remember_token = $remember_token;
+        $categoria = new Categoria();
+        $categoria->cat_descripcion = $cat_descripcion;
+        $categoria->cat_imagen = $cat_imagen;
+        $categoria->estado = $estado;
+        $categoria->cat_publicar = $cat_publicar;
         
-        $status = $users->save();
+        $status = $categoria->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "created") ;
+        $this->savedBitacoraTrait( $categoria, "created") ;
         
-        $id = $users->id;
+        $id = $categoria->id;
         
         $message = "Operancion Correcta";
         
@@ -95,9 +89,9 @@ class UsersController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$users],];
+      $data = ["message" => $message, "status" => $status, "data" => [$categoria],];
     
-      return redirect()->route('admin-users');
+      return redirect()->route('admin-categorias');
     
     }
     catch (Exception $e)
@@ -112,9 +106,9 @@ class UsersController
     try
     {
 
-      $data = Users::find( $id );
+      $data = Categoria::find( $id );
 
-      return view('admin.users.edit-users')->with(compact('data'));
+      return view('admin.categorias.edit-categoria')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -133,28 +127,22 @@ class UsersController
       $message = "";
 
       $id = $request->input('id');
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $remember_token = $request->input('remember_token');
+      $cat_descripcion = $request->input('cat_descripcion');
+      $cat_imagen = $request->input('cat_imagen');
+      $cat_publicar = $request->input('cat_publicar');
 
       if (!empty($id))
       {
-        $users = Users::find($id);
-        $users->id = $id;
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->remember_token = $remember_token;
+        $categoria = Categoria::find($id);
+        $categoria->id = $id;
+        $categoria->cat_descripcion = $cat_descripcion;
+        $categoria->cat_imagen = $cat_imagen;
+        $categoria->cat_publicar = $cat_publicar;
         
-        $status = $users->save();
+        $status = $categoria->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update") ;
+        $this->savedBitacoraTrait( $categoria, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -166,7 +154,7 @@ class UsersController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-users');;
+      return redirect()->route('admin-categorias');;
     
     }
     catch (Exception $e)
@@ -193,27 +181,27 @@ class UsersController
         $estado = 1;
       }
 
-      $users = Users::find( $id ) ;
+      $categoria = Categoria::find( $id ) ;
 
-      if (!empty($users))
+      if (!empty($categoria))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $users->estado = $estado;
-          $users->save();
+          $categoria->estado = $estado;
+          $categoria->save();
             
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update estado: ".$estado) ;
+        $this->savedBitacoraTrait( $categoria, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $users->forceDelete();
+          $categoria->forceDelete();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "delete registro") ;
+        $this->savedBitacoraTrait( $categoria, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -253,7 +241,7 @@ class UsersController
     try
     {
 
-      $data = Users::find($id);
+      $data = Categoria::find($id);
 
       return $data;
     
@@ -276,10 +264,10 @@ class UsersController
 
       if (empty($id))
       {
-        $users = Users::find($id);
-        $users->estado = $estado;
+        $categoria = Categoria::find($id);
+        $categoria->estado = $estado;
         
-        $status = $users->save();
+        $status = $categoria->save();
         
         $message = "Operancion Correcta";
         
@@ -307,7 +295,7 @@ class UsersController
     {
       extract($params) ;
 
-      $data = Users::where("estado", $estado)->get();
+      $data = Categoria::where("estado", $estado)->get();
 
       return $data;
     

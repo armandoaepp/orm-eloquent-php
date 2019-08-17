@@ -8,10 +8,10 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Users; 
+use App\Models\Etiqueta; 
 use App\Traits\BitacoraTrait;
 
-class UsersController
+class EtiquetaController
 {
   use BitacoraTrait;
 
@@ -25,9 +25,9 @@ class UsersController
     try
     {
 
-      $data = Users::get();
+      $data = Etiqueta::get();
 
-      return view('admin.users.list-users')->with(compact('data'));
+      return view('admin.etiquetas.list-etiquetas')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -42,7 +42,7 @@ class UsersController
     try
     {
 
-      return view('admin.users.new-users');
+      return view('admin.etiquetas.new-etiqueta');
     
     }
     catch (Exception $e)
@@ -59,33 +59,23 @@ class UsersController
       $status  = false;
       $message = "";
 
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $estado = $request->input('estado');
-      $remember_token = $request->input('remember_token');
+      $eti_descripcion = $request->input('eti_descripcion');
+      $eti_estado = $request->input('eti_estado');
 
-      $users = Users::where(["nombre" => $nombre])->first();
+      $etiqueta = Etiqueta::where(["eti_descripcion" => $eti_descripcion])->first();
 
-      if (empty($users))
+      if (empty($etiqueta))
       {
-        $users = new Users();
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->estado = $estado;
-        $users->remember_token = $remember_token;
+        $etiqueta = new Etiqueta();
+        $etiqueta->eti_descripcion = $eti_descripcion;
+        $etiqueta->eti_estado = $eti_estado;
         
-        $status = $users->save();
+        $status = $etiqueta->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "created") ;
+        $this->savedBitacoraTrait( $etiqueta, "created") ;
         
-        $id = $users->id;
+        $id = $etiqueta->id;
         
         $message = "Operancion Correcta";
         
@@ -95,9 +85,9 @@ class UsersController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$users],];
+      $data = ["message" => $message, "status" => $status, "data" => [$etiqueta],];
     
-      return redirect()->route('admin-users');
+      return redirect()->route('admin-etiquetas');
     
     }
     catch (Exception $e)
@@ -112,9 +102,9 @@ class UsersController
     try
     {
 
-      $data = Users::find( $id );
+      $data = Etiqueta::find( $id );
 
-      return view('admin.users.edit-users')->with(compact('data'));
+      return view('admin.etiquetas.edit-etiqueta')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -133,28 +123,20 @@ class UsersController
       $message = "";
 
       $id = $request->input('id');
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $remember_token = $request->input('remember_token');
+      $eti_descripcion = $request->input('eti_descripcion');
+      $eti_estado = $request->input('eti_estado');
 
       if (!empty($id))
       {
-        $users = Users::find($id);
-        $users->id = $id;
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->remember_token = $remember_token;
+        $etiqueta = Etiqueta::find($id);
+        $etiqueta->id = $id;
+        $etiqueta->eti_descripcion = $eti_descripcion;
+        $etiqueta->eti_estado = $eti_estado;
         
-        $status = $users->save();
+        $status = $etiqueta->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update") ;
+        $this->savedBitacoraTrait( $etiqueta, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -166,7 +148,7 @@ class UsersController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-users');;
+      return redirect()->route('admin-etiquetas');;
     
     }
     catch (Exception $e)
@@ -193,27 +175,27 @@ class UsersController
         $estado = 1;
       }
 
-      $users = Users::find( $id ) ;
+      $etiqueta = Etiqueta::find( $id ) ;
 
-      if (!empty($users))
+      if (!empty($etiqueta))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $users->estado = $estado;
-          $users->save();
+          $etiqueta->estado = $estado;
+          $etiqueta->save();
             
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update estado: ".$estado) ;
+        $this->savedBitacoraTrait( $etiqueta, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $users->forceDelete();
+          $etiqueta->forceDelete();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "delete registro") ;
+        $this->savedBitacoraTrait( $etiqueta, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -253,61 +235,7 @@ class UsersController
     try
     {
 
-      $data = Users::find($id);
-
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function updateStatus( $params = array() )
-  {
-    try
-    {
-      extract($params) ;
-
-      $status  = false;
-      $message = "";
-
-      if (empty($id))
-      {
-        $users = Users::find($id);
-        $users->estado = $estado;
-        
-        $status = $users->save();
-        
-        $message = "Operancion Correcta";
-        
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-      }
-
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function getByStatus( $params = array()  )
-  {
-    try
-    {
-      extract($params) ;
-
-      $data = Users::where("estado", $estado)->get();
+      $data = Etiqueta::find($id);
 
       return $data;
     

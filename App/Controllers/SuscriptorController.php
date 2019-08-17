@@ -8,10 +8,10 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Users; 
+use App\Models\Suscriptor; 
 use App\Traits\BitacoraTrait;
 
-class UsersController
+class SuscriptorController
 {
   use BitacoraTrait;
 
@@ -25,9 +25,9 @@ class UsersController
     try
     {
 
-      $data = Users::get();
+      $data = Suscriptor::get();
 
-      return view('admin.users.list-users')->with(compact('data'));
+      return view('admin.suscriptors.list-suscriptors')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -42,7 +42,7 @@ class UsersController
     try
     {
 
-      return view('admin.users.new-users');
+      return view('admin.suscriptors.new-suscriptor');
     
     }
     catch (Exception $e)
@@ -60,32 +60,30 @@ class UsersController
       $message = "";
 
       $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
       $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
+      $telefono = $request->input('telefono');
+      $empresa = $request->input('empresa');
+      $mensaje = $request->input('mensaje');
       $estado = $request->input('estado');
-      $remember_token = $request->input('remember_token');
 
-      $users = Users::where(["nombre" => $nombre])->first();
+      $suscriptor = Suscriptor::where(["nombre" => $nombre])->first();
 
-      if (empty($users))
+      if (empty($suscriptor))
       {
-        $users = new Users();
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->estado = $estado;
-        $users->remember_token = $remember_token;
+        $suscriptor = new Suscriptor();
+        $suscriptor->nombre = $nombre;
+        $suscriptor->email = $email;
+        $suscriptor->telefono = $telefono;
+        $suscriptor->empresa = $empresa;
+        $suscriptor->mensaje = $mensaje;
+        $suscriptor->estado = $estado;
         
-        $status = $users->save();
+        $status = $suscriptor->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "created") ;
+        $this->savedBitacoraTrait( $suscriptor, "created") ;
         
-        $id = $users->id;
+        $id = $suscriptor->id;
         
         $message = "Operancion Correcta";
         
@@ -95,9 +93,9 @@ class UsersController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$users],];
+      $data = ["message" => $message, "status" => $status, "data" => [$suscriptor],];
     
-      return redirect()->route('admin-users');
+      return redirect()->route('admin-suscriptors');
     
     }
     catch (Exception $e)
@@ -112,9 +110,9 @@ class UsersController
     try
     {
 
-      $data = Users::find( $id );
+      $data = Suscriptor::find( $id );
 
-      return view('admin.users.edit-users')->with(compact('data'));
+      return view('admin.suscriptors.edit-suscriptor')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -134,27 +132,25 @@ class UsersController
 
       $id = $request->input('id');
       $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
       $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $remember_token = $request->input('remember_token');
+      $telefono = $request->input('telefono');
+      $empresa = $request->input('empresa');
+      $mensaje = $request->input('mensaje');
 
       if (!empty($id))
       {
-        $users = Users::find($id);
-        $users->id = $id;
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->remember_token = $remember_token;
+        $suscriptor = Suscriptor::find($id);
+        $suscriptor->id = $id;
+        $suscriptor->nombre = $nombre;
+        $suscriptor->email = $email;
+        $suscriptor->telefono = $telefono;
+        $suscriptor->empresa = $empresa;
+        $suscriptor->mensaje = $mensaje;
         
-        $status = $users->save();
+        $status = $suscriptor->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update") ;
+        $this->savedBitacoraTrait( $suscriptor, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -166,7 +162,7 @@ class UsersController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-users');;
+      return redirect()->route('admin-suscriptors');;
     
     }
     catch (Exception $e)
@@ -193,27 +189,27 @@ class UsersController
         $estado = 1;
       }
 
-      $users = Users::find( $id ) ;
+      $suscriptor = Suscriptor::find( $id ) ;
 
-      if (!empty($users))
+      if (!empty($suscriptor))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $users->estado = $estado;
-          $users->save();
+          $suscriptor->estado = $estado;
+          $suscriptor->save();
             
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update estado: ".$estado) ;
+        $this->savedBitacoraTrait( $suscriptor, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $users->forceDelete();
+          $suscriptor->forceDelete();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "delete registro") ;
+        $this->savedBitacoraTrait( $suscriptor, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -253,7 +249,7 @@ class UsersController
     try
     {
 
-      $data = Users::find($id);
+      $data = Suscriptor::find($id);
 
       return $data;
     
@@ -276,10 +272,10 @@ class UsersController
 
       if (empty($id))
       {
-        $users = Users::find($id);
-        $users->estado = $estado;
+        $suscriptor = Suscriptor::find($id);
+        $suscriptor->estado = $estado;
         
-        $status = $users->save();
+        $status = $suscriptor->save();
         
         $message = "Operancion Correcta";
         
@@ -307,7 +303,7 @@ class UsersController
     {
       extract($params) ;
 
-      $data = Users::where("estado", $estado)->get();
+      $data = Suscriptor::where("estado", $estado)->get();
 
       return $data;
     

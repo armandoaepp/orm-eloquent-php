@@ -1,7 +1,7 @@
 
 <?php
   $sidebar = array(
-    "sidebar_class" => "",
+    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -12,127 +12,128 @@
 
 @section('content')
 
-<div class="kt-subheader kt-grid__item" id="kt_subheader">
-  <div class="kt-subheader__main">
-    <h3 class="kt-subheader__title"> Users</h3>
-    <span class="kt-subheader__separator kt-hidden"></span>
-    <div class="kt-subheader__breadcrumbs">
-      <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
-      <span class="kt-subheader__breadcrumbs-separator"></span>
-      <a href="#" class="kt-subheader__breadcrumbs-link">
-        Maestros </a>
-      <span class="kt-subheader__breadcrumbs-separator"></span>
-      <a href="{{ route('admin-users') }}" class="kt-subheader__breadcrumbs-link">
-      Users
+<nav class="full-content" aria-label="breadcrumb">
+  <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
+    <li class="breadcrumb-item">
+      <a href="{{ route('admin') }}">
+        <i class="fas fa-home"></i> Home
       </a>
-    </div>
-  </div>
-</div>
+    </li>
+
+    <li class="breadcrumb-item active bg-info text-white" aria-current="page">
+      <span>
+      Users
+      </span>
+    </li>
+  </ol>
+</nav>
 
 <!-- begin:: Content -->
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-  <!-- begin:: Data List -->
-  <div class="kt-portlet kt-portlet--mobile">
-    <div class="kt-portlet__head">
-      <div class="kt-portlet__head-label">
-        <h3 class="kt-portlet__head-title">
-          Lista de users
-        </h3>
-      </div>
-    </div>
-    <div class="kt-portlet__body position-relative">
-
-    <div class="botonera mb-3">
-      <a href="{{ route('admin-users') }}" class="btn btn-brand btn-elevate btn-elevate-air btn-sm" role="button">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mb-3">
+      <a href="{{ route('admin-users') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('users-new') }}" class="btn btn-brand btn-elevate btn-elevate-air btn-sm" role="button">
+      <a href="{{ route('users-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
     </div>
-        <?php
-          $status = [
-            "0" => ["title" => "Eliminado", "class" => " kt-badge--danger"],
-            "1" => ["title" => "Activo", "class" => " kt-badge--success"],
-            "2" => ["title" => "Activo", "class" => " kt-badge--success"],
-          ];
-        ?>
 
-      <!--begin: Datatable -->
-      <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
-        <thead>
-          <tr>
-              <th> Nombre </th> 
-              <th> Apellidos </th> 
-              <th> Email </th> 
-              <th> Email Verified At </th> 
-              <th> Password </th> 
-              <th> Remember Token </th> 
-            <th width="80">Estado </th>
-            <th width="50"> Acciones </th>
-          </tr>
-        </thead>
-        <tbody>
+    <?php
+      $status = [
+        "0" => ["title" => "Eliminado", "class" => " badge-danger"],
+        "1" => ["title" => "Activo", "class" => " badge-success"],
+      ];
+    ?>
 
-        @foreach ($data as $row)
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-white">
+          <i class="fa fa-align-justify"></i> Lista de users
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
 
-        <?php
+          <!--begin: Datatable -->
+          <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
+            <thead>
+              <tr>
+                  <th> Nombre </th> 
+                  <th> Apellidos </th> 
+                  <th> Email </th> 
+                  <th> Email Verified At </th> 
+                  <th> Password </th> 
+                  <th> Remember Token </th> 
+                <th width="80">Estado </th>
+                <th width="50"> Acciones </th>
+              </tr>
+            </thead>
+            <tbody>
 
-          /* estado */
-          $title_estado = "";
-          $class_estado = "";
-          $class_disabled = "";
+            @foreach ($data as $row)
 
-          if ($row->estado == 0) {
-            $title_estado = "Recuperar";
-            $class_estado = "row-disabled";
-            $class_disabled = "disabled";
-          } else {
-            $title_estado = "Eliminar";
-          }
+            <?php
+
+              /* estado */
+              $title_estado = "";
+              $class_estado = "";
+              $class_disabled = "";
+
+              if ($row->estado == 0) {
+                $title_estado = "Recuperar";
+                $class_estado = "row-disabled";
+                $class_disabled = "disabled";
+              } else {
+                $title_estado = "Eliminar";
+              }
 
 
-        ?>
+            ?>
 
-          <tr class="<?php echo $class_estado; ?>">
-          
-              <td> {{ $row->nombre }} </td> 
-              <td> {{ $row->apellidos }} </td> 
-              <td> {{ $row->email }} </td> 
-              <td> {{ $row->email_verified_at }} </td> 
-              <td> {{ $row->password }} </td> 
-              <td> {{ $row->remember_token }} </td> 
-            <td>
-              <span class="kt-badge <?php echo $status[$row->estado]["class"] ?> kt-badge--inline kt-badge--pill"> <?php echo $status[$row->estado]["title"] ?> </span>
-            </td>
-            <td nowrap> <span class="dropdown">
-                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                  <i class="la la-ellipsis-h"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item <?php echo $class_disabled ?>" href="{{ route('users-edit',['id' => $row->id]) }}" title="Editar"><i class="la la-edit"></i> Editar</a>
-                    <button class="dropdown-item" onclick="modalDelete({{$row->id}}, `{{$row->nombre}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
-                      <i class="flaticon-delete"></i> <?php echo $title_estado ?>
-                    </button>
+              <tr class="<?php echo $class_estado; ?>">
+              
+                  <td> {{ $row->nombre }} </td> 
+                  <td> {{ $row->apellidos }} </td> 
+                  <td> {{ $row->email }} </td> 
+                  <td> {{ $row->email_verified_at }} </td> 
+                  <td> {{ $row->password }} </td> 
+                  <td> {{ $row->remember_token }} </td> 
+                <td>
+                  <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
+                </td>
+                <td nowrap>
+                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
+                    href="{{ route('users-edit',['id' => $row->id]) }}" title="Editar">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
+                  onclick="modalDelete({{$row->id}}, `{{$row->nombre}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                  <span class="sr-only">
+                    {{ $row->estado }}
+                  </span>
+                </td>
 
-                </div>
-            </span>
-            </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
 
-          </tr>
-        @endforeach
-        </tbody>
-      </table>
+          <!--end: Datatable -->
 
-      <!--end: Datatable -->
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 
-  <!-- end:: Data List -->
-
 </div>
+
 <!-- end:: Content -->
 
 

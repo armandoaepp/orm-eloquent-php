@@ -8,6 +8,7 @@ require __DIR__.'/model.php';
 require __DIR__.'/controller.php';
 
 require __DIR__.'/functions.php';
+require __DIR__.'/helper.php';
 require __DIR__.'/fieldsTable.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;

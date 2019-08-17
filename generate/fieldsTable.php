@@ -29,9 +29,14 @@ function fieldsNotUpdateInController($item)
 }
 
 /* items que no se mostraran en las vista */
-function verificarItemForm($item){
+function verificarItemForm($item, $prefix = ""){
 
   $item = strtolower( trim($item) ) ;
+
+  if(!empty($prefix))
+  {
+    $item = revemoPrefix($item, $prefix)  ;
+  }
 
   $items = array('id','estado', 'created_at', 'updated_at', 'imagen', 'url', 'publicar') ;
 
@@ -56,4 +61,13 @@ function verificarItemNotListTable($item){
   }
   return false ;
 
+}
+
+function strpos_arr($haystack, $needle)
+{
+  if(!is_array($needle)) $needle = array($needle);
+  foreach($needle as $what) {
+      if(($pos = strpos($haystack, $what))!==false) return $pos;
+  }
+  return false;
 }

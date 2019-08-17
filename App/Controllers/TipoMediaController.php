@@ -8,10 +8,10 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Users; 
+use App\Models\TipoMedia; 
 use App\Traits\BitacoraTrait;
 
-class UsersController
+class TipoMediaController
 {
   use BitacoraTrait;
 
@@ -25,9 +25,9 @@ class UsersController
     try
     {
 
-      $data = Users::get();
+      $data = TipoMedia::get();
 
-      return view('admin.users.list-users')->with(compact('data'));
+      return view('admin.tipo-media.list-tipo-media')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -42,7 +42,7 @@ class UsersController
     try
     {
 
-      return view('admin.users.new-users');
+      return view('admin.tipo-media.new-tipo-media');
     
     }
     catch (Exception $e)
@@ -59,33 +59,23 @@ class UsersController
       $status  = false;
       $message = "";
 
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $estado = $request->input('estado');
-      $remember_token = $request->input('remember_token');
+      $tm_descripcion = $request->input('tm_descripcion');
+      $tm_estado = $request->input('tm_estado');
 
-      $users = Users::where(["nombre" => $nombre])->first();
+      $tipo_media = TipoMedia::where(["tm_descripcion" => $tm_descripcion])->first();
 
-      if (empty($users))
+      if (empty($tipo_media))
       {
-        $users = new Users();
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->estado = $estado;
-        $users->remember_token = $remember_token;
+        $tipo_media = new TipoMedia();
+        $tipo_media->tm_descripcion = $tm_descripcion;
+        $tipo_media->tm_estado = $tm_estado;
         
-        $status = $users->save();
+        $status = $tipo_media->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "created") ;
+        $this->savedBitacoraTrait( $tipo_media, "created") ;
         
-        $id = $users->id;
+        $id = $tipo_media->id;
         
         $message = "Operancion Correcta";
         
@@ -95,9 +85,9 @@ class UsersController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$users],];
+      $data = ["message" => $message, "status" => $status, "data" => [$tipo_media],];
     
-      return redirect()->route('admin-users');
+      return redirect()->route('admin-tipo-media');
     
     }
     catch (Exception $e)
@@ -112,9 +102,9 @@ class UsersController
     try
     {
 
-      $data = Users::find( $id );
+      $data = TipoMedia::find( $id );
 
-      return view('admin.users.edit-users')->with(compact('data'));
+      return view('admin.tipo-media.edit-tipo-media')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -133,28 +123,20 @@ class UsersController
       $message = "";
 
       $id = $request->input('id');
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $remember_token = $request->input('remember_token');
+      $tm_descripcion = $request->input('tm_descripcion');
+      $tm_estado = $request->input('tm_estado');
 
       if (!empty($id))
       {
-        $users = Users::find($id);
-        $users->id = $id;
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->remember_token = $remember_token;
+        $tipo_media = TipoMedia::find($id);
+        $tipo_media->id = $id;
+        $tipo_media->tm_descripcion = $tm_descripcion;
+        $tipo_media->tm_estado = $tm_estado;
         
-        $status = $users->save();
+        $status = $tipo_media->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update") ;
+        $this->savedBitacoraTrait( $tipo_media, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -166,7 +148,7 @@ class UsersController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-users');;
+      return redirect()->route('admin-tipo-media');;
     
     }
     catch (Exception $e)
@@ -193,27 +175,27 @@ class UsersController
         $estado = 1;
       }
 
-      $users = Users::find( $id ) ;
+      $tipo_media = TipoMedia::find( $id ) ;
 
-      if (!empty($users))
+      if (!empty($tipo_media))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $users->estado = $estado;
-          $users->save();
+          $tipo_media->estado = $estado;
+          $tipo_media->save();
             
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update estado: ".$estado) ;
+        $this->savedBitacoraTrait( $tipo_media, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $users->forceDelete();
+          $tipo_media->forceDelete();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "delete registro") ;
+        $this->savedBitacoraTrait( $tipo_media, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -253,61 +235,7 @@ class UsersController
     try
     {
 
-      $data = Users::find($id);
-
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function updateStatus( $params = array() )
-  {
-    try
-    {
-      extract($params) ;
-
-      $status  = false;
-      $message = "";
-
-      if (empty($id))
-      {
-        $users = Users::find($id);
-        $users->estado = $estado;
-        
-        $status = $users->save();
-        
-        $message = "Operancion Correcta";
-        
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-      }
-
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function getByStatus( $params = array()  )
-  {
-    try
-    {
-      extract($params) ;
-
-      $data = Users::where("estado", $estado)->get();
+      $data = TipoMedia::find($id);
 
       return $data;
     

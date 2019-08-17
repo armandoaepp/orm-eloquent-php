@@ -20,7 +20,11 @@ function generateModel($table_name, $class_name, $entities = array() )
 
     protected $primaryKey = ["'.$entities[0]->Field.'"];
 
+    protected $guarded = ["'.$entities[0]->Field.'"];
+
     // public $timestamps = false;
+
+    // protected $hidden = ["created_at", "updated_at"];
 
 
   }

@@ -8,10 +8,10 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Users; 
+use App\Models\ProductoDetalle; 
 use App\Traits\BitacoraTrait;
 
-class UsersController
+class ProductoDetalleController
 {
   use BitacoraTrait;
 
@@ -25,9 +25,9 @@ class UsersController
     try
     {
 
-      $data = Users::get();
+      $data = ProductoDetalle::get();
 
-      return view('admin.users.list-users')->with(compact('data'));
+      return view('admin.producto-detalles.list-producto-detalles')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -42,7 +42,7 @@ class UsersController
     try
     {
 
-      return view('admin.users.new-users');
+      return view('admin.producto-detalles.new-producto-detalle');
     
     }
     catch (Exception $e)
@@ -59,33 +59,25 @@ class UsersController
       $status  = false;
       $message = "";
 
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $estado = $request->input('estado');
-      $remember_token = $request->input('remember_token');
+      $producto_id = $request->input('producto_id');
+      $pd_descripcion = $request->input('pd_descripcion');
+      $pd_estado = $request->input('pd_estado');
 
-      $users = Users::where(["nombre" => $nombre])->first();
+      $producto_detalle = ProductoDetalle::where(["producto_id" => $producto_id])->first();
 
-      if (empty($users))
+      if (empty($producto_detalle))
       {
-        $users = new Users();
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->estado = $estado;
-        $users->remember_token = $remember_token;
+        $producto_detalle = new ProductoDetalle();
+        $producto_detalle->producto_id = $producto_id;
+        $producto_detalle->pd_descripcion = $pd_descripcion;
+        $producto_detalle->pd_estado = $pd_estado;
         
-        $status = $users->save();
+        $status = $producto_detalle->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "created") ;
+        $this->savedBitacoraTrait( $producto_detalle, "created") ;
         
-        $id = $users->id;
+        $id = $producto_detalle->id;
         
         $message = "Operancion Correcta";
         
@@ -95,9 +87,9 @@ class UsersController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$users],];
+      $data = ["message" => $message, "status" => $status, "data" => [$producto_detalle],];
     
-      return redirect()->route('admin-users');
+      return redirect()->route('admin-producto-detalles');
     
     }
     catch (Exception $e)
@@ -112,9 +104,9 @@ class UsersController
     try
     {
 
-      $data = Users::find( $id );
+      $data = ProductoDetalle::find( $id );
 
-      return view('admin.users.edit-users')->with(compact('data'));
+      return view('admin.producto-detalles.edit-producto-detalle')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -133,28 +125,22 @@ class UsersController
       $message = "";
 
       $id = $request->input('id');
-      $nombre = $request->input('nombre');
-      $apellidos = $request->input('apellidos');
-      $email = $request->input('email');
-      $email_verified_at = $request->input('email_verified_at');
-      $password = $request->input('password');
-      $remember_token = $request->input('remember_token');
+      $producto_id = $request->input('producto_id');
+      $pd_descripcion = $request->input('pd_descripcion');
+      $pd_estado = $request->input('pd_estado');
 
       if (!empty($id))
       {
-        $users = Users::find($id);
-        $users->id = $id;
-        $users->nombre = $nombre;
-        $users->apellidos = $apellidos;
-        $users->email = $email;
-        $users->email_verified_at = $email_verified_at;
-        $users->password = $password;
-        $users->remember_token = $remember_token;
+        $producto_detalle = ProductoDetalle::find($id);
+        $producto_detalle->id = $id;
+        $producto_detalle->producto_id = $producto_id;
+        $producto_detalle->pd_descripcion = $pd_descripcion;
+        $producto_detalle->pd_estado = $pd_estado;
         
-        $status = $users->save();
+        $status = $producto_detalle->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update") ;
+        $this->savedBitacoraTrait( $producto_detalle, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -166,7 +152,7 @@ class UsersController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-users');;
+      return redirect()->route('admin-producto-detalles');;
     
     }
     catch (Exception $e)
@@ -193,27 +179,27 @@ class UsersController
         $estado = 1;
       }
 
-      $users = Users::find( $id ) ;
+      $producto_detalle = ProductoDetalle::find( $id ) ;
 
-      if (!empty($users))
+      if (!empty($producto_detalle))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $users->estado = $estado;
-          $users->save();
+          $producto_detalle->estado = $estado;
+          $producto_detalle->save();
             
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "update estado: ".$estado) ;
+        $this->savedBitacoraTrait( $producto_detalle, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $users->forceDelete();
+          $producto_detalle->forceDelete();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $users, "delete registro") ;
+        $this->savedBitacoraTrait( $producto_detalle, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
@@ -253,61 +239,7 @@ class UsersController
     try
     {
 
-      $data = Users::find($id);
-
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function updateStatus( $params = array() )
-  {
-    try
-    {
-      extract($params) ;
-
-      $status  = false;
-      $message = "";
-
-      if (empty($id))
-      {
-        $users = Users::find($id);
-        $users->estado = $estado;
-        
-        $status = $users->save();
-        
-        $message = "Operancion Correcta";
-        
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-      }
-
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function getByStatus( $params = array()  )
-  {
-    try
-    {
-      extract($params) ;
-
-      $data = Users::where("estado", $estado)->get();
+      $data = ProductoDetalle::find($id);
 
       return $data;
     

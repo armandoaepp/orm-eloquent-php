@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-users') }}" class="">
-      Users
+      <a href="{{ route('admin-suscriptors') }}" class="">
+      Suscriptors
       </a>
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <span>
-      Nuevo Users
+      Editar Suscriptor
       </span>
     </li>
   </ol>
@@ -40,71 +40,61 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Users
+          <i class="fa fa-align-justify"></i> Editar Suscriptor
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('users-save') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('suscriptor-update') }}" method="POST" enctype="multipart/form-data">
               @csrf
-              <input type="hidden" class="form-control" name="id" id="id" value="">
+              <input type="hidden" class="form-control" name="id" id="id" value="{{ $data->id }}">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="nombre">Nombre: </label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="apellidos">Apellidos: </label>
-                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos">
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" value="{{ $data->nombre }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="email">Email: </label>
-                    <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ $data->email }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="email_verified_at">Email Verified At: </label>
-                    <input type="text" class="form-control" name="email_verified_at" id="email_verified_at" placeholder="Email Verified At">
+                    <label for="telefono">Telefono: </label>
+                    <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="{{ $data->telefono }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="password">Password: </label>
-                    <input type="text" class="form-control" name="password" id="password" placeholder="Password">
+                    <label for="empresa">Empresa: </label>
+                    <input type="text" class="form-control" name="empresa" id="empresa" placeholder="Empresa" value="{{ $data->empresa }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="remember_token">Remember Token: </label>
-                    <input type="text" class="form-control" name="remember_token" id="remember_token" placeholder="Remember Token">
+                    <label for="mensaje">Mensaje: </label>
+                    <input type="text" class="form-control" name="mensaje" id="mensaje" placeholder="Mensaje" value="{{ $data->mensaje }}" >
                   </div>
                 </div>
-
-
 
 
               </div>
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-users') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-suscriptors') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>
 
             </form>
-
           </div>
 
         </div>
@@ -113,6 +103,7 @@
 
   </div>
 </div>
+
 <!-- end:: Content -->
 
 

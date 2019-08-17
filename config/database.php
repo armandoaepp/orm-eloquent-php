@@ -10,7 +10,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
  'driver'    => 'mysql',
  'host'      => 'localhost',
- 'database'  => 'plt_db_mail',
+ 'database'  => 'db_tortas',
  'username'  => 'root',
  'password'  => '',
  'charset'   => 'utf8',

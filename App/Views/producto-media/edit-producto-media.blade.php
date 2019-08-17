@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-users') }}" class="">
-      Users
+      <a href="{{ route('admin-producto media') }}" class="">
+      Producto Media
       </a>
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <span>
-      Nuevo Users
+      Editar Producto Media
       </span>
     </li>
   </ol>
@@ -40,71 +40,54 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Users
+          <i class="fa fa-align-justify"></i> Editar Producto Media
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('users-save') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('producto media-update') }}" method="POST" enctype="multipart/form-data">
               @csrf
-              <input type="hidden" class="form-control" name="id" id="id" value="">
+              <input type="hidden" class="form-control" name="id" id="id" value="{{ $data->id }}">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="nombre">Nombre: </label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
+                    <label for="producto_id">Producto Id: </label>
+                    <input type="text" class="form-control" name="producto_id" id="producto_id" placeholder="Producto Id" value="{{ $data->producto_id }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="apellidos">Apellidos: </label>
-                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos">
+                    <label for="tipo_media_id">Tipo Media Id: </label>
+                    <input type="text" class="form-control" name="tipo_media_id" id="tipo_media_id" placeholder="Tipo Media Id" value="{{ $data->tipo_media_id }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="email">Email: </label>
-                    <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                    <label for="pm_jerarquia">Jerarquia: </label>
+                    <input type="text" class="form-control" name="pm_jerarquia" id="pm_jerarquia" placeholder="Jerarquia" value="{{ $data->pm_jerarquia }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="email_verified_at">Email Verified At: </label>
-                    <input type="text" class="form-control" name="email_verified_at" id="email_verified_at" placeholder="Email Verified At">
+                    <label for="pm_descripcion">Descripcion: </label>
+                    <input type="text" class="form-control" name="pm_descripcion" id="pm_descripcion" placeholder="Descripcion" value="{{ $data->pm_descripcion }}" >
                   </div>
                 </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="password">Password: </label>
-                    <input type="text" class="form-control" name="password" id="password" placeholder="Password">
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="remember_token">Remember Token: </label>
-                    <input type="text" class="form-control" name="remember_token" id="remember_token" placeholder="Remember Token">
-                  </div>
-                </div>
-
-
 
 
               </div>
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-users') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-producto media') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>
 
             </form>
-
           </div>
 
         </div>
@@ -113,6 +96,7 @@
 
   </div>
 </div>
+
 <!-- end:: Content -->
 
 

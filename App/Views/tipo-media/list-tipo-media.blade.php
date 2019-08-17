@@ -1,16 +1,4 @@
-<?php
-function generateIndex($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
-{
-  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
 
-  // $title = str_replace ('-', ' ', $table_plural);
-  $title = ucwords(str_replace ('-', ' ', $table_plural));
-
-  $prefix =  generatePrefixTable( $table_name ) ;
-  $prefix = !empty($prefix) ? $prefix."_" : "" ;
-
-$html = '
 <?php
   $sidebar = array(
     "sidebar_class"  => "",
@@ -20,21 +8,21 @@ $html = '
 
 ?>
 
-@extends(\'layouts.app-admin\')
+@extends('layouts.app-admin')
 
-@section(\'content\')
+@section('content')
 
 <nav class="full-content" aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
     <li class="breadcrumb-item">
-      <a href="{{ route(\'admin\') }}">
+      <a href="{{ route('admin') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <span>
-      '.$title.'
+      Tipo Media
       </span>
     </li>
   </ol>
@@ -44,11 +32,11 @@ $html = '
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-tipo-media') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('tipo-media-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -64,7 +52,7 @@ $html = '
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
+          <i class="fa fa-align-justify"></i> Lista de tipo-media
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -72,33 +60,10 @@ $html = '
           <!--begin: Datatable -->
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
-              <tr>';
-              for ($i=0; $i < count( $heads_table) ; $i++)
-              {
-                if ( !verificarItemForm($fields_table[$i],$prefix) )
-                {
-                  $width = '' ;
-                  if ($i == 0) {
-                    $width = ' width="60"' ;
-                  }
-
-                  // ==== Start remove prefix
-                  $field_item = $heads_table[$i] ;
-                  if(!empty($prefix))
-                  {
-                    $field_item = revemoPrefix($field_item, $prefix)  ;
-                  }
-                  $field_item = toCamelCase($field_item);
-
-                  // ==== Start remove prefix
-
-                  $html .= '
-                <th'.$width.'> '.$field_item .' </th> ';
-                }
-              }
-
-    $html .= '
-                <th width="80"> Estado </th>
+              <tr>
+                  <th> Tm Descripcion </th> 
+                  <th> Tm Estado </th> 
+                <th width="80">Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -125,28 +90,19 @@ $html = '
             ?>
 
               <tr class="<?php echo $class_estado; ?>">
-              ';
-
-              for ($i=0; $i < count( $fields_table) ; $i++)
-              {
-                if ( !verificarItemForm($fields_table[$i]) )
-                {
-                  $html .= '
-                  <td> {{ $row->'.$fields_table[$i].' }} </td> ';
-                }
-
-              }
-            $html .= '
+              
+                  <td> {{ $row->tm_descripcion }} </td> 
+                  <td> {{ $row->tm_estado }} </td> 
                 <td>
                   <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
                 </td>
                 <td nowrap>
                   <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                    href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
+                    href="{{ route('tipo-media-edit',['id' => $row->id]) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                   <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete({{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                  onclick="modalDelete({{$row->id}}, `{{$row->tm_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
@@ -178,7 +134,7 @@ $html = '
 
 @endsection
 
-@section(\'modal\')
+@section('modal')
 
 <!-- Modal Delete -->
 <form id="formModal">
@@ -234,9 +190,9 @@ $html = '
 @endsection
 
 
-@section(\'script\')
+@section('script')
 
-@include(\'shared.datatables\')
+@include('shared.datatables')
 
 <script>
   // modals
@@ -244,17 +200,17 @@ $html = '
     function processFormModal(event) {
 
       event.preventDefault();
-      $("#alertModal").html(\'\');
+      $("#alertModal").html('');
 
       let inputs = $("#formModal").serializeFormJSON();
       inputs.id = $("#idRowModal").val();
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api = "{{ route(\''.$table_amigable.'-delete\') }}";
+      let url_api = "{{ route('tipo-media-delete') }}";
 
       axios({
-        method: \'post\',
+        method: 'post',
         url: url_api,
         data: params,
       }).then(function (response) {
@@ -295,7 +251,7 @@ $html = '
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> de '.$table_plural .': <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> de tipo-media: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 
@@ -314,7 +270,3 @@ $html = '
 </script>
 
 @endsection
-';
-
-return $html ;
-}

@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-users') }}" class="">
-      Users
+      <a href="{{ route('admin-sub categorias') }}" class="">
+      Sub Categorias
       </a>
     </li>
 
     <li class="breadcrumb-item active bg-info text-white" aria-current="page">
       <span>
-      Nuevo Users
+      Nuevo Sub Categoria
       </span>
     </li>
   </ol>
@@ -40,54 +40,40 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Users
+          <i class="fa fa-align-justify"></i> Nuevo Sub Categoria
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('users-save') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('sub categoria-save') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="nombre">Nombre: </label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
+                    <label for="categoria_id">Categoria Id: </label>
+                    <input type="text" class="form-control" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="apellidos">Apellidos: </label>
-                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos">
+                    <label for="sc_descripcion">Sc Descripcion: </label>
+                    <input type="text" class="form-control" name="sc_descripcion" id="sc_descripcion" placeholder="Sc Descripcion">
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="email">Email: </label>
-                    <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                    <label for="sc_imagen">Sc Imagen: </label>
+                    <input type="text" class="form-control" name="sc_imagen" id="sc_imagen" placeholder="Sc Imagen">
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="email_verified_at">Email Verified At: </label>
-                    <input type="text" class="form-control" name="email_verified_at" id="email_verified_at" placeholder="Email Verified At">
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="password">Password: </label>
-                    <input type="text" class="form-control" name="password" id="password" placeholder="Password">
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="remember_token">Remember Token: </label>
-                    <input type="text" class="form-control" name="remember_token" id="remember_token" placeholder="Remember Token">
+                    <label for="sc_estado">Sc Estado: </label>
+                    <input type="text" class="form-control" name="sc_estado" id="sc_estado" placeholder="Sc Estado">
                   </div>
                 </div>
 
@@ -98,7 +84,7 @@
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-users') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-sub categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>

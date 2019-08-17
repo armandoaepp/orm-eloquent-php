@@ -3,9 +3,9 @@
 
   use Illuminate\Database\Eloquent\Model;
 
-  class Users extends Model {
+  class ProductoMedia extends Model {
 
-    protected $table = "users";
+    protected $table = "producto_media";
 
     protected $primaryKey = ["id"];
 
