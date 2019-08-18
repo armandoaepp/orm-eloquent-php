@@ -62,6 +62,7 @@ class SubCategoriaController
       $categoria_id = $request->input('categoria_id');
       $sc_descripcion = $request->input('sc_descripcion');
       $sc_imagen = $request->input('sc_imagen');
+      $sc_publicar = $request->input('sc_publicar');
       $sc_estado = $request->input('sc_estado');
 
       $sub_categoria = SubCategoria::where(["categoria_id" => $categoria_id])->first();
@@ -72,6 +73,7 @@ class SubCategoriaController
         $sub_categoria->categoria_id = $categoria_id;
         $sub_categoria->sc_descripcion = $sc_descripcion;
         $sub_categoria->sc_imagen = $sc_imagen;
+        $sub_categoria->sc_publicar = $sc_publicar;
         $sub_categoria->sc_estado = $sc_estado;
         
         $status = $sub_categoria->save();
@@ -130,6 +132,7 @@ class SubCategoriaController
       $categoria_id = $request->input('categoria_id');
       $sc_descripcion = $request->input('sc_descripcion');
       $sc_imagen = $request->input('sc_imagen');
+      $sc_publicar = $request->input('sc_publicar');
       $sc_estado = $request->input('sc_estado');
 
       if (!empty($id))
@@ -139,6 +142,7 @@ class SubCategoriaController
         $sub_categoria->categoria_id = $categoria_id;
         $sub_categoria->sc_descripcion = $sc_descripcion;
         $sub_categoria->sc_imagen = $sc_imagen;
+        $sub_categoria->sc_publicar = $sc_publicar;
         $sub_categoria->sc_estado = $sc_estado;
         
         $status = $sub_categoria->save();

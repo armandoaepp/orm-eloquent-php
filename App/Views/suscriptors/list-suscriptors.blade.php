@@ -61,12 +61,12 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                  <th> Nombre </th> 
-                  <th> Email </th> 
-                  <th> Telefono </th> 
-                  <th> Empresa </th> 
-                  <th> Mensaje </th> 
-                <th width="80">Estado </th>
+                <th> Nombre </th> 
+                <th> Email </th> 
+                <th> Telefono </th> 
+                <th> Empresa </th> 
+                <th> Mensaje </th> 
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>

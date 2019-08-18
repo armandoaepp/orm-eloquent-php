@@ -56,22 +56,30 @@
                   </div>
                 </div>
 
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="email" class="d-block">Publicar </label>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" checked="checked">
+                      <label class="form-check-label" for="si">SI</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N">
+                      <label class="form-check-label" for="no">NO</label>
+                    </div>
+                  </div>
+                </div>
 
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label for="email" class="d-block">Publicar </label>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="publicar" id="si" value="S" checked="checked">
-                                <label class="form-check-label" for="si">SI</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="publicar" id="no" value="N">
-                                <label class="form-check-label" for="no">NO</label>
-                              </div>
-                            </div>
-                          </div>
+                <div class="col-12 mb-3">
+                  <div class="form-group">
+                    <label for="cat_imagen">Imagen:</label>
+                    <input data-file-img="images" type="file" class="form-control" name="cat_imagen" id="cat_imagen" required placeholder="Imagen" accept="image/*">
+                  </div>
+                </div>
 
-
+                <div class="col-12 mb-3">
+                  <div class="preview-img" data-img-preview="preview" id="preview"></div>
+                </div>
 
               </div>
 

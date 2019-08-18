@@ -27,7 +27,7 @@ class CategoriaController
 
       $data = Categoria::get();
 
-      return view('admin.categorias.list-categorias')->with(compact('data'));
+      return view($prefixView.'admin.categorias.list-categorias')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -61,8 +61,8 @@ class CategoriaController
 
       $cat_descripcion = $request->input('cat_descripcion');
       $cat_imagen = $request->input('cat_imagen');
-      $estado = $request->input('estado');
       $cat_publicar = $request->input('cat_publicar');
+      $cat_estado = $request->input('cat_estado');
 
       $categoria = Categoria::where(["cat_descripcion" => $cat_descripcion])->first();
 
@@ -71,8 +71,8 @@ class CategoriaController
         $categoria = new Categoria();
         $categoria->cat_descripcion = $cat_descripcion;
         $categoria->cat_imagen = $cat_imagen;
-        $categoria->estado = $estado;
         $categoria->cat_publicar = $cat_publicar;
+        $categoria->cat_estado = $cat_estado;
         
         $status = $categoria->save();
         
@@ -130,6 +130,7 @@ class CategoriaController
       $cat_descripcion = $request->input('cat_descripcion');
       $cat_imagen = $request->input('cat_imagen');
       $cat_publicar = $request->input('cat_publicar');
+      $cat_estado = $request->input('cat_estado');
 
       if (!empty($id))
       {
@@ -138,6 +139,7 @@ class CategoriaController
         $categoria->cat_descripcion = $cat_descripcion;
         $categoria->cat_imagen = $cat_imagen;
         $categoria->cat_publicar = $cat_publicar;
+        $categoria->cat_estado = $cat_estado;
         
         $status = $categoria->save();
         
@@ -242,60 +244,6 @@ class CategoriaController
     {
 
       $data = Categoria::find($id);
-
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function updateStatus( $params = array() )
-  {
-    try
-    {
-      extract($params) ;
-
-      $status  = false;
-      $message = "";
-
-      if (empty($id))
-      {
-        $categoria = Categoria::find($id);
-        $categoria->estado = $estado;
-        
-        $status = $categoria->save();
-        
-        $message = "Operancion Correcta";
-        
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-      }
-
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
-      return $data;
-    
-    }
-    catch (Exception $e)
-    {
-      throw new Exception($e->getMessage());
-    }
-
-  }
-
-  public function getByStatus( $params = array()  )
-  {
-    try
-    {
-      extract($params) ;
-
-      $data = Categoria::where("estado", $estado)->get();
 
       return $data;
     

@@ -93,6 +93,7 @@
                   <td> {{ $row->cat_descripcion }} </td> 
                   <td> {{ $row->cat_imagen }} </td> 
                   <td> {{ $row->cat_publicar }} </td> 
+                  <td> {{ $row->cat_estado }} </td> 
                 <td>
                   <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
                 </td>

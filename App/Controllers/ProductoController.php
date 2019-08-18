@@ -60,6 +60,7 @@ class ProductoController
       $message = "";
 
       $sub_categoria_id = $request->input('sub_categoria_id');
+      $categoria_id = $request->input('categoria_id');
       $codigo = $request->input('codigo');
       $descripcion = $request->input('descripcion');
       $glosa = $request->input('glosa');
@@ -76,6 +77,7 @@ class ProductoController
       {
         $producto = new Producto();
         $producto->sub_categoria_id = $sub_categoria_id;
+        $producto->categoria_id = $categoria_id;
         $producto->codigo = $codigo;
         $producto->descripcion = $descripcion;
         $producto->glosa = $glosa;
@@ -140,6 +142,7 @@ class ProductoController
 
       $id = $request->input('id');
       $sub_categoria_id = $request->input('sub_categoria_id');
+      $categoria_id = $request->input('categoria_id');
       $codigo = $request->input('codigo');
       $descripcion = $request->input('descripcion');
       $glosa = $request->input('glosa');
@@ -154,6 +157,7 @@ class ProductoController
         $producto = Producto::find($id);
         $producto->id = $id;
         $producto->sub_categoria_id = $sub_categoria_id;
+        $producto->categoria_id = $categoria_id;
         $producto->codigo = $codigo;
         $producto->descripcion = $descripcion;
         $producto->glosa = $glosa;

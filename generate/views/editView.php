@@ -113,6 +113,52 @@ $html = '
                   }
 
                 }
+                elseif(strpos(strtolower($fields_table[$i]), "publicar") )
+                {
+
+                  $html .= '                <div class="col-md-12">'.PHP_EOL;
+                  $html .= '                  <div class="form-group">'.PHP_EOL;
+                  $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
+                  $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
+                  $html .= '                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" <?php echo $si; ?> >'.PHP_EOL;
+                  $html .= '                      <label class="form-check-label" for="si">SI</label>'.PHP_EOL;
+                  $html .= '                    </div>'.PHP_EOL;
+                  $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
+                  $html .= '                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N" <?php echo $no; ?> >'.PHP_EOL;
+                  $html .= '                      <label class="form-check-label" for="no">NO</label>'.PHP_EOL;
+                  $html .= '                    </div>'.PHP_EOL;
+                  $html .= '                  </div>'.PHP_EOL;
+                  $html .= '                </div>'.PHP_EOL;
+                  $html .= '' . PHP_EOL;
+
+                }
+              }
+
+              if(in_array("imagen", $fields_table) || in_array($prefix."imagen", $fields_table))
+              {
+                  $file_imagen = (in_array("imagen", $fields_table) ) ? 'imagen' : $prefix."imagen" ;
+
+
+                  $html .= '                <div class="col-md-12 text-center">' . PHP_EOL ;
+                  $html .= '                  <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="<?php echo $'. $table_name .'->'.$file_imagen.'; ?>">' . PHP_EOL ;
+                  $html .= '                  <img src="<?php echo $'. $table_name .'->'.$file_imagen.'; ?>" class="img-fluid img-view-edit mb-2">' . PHP_EOL ;
+                  $html .= '                </div>' . PHP_EOL ;
+                  $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
+                  $html .= '                  <hr>' . PHP_EOL ;
+                  $html .= '                  <div class="form-group">' . PHP_EOL ;
+                  $html .= '                    <div class="input-group mb-2">' . PHP_EOL ;
+                  $html .= '                      <div class="input-group-prepend">' . PHP_EOL ;
+                  $html .= '                        <label class="input-group-text" for="'.$file_imagen.'">Nueva Imagen</label>' . PHP_EOL ;
+                  $html .= '                      </div>' . PHP_EOL ;
+                  $html .= '                      <input data-file-img="images" type="file" class="form-control" name="'.$file_imagen.'" id="'.$file_imagen.'" required placeholder="Imagen" accept="image/*">' . PHP_EOL ;
+                  $html .= '                    </div>' . PHP_EOL ;
+                  $html .= '                  </div>' . PHP_EOL ;
+                  $html .= '                </div>' . PHP_EOL ;
+                  $html .= '' . PHP_EOL ;
+                  $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
+                  $html .= '                  <div class="preview-img" data-img-preview="preview" id="preview"></div>' . PHP_EOL ;
+                  $html .= '                </div>' . PHP_EOL;
+
               }
 
 

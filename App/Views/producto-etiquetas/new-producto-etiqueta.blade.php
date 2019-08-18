@@ -59,7 +59,10 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="etiqueta_id">Etiqueta Id: </label>
-                    <input type="text" class="form-control" name="etiqueta_id" id="etiqueta_id" placeholder="Etiqueta Id">
+                    <select class="custom-select" name="etiqueta_id" id="etiqueta_id" placeholder="Etiqueta Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -69,8 +72,6 @@
                     <input type="text" class="form-control" name="pm_estado" id="pm_estado" placeholder="Pm Estado">
                   </div>
                 </div>
-
-
 
 
               </div>

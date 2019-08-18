@@ -61,9 +61,8 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                  <th> Eti Descripcion </th> 
-                  <th> Eti Estado </th> 
-                <th width="80">Estado </th>
+                <th> Descripcion </th> 
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -92,6 +91,7 @@
               <tr class="<?php echo $class_estado; ?>">
               
                   <td> {{ $row->eti_descripcion }} </td> 
+                  <td> {{ $row->eti_publicar }} </td> 
                   <td> {{ $row->eti_estado }} </td> 
                 <td>
                   <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>

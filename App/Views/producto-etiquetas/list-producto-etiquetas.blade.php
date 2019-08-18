@@ -61,10 +61,10 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                  <th> Producto Id </th> 
-                  <th> Etiqueta Id </th> 
-                  <th> Pm Estado </th> 
-                <th width="80">Estado </th>
+                <th> Producto Id </th> 
+                <th> Etiqueta Id </th> 
+                <th> Pm Estado </th> 
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>

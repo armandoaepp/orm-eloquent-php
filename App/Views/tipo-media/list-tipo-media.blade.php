@@ -61,9 +61,8 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                  <th> Tm Descripcion </th> 
-                  <th> Tm Estado </th> 
-                <th width="80">Estado </th>
+                <th> Descripcion </th> 
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>

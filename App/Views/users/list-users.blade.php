@@ -61,13 +61,13 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                  <th> Nombre </th> 
-                  <th> Apellidos </th> 
-                  <th> Email </th> 
-                  <th> Email Verified At </th> 
-                  <th> Password </th> 
-                  <th> Remember Token </th> 
-                <th width="80">Estado </th>
+                <th> Nombre </th> 
+                <th> Apellidos </th> 
+                <th> Email </th> 
+                <th> Email Verified At </th> 
+                <th> Password </th> 
+                <th> Remember Token </th> 
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>

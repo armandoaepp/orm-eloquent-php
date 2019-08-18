@@ -59,7 +59,10 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="tipo_media_id">Tipo Media Id: </label>
-                    <input type="text" class="form-control" name="tipo_media_id" id="tipo_media_id" placeholder="Tipo Media Id">
+                    <select class="custom-select" name="tipo_media_id" id="tipo_media_id" placeholder="Tipo Media Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -76,8 +79,6 @@
                     <input type="text" class="form-control" name="pm_descripcion" id="pm_descripcion" placeholder="Descripcion">
                   </div>
                 </div>
-
-
 
 
               </div>

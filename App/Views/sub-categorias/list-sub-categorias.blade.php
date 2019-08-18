@@ -61,11 +61,9 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                  <th> Categoria Id </th> 
-                  <th> Sc Descripcion </th> 
-                  <th> Sc Imagen </th> 
-                  <th> Sc Estado </th> 
-                <th width="80">Estado </th>
+                <th> Categoria Id </th> 
+                <th> Descripcion </th> 
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -96,6 +94,7 @@
                   <td> {{ $row->categoria_id }} </td> 
                   <td> {{ $row->sc_descripcion }} </td> 
                   <td> {{ $row->sc_imagen }} </td> 
+                  <td> {{ $row->sc_publicar }} </td> 
                   <td> {{ $row->sc_estado }} </td> 
                 <td>
                   <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>

@@ -51,15 +51,22 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="eti_descripcion">Eti Descripcion: </label>
-                    <input type="text" class="form-control" name="eti_descripcion" id="eti_descripcion" placeholder="Eti Descripcion" value="{{ $data->eti_descripcion }}" >
+                    <label for="eti_descripcion">Descripcion: </label>
+                    <textarea class="form-control ckeditor" name="eti_descripcion" id="eti_descripcion" placeholder="Descripcion" cols="30" rows="6">{{ $data->eti_descripcion }}</textarea>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="eti_estado">Eti Estado: </label>
-                    <input type="text" class="form-control" name="eti_estado" id="eti_estado" placeholder="Eti Estado" value="{{ $data->eti_estado }}" >
+                    <label for="email" class="d-block">Publicar </label>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" <?php echo $si; ?> >
+                      <label class="form-check-label" for="si">SI</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N" <?php echo $no; ?> >
+                      <label class="form-check-label" for="no">NO</label>
+                    </div>
                   </div>
                 </div>
 

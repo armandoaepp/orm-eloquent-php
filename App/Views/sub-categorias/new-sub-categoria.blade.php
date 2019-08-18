@@ -52,33 +52,44 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="categoria_id">Categoria Id: </label>
-                    <input type="text" class="form-control" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                    <select class="custom-select" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="sc_descripcion">Sc Descripcion: </label>
-                    <input type="text" class="form-control" name="sc_descripcion" id="sc_descripcion" placeholder="Sc Descripcion">
+                    <label for="sc_descripcion">Descripcion: </label>
+                    <input type="text" class="form-control" name="sc_descripcion" id="sc_descripcion" placeholder="Descripcion">
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="sc_imagen">Sc Imagen: </label>
-                    <input type="text" class="form-control" name="sc_imagen" id="sc_imagen" placeholder="Sc Imagen">
+                    <label for="email" class="d-block">Publicar </label>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" checked="checked">
+                      <label class="form-check-label" for="si">SI</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N">
+                      <label class="form-check-label" for="no">NO</label>
+                    </div>
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-12 mb-3">
                   <div class="form-group">
-                    <label for="sc_estado">Sc Estado: </label>
-                    <input type="text" class="form-control" name="sc_estado" id="sc_estado" placeholder="Sc Estado">
+                    <label for="cat_imagen">Imagen:</label>
+                    <input data-file-img="images" type="file" class="form-control" name="cat_imagen" id="cat_imagen" required placeholder="Imagen" accept="image/*">
                   </div>
                 </div>
 
-
-
+                <div class="col-12 mb-3">
+                  <div class="preview-img" data-img-preview="preview" id="preview"></div>
+                </div>
 
               </div>
 

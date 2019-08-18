@@ -58,15 +58,8 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="pd_descripcion">Pd Descripcion: </label>
-                    <input type="text" class="form-control" name="pd_descripcion" id="pd_descripcion" placeholder="Pd Descripcion" value="{{ $data->pd_descripcion }}" >
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="pd_estado">Pd Estado: </label>
-                    <input type="text" class="form-control" name="pd_estado" id="pd_estado" placeholder="Pd Estado" value="{{ $data->pd_estado }}" >
+                    <label for="pd_descripcion">Descripcion: </label>
+                    <textarea class="form-control ckeditor" name="pd_descripcion" id="pd_descripcion" placeholder="Descripcion" cols="30" rows="6">{{ $data->pd_descripcion }}</textarea>
                   </div>
                 </div>
 

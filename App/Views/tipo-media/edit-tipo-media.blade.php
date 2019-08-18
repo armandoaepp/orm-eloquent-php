@@ -51,15 +51,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="tm_descripcion">Tm Descripcion: </label>
-                    <input type="text" class="form-control" name="tm_descripcion" id="tm_descripcion" placeholder="Tm Descripcion" value="{{ $data->tm_descripcion }}" >
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="tm_estado">Tm Estado: </label>
-                    <input type="text" class="form-control" name="tm_estado" id="tm_estado" placeholder="Tm Estado" value="{{ $data->tm_estado }}" >
+                    <label for="tm_descripcion">Descripcion: </label>
+                    <input type="text" class="form-control" name="tm_descripcion" id="tm_descripcion" placeholder="Descripcion" value="{{ $data->tm_descripcion }}" >
                   </div>
                 </div>
 

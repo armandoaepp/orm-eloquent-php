@@ -62,6 +62,7 @@
             <thead>
               <tr>
                 <th> Sub Categoria Id </th> 
+                <th> Categoria Id </th> 
                 <th> Codigo </th> 
                 <th> Descripcion </th> 
                 <th> Glosa </th> 
@@ -69,7 +70,7 @@
                 <th> Descuento </th> 
                 <th> Precio Descuento </th> 
                 <th> Num Visitas </th> 
-                <th width="80">Estado </th>
+                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -98,6 +99,7 @@
               <tr class="<?php echo $class_estado; ?>">
               
                   <td> {{ $row->sub_categoria_id }} </td> 
+                  <td> {{ $row->categoria_id }} </td> 
                   <td> {{ $row->codigo }} </td> 
                   <td> {{ $row->descripcion }} </td> 
                   <td> {{ $row->glosa }} </td> 

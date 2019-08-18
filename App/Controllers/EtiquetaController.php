@@ -60,6 +60,7 @@ class EtiquetaController
       $message = "";
 
       $eti_descripcion = $request->input('eti_descripcion');
+      $eti_publicar = $request->input('eti_publicar');
       $eti_estado = $request->input('eti_estado');
 
       $etiqueta = Etiqueta::where(["eti_descripcion" => $eti_descripcion])->first();
@@ -68,6 +69,7 @@ class EtiquetaController
       {
         $etiqueta = new Etiqueta();
         $etiqueta->eti_descripcion = $eti_descripcion;
+        $etiqueta->eti_publicar = $eti_publicar;
         $etiqueta->eti_estado = $eti_estado;
         
         $status = $etiqueta->save();
@@ -124,6 +126,7 @@ class EtiquetaController
 
       $id = $request->input('id');
       $eti_descripcion = $request->input('eti_descripcion');
+      $eti_publicar = $request->input('eti_publicar');
       $eti_estado = $request->input('eti_estado');
 
       if (!empty($id))
@@ -131,6 +134,7 @@ class EtiquetaController
         $etiqueta = Etiqueta::find($id);
         $etiqueta->id = $id;
         $etiqueta->eti_descripcion = $eti_descripcion;
+        $etiqueta->eti_publicar = $eti_publicar;
         $etiqueta->eti_estado = $eti_estado;
         
         $status = $etiqueta->save();

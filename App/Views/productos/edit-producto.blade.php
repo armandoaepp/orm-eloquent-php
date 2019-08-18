@@ -52,7 +52,20 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="sub_categoria_id">Sub Categoria Id: </label>
-                    <input type="text" class="form-control" name="sub_categoria_id" id="sub_categoria_id" placeholder="Sub Categoria Id" value="{{ $data->sub_categoria_id }}" >
+                    <select class="custom-select" name="sub_categoria_id" id="sub_categoria_id" placeholder="Sub Categoria Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="categoria_id">Categoria Id: </label>
+                    <select class="custom-select" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -80,28 +93,28 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="precio">Precio: </label>
-                    <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio" value="{{ $data->precio }}" >
+                    <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" value="{{ $data->precio }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="descuento">Descuento: </label>
-                    <input type="text" class="form-control" name="descuento" id="descuento" placeholder="Descuento" value="{{ $data->descuento }}" >
+                    <input type="number" class="form-control" name="descuento" id="descuento" placeholder="Descuento" value="{{ $data->descuento }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="precio_descuento">Precio Descuento: </label>
-                    <input type="text" class="form-control" name="precio_descuento" id="precio_descuento" placeholder="Precio Descuento" value="{{ $data->precio_descuento }}" >
+                    <input type="number" class="form-control" name="precio_descuento" id="precio_descuento" placeholder="Precio Descuento" value="{{ $data->precio_descuento }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_visitas">Num Visitas: </label>
-                    <input type="text" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas" value="{{ $data->num_visitas }}" >
+                    <input type="number" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas" value="{{ $data->num_visitas }}" >
                   </div>
                 </div>
 

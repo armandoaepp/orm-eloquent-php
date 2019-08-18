@@ -51,19 +51,10 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="tm_descripcion">Tm Descripcion: </label>
-                    <input type="text" class="form-control" name="tm_descripcion" id="tm_descripcion" placeholder="Tm Descripcion">
+                    <label for="tm_descripcion">Descripcion: </label>
+                    <input type="text" class="form-control" name="tm_descripcion" id="tm_descripcion" placeholder="Descripcion">
                   </div>
                 </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="tm_estado">Tm Estado: </label>
-                    <input type="text" class="form-control" name="tm_estado" id="tm_estado" placeholder="Tm Estado">
-                  </div>
-                </div>
-
-
 
 
               </div>

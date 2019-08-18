@@ -52,31 +52,53 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="categoria_id">Categoria Id: </label>
-                    <input type="text" class="form-control" name="categoria_id" id="categoria_id" placeholder="Categoria Id" value="{{ $data->categoria_id }}" >
+                    <select class="custom-select" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="sc_descripcion">Sc Descripcion: </label>
-                    <input type="text" class="form-control" name="sc_descripcion" id="sc_descripcion" placeholder="Sc Descripcion" value="{{ $data->sc_descripcion }}" >
+                    <label for="sc_descripcion">Descripcion: </label>
+                    <input type="text" class="form-control" name="sc_descripcion" id="sc_descripcion" placeholder="Descripcion" value="{{ $data->sc_descripcion }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="sc_imagen">Sc Imagen: </label>
-                    <input type="text" class="form-control" name="sc_imagen" id="sc_imagen" placeholder="Sc Imagen" value="{{ $data->sc_imagen }}" >
+                    <label for="email" class="d-block">Publicar </label>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" <?php echo $si; ?> >
+                      <label class="form-check-label" for="si">SI</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N" <?php echo $no; ?> >
+                      <label class="form-check-label" for="no">NO</label>
+                    </div>
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 text-center">
+                  <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="<?php echo $sub_categoria->sc_imagen; ?>">
+                  <img src="<?php echo $sub_categoria->sc_imagen; ?>" class="img-fluid img-view-edit mb-2">
+                </div>
+                <div class="col-12 mb-3">
+                  <hr>
                   <div class="form-group">
-                    <label for="sc_estado">Sc Estado: </label>
-                    <input type="text" class="form-control" name="sc_estado" id="sc_estado" placeholder="Sc Estado" value="{{ $data->sc_estado }}" >
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="sc_imagen">Nueva Imagen</label>
+                      </div>
+                      <input data-file-img="images" type="file" class="form-control" name="sc_imagen" id="sc_imagen" required placeholder="Imagen" accept="image/*">
+                    </div>
                   </div>
                 </div>
 
+                <div class="col-12 mb-3">
+                  <div class="preview-img" data-img-preview="preview" id="preview"></div>
+                </div>
 
               </div>
 
