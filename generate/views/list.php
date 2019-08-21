@@ -25,14 +25,14 @@ $html = '
 @section(\'content\')
 
 <nav class="full-content" aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
+  <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
       <a href="{{ route(\'admin\') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
 
-    <li class="breadcrumb-item active bg-info text-white" aria-current="page">
+    <li class="breadcrumb-item active" aria-current="page">
       <span>
       '.$title.'
       </span>
@@ -75,7 +75,7 @@ $html = '
               <tr>';
               for ($i=0; $i < count( $heads_table) ; $i++)
               {
-                if ( !verificarItemForm($fields_table[$i],$prefix) )
+                if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
                 {
                   $width = '' ;
                   if ($i == 0) {
@@ -97,8 +97,12 @@ $html = '
                 }
               }
 
-    $html .= '
+          $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
+          $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+
+    $html .= '                
                 <th width="80"> Estado </th>
+                <th width="80"> Publicar </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -108,12 +112,30 @@ $html = '
 
             <?php
 
+              /* publicar */
+              $classBtn = "" ;
+              $title    = "" ;
+              $icon_pub = "" ;
+
+              if(!empty($row->'.$prefix_publicar.')){
+                if($row->'.$prefix_publicar.' == "S"){
+                  $classBtn =  "btn-outline-danger";
+                  $title = "Desactivar/Ocultar" ;
+                  $icon_pub = \'<i class="fas fa-times"></i>\';
+                }
+                else {
+                  $classBtn =  "btn-outline-success";
+                  $title = "Publicar" ;
+                  $icon_pub = \'<i class="fas fa-check"></i>\';
+                }
+              }
+
               /* estado */
               $title_estado = "";
               $class_estado = "";
               $class_disabled = "";
 
-              if ($row->estado == 0) {
+              if ($row->'.$prefix_estado.' == 0) {
                 $title_estado = "Recuperar";
                 $class_estado = "row-disabled";
                 $class_disabled = "disabled";
@@ -124,33 +146,48 @@ $html = '
 
             ?>
 
-              <tr class="<?php echo $class_estado; ?>">
-              ';
+              <tr class="<?php echo $class_estado; ?>">'. PHP_EOL;
 
               for ($i=0; $i < count( $fields_table) ; $i++)
               {
-                if ( !verificarItemForm($fields_table[$i]) )
+                if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
                 {
-                  $html .= '
-                  <td> {{ $row->'.$fields_table[$i].' }} </td> ';
+                  $html .= '                <td> {{ $row->'.$fields_table[$i].' }} </td> '. PHP_EOL;
                 }
 
               }
-            $html .= '
-                <td>
-                  <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
-                </td>
+                           
+              $html .= '                <td>'. PHP_EOL;
+              $html .= '                  <span class="badge badge-pill <?php echo $status[$row->'.$prefix_estado.']["class"] ?>"> '. PHP_EOL;
+              $html .= '                    <?php echo $status[$row->'.$prefix_estado.']["title"] ?> '. PHP_EOL;
+              $html .= '                  </span>'. PHP_EOL;
+              $html .= '                </td>'. PHP_EOL;
+
+              if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+              {
+
+                $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+                $html .= '                <td class="text-center">' . PHP_EOL;
+                $html .= '                 <span class="sr-only"><?php echo $row->'. $name_publicar .'; ?></span>' . PHP_EOL;
+                $html .= '                 <button onclick="modalPublicar(<?php echo $row->'. $fields_table[0] .' ?>, `<?php echo $row->'. $fields_table[1] .' ?>` ,`<?php echo $title ?>`, `<?php echo $row->'. $name_publicar .';  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.\' \' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >' . PHP_EOL;
+                $html .= '                   <?php echo $icon_pub ;?>' . PHP_EOL;
+                $html .= '                 </button>' . PHP_EOL;
+                $html .= '                </td>' . PHP_EOL;
+              }
+
+
+            $html .= '                
                 <td nowrap>
                   <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
                     href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                   <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete({{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                  onclick="modalDelete({{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
-                    {{ $row->estado }}
+                    {{ $row->'.$prefix_estado.' }}
                   </span>
                 </td>
 

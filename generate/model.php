@@ -18,7 +18,7 @@ function generateModel($table_name, $class_name, $entities = array() )
 
     protected $table = "'.$table_name.'";
 
-    protected $primaryKey = ["'.$entities[0]->Field.'"];
+    protected $primaryKey = "'.$entities[0]->Field.'";
 
     protected $guarded = ["'.$entities[0]->Field.'"];
 

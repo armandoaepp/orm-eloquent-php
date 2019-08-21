@@ -13,7 +13,7 @@
 @section('content')
 
 <nav class="full-content" aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
+  <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
       <a href="{{ route('admin') }}">
         <i class="fas fa-home"></i> Home
@@ -21,12 +21,12 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-sub categorias') }}" class="">
-      Sub Categorias
+      <a href="{{ route('admin-sub-categorias') }}" class="">
+        <i class="fa fa-align-justify"></i> Sub Categorias
       </a>
     </li>
 
-    <li class="breadcrumb-item active bg-info text-white" aria-current="page">
+    <li class="breadcrumb-item active" aria-current="page">
       <span>
       Nuevo Sub Categoria
       </span>
@@ -45,7 +45,7 @@
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('sub categoria-save') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('sub-categoria-save') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
@@ -95,7 +95,7 @@
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-sub categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-sub-categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>

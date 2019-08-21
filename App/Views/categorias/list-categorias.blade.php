@@ -13,14 +13,14 @@
 @section('content')
 
 <nav class="full-content" aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
+  <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
       <a href="{{ route('admin') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
 
-    <li class="breadcrumb-item active bg-info text-white" aria-current="page">
+    <li class="breadcrumb-item active" aria-current="page">
       <span>
       Categorias
       </span>
@@ -61,8 +61,10 @@
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
               <tr>
-                <th> Descripcion </th> 
+                <th width="60"> Id </th> 
+                <th> Descripcion </th>                 
                 <th width="80"> Estado </th>
+                <th width="80"> Publicar </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -72,12 +74,30 @@
 
             <?php
 
+              /* publicar */
+              $classBtn = "" ;
+              $title    = "" ;
+              $icon_pub = "" ;
+
+              if(!empty($row->cat_publicar)){
+                if($row->cat_publicar == "S"){
+                  $classBtn =  "btn-outline-danger";
+                  $title = "Desactivar/Ocultar" ;
+                  $icon_pub = '<i class="fas fa-times"></i>';
+                }
+                else {
+                  $classBtn =  "btn-outline-success";
+                  $title = "Publicar" ;
+                  $icon_pub = '<i class="fas fa-check"></i>';
+                }
+              }
+
               /* estado */
               $title_estado = "";
               $class_estado = "";
               $class_disabled = "";
 
-              if ($row->estado == 0) {
+              if ($row->cat_estado == 0) {
                 $title_estado = "Recuperar";
                 $class_estado = "row-disabled";
                 $class_disabled = "disabled";
@@ -89,25 +109,31 @@
             ?>
 
               <tr class="<?php echo $class_estado; ?>">
-              
-                  <td> {{ $row->cat_descripcion }} </td> 
-                  <td> {{ $row->cat_imagen }} </td> 
-                  <td> {{ $row->cat_publicar }} </td> 
-                  <td> {{ $row->cat_estado }} </td> 
+                <td> {{ $row->id }} </td> 
+                <td> {{ $row->cat_descripcion }} </td> 
                 <td>
-                  <span class="badge badge-pill <?php echo $status[$row->estado]["class"] ?>"> <?php echo $status[$row->estado]["title"] ?> </span>
+                  <span class="badge badge-pill <?php echo $status[$row->cat_estado]["class"] ?>"> 
+                    <?php echo $status[$row->cat_estado]["title"] ?> 
+                  </span>
                 </td>
+                <td class="text-center">
+                 <span class="sr-only"><?php echo $row->cat_publicar; ?></span>
+                 <button onclick="modalPublicar(<?php echo $row->id ?>, `<?php echo $row->cat_descripcion ?>` ,`<?php echo $title ?>`, `<?php echo $row->cat_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
+                   <?php echo $icon_pub ;?>
+                 </button>
+                </td>
+                
                 <td nowrap>
                   <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
                     href="{{ route('categoria-edit',['id' => $row->id]) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                   <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete({{$row->id}}, `{{$row->cat_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->estado}}`);" title="<?php echo $title_estado; ?>">
+                  onclick="modalDelete({{$row->id}}, `{{$row->cat_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->cat_estado}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
-                    {{ $row->estado }}
+                    {{ $row->cat_estado }}
                   </span>
                 </td>
 

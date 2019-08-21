@@ -1,10 +1,18 @@
 <?php
 
-function fieldsNotSaveInController($item)
+function fieldsNotSaveInController($item, $prefix = "")
 {
+
+  if(!empty($prefix))
+  {
+    $item = revemoPrefix($item, $prefix)  ;
+  }
+
+  //echo $item ." - $prefix - fieldsNotSaveInController <br>" ; 
+
   $item = strtolower( trim($item) ) ;
 
-  $items = array('created_at','updated_at','id') ;
+  $items = array('id', 'imagen', 'created_at','updated_at') ;
 
   if ( in_array($item, $items) )
   {
@@ -14,8 +22,32 @@ function fieldsNotSaveInController($item)
 
 }
 
-function fieldsNotUpdateInController($item)
+function fieldsNotUpdateInController($item, $prefix = "")
 {
+  if(!empty($prefix))
+  {
+    $item = revemoPrefix($item, $prefix)  ;
+  }
+
+  $item = strtolower( trim($item) ) ;
+
+  $items = array('imagen', 'estado','status','created_at','updated_at') ;
+
+  if ( in_array($item, $items) )
+  {
+    return true ;
+  }
+  return false ;
+
+}
+
+function fieldsNotUpdateClassInController($item, $prefix = "")
+{
+  if(!empty($prefix))
+  {
+    $item = revemoPrefix($item, $prefix)  ;
+  }
+
   $item = strtolower( trim($item) ) ;
 
   $items = array('estado','status','created_at','updated_at') ;
@@ -49,9 +81,14 @@ function verificarItemForm($item, $prefix = ""){
 }
 
 /* items que no se mostraran en las vista */
-function verificarItemNotListTable($item){
+function verificarItemNotListTable($item, $prefix = ""){
 
   $item = strtolower( trim($item) ) ;
+
+  if(!empty($prefix))
+  {
+    $item = revemoPrefix($item, $prefix)  ;
+  }
 
   $items = array('estado', 'created_at', 'updated_at', 'imagen', 'url', 'publicar') ;
 

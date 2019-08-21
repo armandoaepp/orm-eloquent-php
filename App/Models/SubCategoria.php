@@ -7,7 +7,7 @@
 
     protected $table = "sub_categoria";
 
-    protected $primaryKey = ["id"];
+    protected $primaryKey = "id";
 
     protected $guarded = ["id"];
 

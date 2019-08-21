@@ -2,6 +2,13 @@
 
 function generateController($table_name, $class_name, $entities = array() )
 {
+  $prefix =  generatePrefixTable( $table_name ) ;
+  $prefix = !empty($prefix) ? $prefix."_" : "" ;
+
+  $table_amigable_sin_guion = str_replace ('-', ' ', $table_name);
+  $table_plural = str_plural($table_amigable_sin_guion) ;
+  $url_friendly_plural = str_replace (' ', '-', $table_plural);
+
   // var_dump($entities);
   $fields_col = array_column($entities, 'Field');
 
@@ -29,11 +36,14 @@ function generateController($table_name, $class_name, $entities = array() )
   $str .= 'use App\Models\\'.$class_name.'; '. PHP_EOL ;
 
   $str .= 'use App\Traits\BitacoraTrait;'. PHP_EOL ;
+  $str .= 'use App\Traits\UploadFiles;'. PHP_EOL ;
 
   $str .= ''. PHP_EOL ;
   $str .= 'class '.$class_controller.''. PHP_EOL ;
   $str .= '{'. PHP_EOL ;
-  $str .= '  use BitacoraTrait;'. PHP_EOL ;
+  $str .= '  use BitacoraTrait, UploadFiles;'. PHP_EOL ;
+  $str .= ''. PHP_EOL ;  
+  $str .= '  protected $prefixView = "admin";'. PHP_EOL ;
   $str .= ''. PHP_EOL ;  
   $str .= '  public function __construct()'. PHP_EOL ;
   $str .= '  {'. PHP_EOL  ;
@@ -43,11 +53,11 @@ function generateController($table_name, $class_name, $entities = array() )
 
   $str .=  getAll($table_name, $class_name, $entities);
   $str .=  newRegister($table_name, $class_name, $entities);
-  $str .=  save($table_name, $class_name, $entities);
+  $str .=  save($table_name, $class_name, $entities, $prefix, $url_friendly_plural);
   $str .=  edit($table_name, $class_name, $entities);
-  $str .=  update($table_name, $class_name, $entities);
-  $str .=  delete($table_name, $class_name, $entities);
-  $str .=  find($table_name, $class_name, $entities);
+  $str .=  update($table_name, $class_name, $entities,$prefix, $url_friendly_plural);
+  $str .=  delete($table_name, $class_name, $entities, $prefix);
+  $str .=  find($table_name, $class_name, $entities, $prefix);
 
   if ( in_array('estado', $fields_col) )
   {

@@ -10,10 +10,13 @@ namespace App\Controllers;
 
 use App\Models\Categoria; 
 use App\Traits\BitacoraTrait;
+use App\Traits\UploadFiles;
 
 class CategoriaController
 {
-  use BitacoraTrait;
+  use BitacoraTrait, UploadFiles;
+
+  protected $prefixView = "admin";
 
   public function __construct()
   {
@@ -27,7 +30,7 @@ class CategoriaController
 
       $data = Categoria::get();
 
-      return view($prefixView.'admin.categorias.list-categorias')->with(compact('data'));
+      return view($this->prefixView.'.categorias.list-categorias')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -42,7 +45,7 @@ class CategoriaController
     try
     {
 
-      return view('admin.categorias.new-categoria');
+      return view($this->prefixView.'.categorias.new-categoria');
     
     }
     catch (Exception $e)
@@ -60,7 +63,7 @@ class CategoriaController
       $message = "";
 
       $cat_descripcion = $request->input('cat_descripcion');
-      $cat_imagen = $request->input('cat_imagen');
+      $cat_imagen = $request->file('cat_imagen');
       $cat_publicar = $request->input('cat_publicar');
       $cat_estado = $request->input('cat_estado');
 
@@ -68,6 +71,14 @@ class CategoriaController
 
       if (empty($categoria))
       {
+
+        ##################################################################################
+        $path_relative = "images/categorias/" ;
+        $name_file     = "cat_imagen";
+        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
+        $cat_imagen    = $image_url ;
+        ##################################################################################
+
         $categoria = new Categoria();
         $categoria->cat_descripcion = $cat_descripcion;
         $categoria->cat_imagen = $cat_imagen;
@@ -106,9 +117,9 @@ class CategoriaController
     try
     {
 
-      $data = Categoria::find( $id );
+      $categoria = Categoria::find( $id );
 
-      return view('admin.categorias.edit-categoria')->with(compact('data'));
+      return view($this->prefixView.'.categorias.edit-categoria')->with(compact('categoria'));
     
     }
     catch (Exception $e)
@@ -128,23 +139,42 @@ class CategoriaController
 
       $id = $request->input('id');
       $cat_descripcion = $request->input('cat_descripcion');
-      $cat_imagen = $request->input('cat_imagen');
+      $cat_imagen = $request->file('cat_imagen');
+      $img_bd     = $request->input('img_bd');
       $cat_publicar = $request->input('cat_publicar');
-      $cat_estado = $request->input('cat_estado');
 
       if (!empty($id))
       {
+        ##################################################################################
+        $path_relative = "images/categorias/" ;
+        $name_file     = "cat_imagen";
+        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
+        
+        if(empty($image_url))
+        {
+          $image_url = $img_bd ;
+        }
+        
+        $cat_imagen    = $image_url ;
+        ##################################################################################
+
         $categoria = Categoria::find($id);
         $categoria->id = $id;
         $categoria->cat_descripcion = $cat_descripcion;
         $categoria->cat_imagen = $cat_imagen;
         $categoria->cat_publicar = $cat_publicar;
-        $categoria->cat_estado = $cat_estado;
         
         $status = $categoria->save();
         
         # TABLE BITACORA
         $this->savedBitacoraTrait( $categoria, "update") ;
+        
+        # remove imagen
+        if($cat_imagen != $img_bd && $status )
+        {
+          if (file_exists($img_bd))
+            unlink($img_bd) ;
+        }
         
         $message = "Operancion Correcta";
         
@@ -190,7 +220,7 @@ class CategoriaController
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $categoria->estado = $estado;
+          $categoria->cat_estado = $estado;
           $categoria->save();
             
         # TABLE BITACORA

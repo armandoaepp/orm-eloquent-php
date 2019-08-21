@@ -2,17 +2,18 @@
 function generateEditView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_amigable_no_guion = str_replace ('-', ' ', $table_amigable);
+  $table_amigable_sin_guion = str_replace ('-', ' ', $table_amigable);
 
-  $table_plural = str_plural($table_amigable_no_guion) ;
+  $table_plural = str_plural($table_amigable_sin_guion) ;
 
+  $url_friendly_plural = str_replace (' ', '-', $table_plural);
   // $title = ucwords(str_replace ('-', ' ', $title_lower));
   $title = ucwords($table_plural);
 
   $prefix =  generatePrefixTable( $table_name ) ;
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
-
-$html = '
+$html = '';
+$html .= '
 <?php
   $sidebar = array(
     "sidebar_class"  => "",
@@ -22,12 +23,36 @@ $html = '
 
 ?>
 
+' ;
+
+if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+{
+
+  $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+
+$html .= '
+<?php
+  $publicar = trim($'. $table_name .'->'.$name_publicar.');
+
+  $si = "";
+  $no = "";
+
+  if ($publicar == "S") {
+      $si = "checked=\'checked\'";
+  } elseif ($publicar == "N") {
+      $no = "checked=\'checked\'";
+  }
+?>'. PHP_EOL ;
+
+}
+
+$html .= '
 @extends(\'layouts.app-admin\')
 
 @section(\'content\')
 
 <nav class="full-content" aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-shape shadow-sm radius-0">
+  <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
       <a href="{{ route(\'admin\') }}">
         <i class="fas fa-home"></i> Home
@@ -35,14 +60,14 @@ $html = '
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="">
-      '.$title.'
+      <a href="{{ route(\'admin-'.$url_friendly_plural.'\') }}" class="">
+        <i class="fa fa-align-justify"></i> '.$title.'
       </a>
     </li>
 
-    <li class="breadcrumb-item active bg-info text-white" aria-current="page">
+    <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Editar '.ucwords($table_amigable_no_guion).'
+      Editar '.ucwords($table_amigable_sin_guion).'
       </span>
     </li>
   </ol>
@@ -54,14 +79,14 @@ $html = '
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Editar '.ucwords($table_amigable_no_guion).'
+          <i class="fa fa-align-justify"></i> Editar '.ucwords($table_amigable_sin_guion).'
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route(\''.$table_amigable_no_guion.'-update\') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route(\''.$table_amigable.'-update\') }}" method="POST" enctype="multipart/form-data">
               @csrf
-              <input type="hidden" class="form-control" name="id" id="id" value="{{ $data->'.$fields_table[0].' }}">
+              <input type="hidden" class="form-control" name="id" id="id" value="{{ $'. $table_name .'->'.$fields_table[0].' }}">
               <div class="row">' . PHP_EOL;
 
               for ($i=1; $i < count( $fields_table) ; $i++)
@@ -84,7 +109,7 @@ $html = '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <textarea class="form-control ckeditor" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '" cols="30" rows="6">{{ $data->'.$fields_table[$i].' }}</textarea>' . PHP_EOL;
+                    $html .= '                    <textarea class="form-control ckeditor" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '" cols="30" rows="6">{{ $'. $table_name .'->'.$fields_table[$i].' }}</textarea>' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
@@ -106,57 +131,61 @@ $html = '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ $data->'.$fields_table[$i].' }}" >' . PHP_EOL;
+                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ $'. $table_name .'->'.$fields_table[$i].' }}" >' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
                   }
 
                 }
-                elseif(strpos(strtolower($fields_table[$i]), "publicar") )
-                {
 
-                  $html .= '                <div class="col-md-12">'.PHP_EOL;
-                  $html .= '                  <div class="form-group">'.PHP_EOL;
-                  $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
-                  $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
-                  $html .= '                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" <?php echo $si; ?> >'.PHP_EOL;
-                  $html .= '                      <label class="form-check-label" for="si">SI</label>'.PHP_EOL;
-                  $html .= '                    </div>'.PHP_EOL;
-                  $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
-                  $html .= '                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N" <?php echo $no; ?> >'.PHP_EOL;
-                  $html .= '                      <label class="form-check-label" for="no">NO</label>'.PHP_EOL;
-                  $html .= '                    </div>'.PHP_EOL;
-                  $html .= '                  </div>'.PHP_EOL;
-                  $html .= '                </div>'.PHP_EOL;
-                  $html .= '' . PHP_EOL;
+              }
 
-                }
+              // elseif(strpos(strtolower($fields_table[$i]), "publicar") )
+              if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+              {
+                $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+
+                $html .= '                <div class="col-md-12">'.PHP_EOL;
+                $html .= '                  <div class="form-group">'.PHP_EOL;
+                $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
+                $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
+                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="si" value="S" <?php echo $si; ?> >'.PHP_EOL;
+                $html .= '                      <label class="form-check-label" for="si">SI</label>'.PHP_EOL;
+                $html .= '                    </div>'.PHP_EOL;
+                $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
+                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="no" value="N" <?php echo $no; ?> >'.PHP_EOL;
+                $html .= '                      <label class="form-check-label" for="no">NO</label>'.PHP_EOL;
+                $html .= '                    </div>'.PHP_EOL;
+                $html .= '                  </div>'.PHP_EOL;
+                $html .= '                </div>'.PHP_EOL;
+                $html .= '' . PHP_EOL;
+
               }
 
               if(in_array("imagen", $fields_table) || in_array($prefix."imagen", $fields_table))
               {
-                  $file_imagen = (in_array("imagen", $fields_table) ) ? 'imagen' : $prefix."imagen" ;
+                  $name_file_imagen = (in_array("imagen", $fields_table) ) ? 'imagen' : $prefix."imagen" ;
 
 
                   $html .= '                <div class="col-md-12 text-center">' . PHP_EOL ;
-                  $html .= '                  <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="<?php echo $'. $table_name .'->'.$file_imagen.'; ?>">' . PHP_EOL ;
-                  $html .= '                  <img src="<?php echo $'. $table_name .'->'.$file_imagen.'; ?>" class="img-fluid img-view-edit mb-2">' . PHP_EOL ;
+                  $html .= '                  <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="{{ $'. $table_name .'->'.$name_file_imagen.' }}">' . PHP_EOL ;
+                  $html .= '                  <img src="{{ url($'. $table_name .'->'.$name_file_imagen.') }}" class="img-fluid img-view-edit mb-2">' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL ;
                   $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
                   $html .= '                  <hr>' . PHP_EOL ;
                   $html .= '                  <div class="form-group">' . PHP_EOL ;
                   $html .= '                    <div class="input-group mb-2">' . PHP_EOL ;
                   $html .= '                      <div class="input-group-prepend">' . PHP_EOL ;
-                  $html .= '                        <label class="input-group-text" for="'.$file_imagen.'">Nueva Imagen</label>' . PHP_EOL ;
+                  $html .= '                        <label class="input-group-text" for="'.$name_file_imagen.'">Nueva Imagen</label>' . PHP_EOL ;
                   $html .= '                      </div>' . PHP_EOL ;
-                  $html .= '                      <input data-file-img="images" type="file" class="form-control" name="'.$file_imagen.'" id="'.$file_imagen.'" required placeholder="Imagen" accept="image/*">' . PHP_EOL ;
+                  $html .= '                      <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="'.$name_file_imagen.'" id="'.$name_file_imagen.'" placeholder="Imagen" accept="image/*">' . PHP_EOL ;
                   $html .= '                    </div>' . PHP_EOL ;
                   $html .= '                  </div>' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL ;
                   $html .= '' . PHP_EOL ;
                   $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
-                  $html .= '                  <div class="preview-img" data-img-preview="preview" id="preview"></div>' . PHP_EOL ;
+                  $html .= '                  <div class="preview-img" data-img-preview="preview-images-id"></div>' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL;
 
               }
@@ -167,7 +196,7 @@ $html = '
 
               <div class="w-100 text-center">
 
-                <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route(\'admin-'.$url_friendly_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>
