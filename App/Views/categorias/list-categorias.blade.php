@@ -118,7 +118,7 @@
                 </td>
                 <td class="text-center">
                  <span class="sr-only"><?php echo $row->cat_publicar; ?></span>
-                 <button onclick="modalPublicar(<?php echo $row->id ?>, `<?php echo $row->cat_descripcion ?>` ,`<?php echo $title ?>`, `<?php echo $row->cat_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
+                 <button onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->cat_descripcion ?>` ,`<?php echo $title ?>`, `<?php echo $row->cat_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
                    <?php echo $icon_pub ;?>
                  </button>
                 </td>
@@ -129,7 +129,7 @@
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                   <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete({{$row->id}}, `{{$row->cat_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->cat_estado}}`);" title="<?php echo $title_estado; ?>">
+                  onclick="modalDelete(event,{{$row->id}}, `{{$row->cat_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->cat_estado}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
@@ -154,11 +154,6 @@
 </div>
 
 <!-- end:: Content -->
-
-
-
-
-
 @endsection
 
 @section('modal')
@@ -213,6 +208,39 @@
   </div>
 </form>
 
+<!-- Modal Publicar -->
+<form id="formModalPublicar">
+  <div class="modal fade" id="myModalPublicar" tabindex="-1" role="dialog" aria-labelledby="myModalPublicarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitlePublicar">
+            <span> Publicar </span>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          @csrf
+          <input type="hidden" name="idPublicar" id="idPublicar">
+          <input type="hidden" name="publicar" id="publicar">
+          <div id="dataTextModalPublicar">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-outline-danger" id="btn-send-publicar"> Desactivar</button>
+        </div>
+        <div class="modal-body py-0">
+          <div id="alertModalPublicar" class="text-danger pb-3 boder-top"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
 
 @endsection
 
@@ -269,7 +297,10 @@
   })(jQuery);
 
   // modal DELETE
-  function modalDelete(id, textRow, title, estado) {
+  function modalDelete(event, id, textRow, title, estado) {
+
+    event.preventDefault();
+    
     $("#idRowModal").val(id);
     $("#accion").val("delete");
 
@@ -308,7 +339,7 @@
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api_pub = "{{ route('categoria-publucar') }}";
+      let url_api_pub = "{{ route('categoria-publish') }}";
 
       axios({
         method: "post",
@@ -343,7 +374,10 @@
   })(jQuery);
 
   // modal PUBLICAR
-  function modalPublicar(id, textRow, title, publicar) {
+  function modalPublicar(event, id, textRow, title, publicar) {
+    
+    event.preventDefault();
+
     $("#idPublicar").val(id);
     $("#publicar").val(publicar);
 

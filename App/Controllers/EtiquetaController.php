@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\SubCategoria; 
+use App\Models\Etiqueta; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class SubCategoriaController
+class EtiquetaController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class SubCategoriaController
     try
     {
 
-      $data = SubCategoria::get();
+      $data = Etiqueta::get();
 
-      return view($this->prefixView.'.sub-categorias.list-sub-categorias')->with(compact('data'));
+      return view($this->prefixView.'.etiquetas.list-etiquetas')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -45,7 +45,7 @@ class SubCategoriaController
     try
     {
 
-      return view($this->prefixView.'.sub-categorias.new-sub-categoria');
+      return view($this->prefixView.'.etiquetas.new-etiqueta');
     
     }
     catch (Exception $e)
@@ -62,37 +62,26 @@ class SubCategoriaController
       $status  = false;
       $message = "";
 
-      $categoria_id = $request->input('categoria_id');
-      $sc_descripcion = $request->input('sc_descripcion');
-      $sc_imagen = $request->file('sc_imagen');
-      $sc_publicar = $request->input('sc_publicar');
-      $sc_estado = !empty($request->input('sc_estado')) ? $request->input('sc_estado') : 1;
+      $eti_descripcion = $request->input('eti_descripcion');
+      $eti_publicar = $request->input('eti_publicar');
+      $eti_estado = $request->input('eti_estado');
 
-      $sub_categoria = SubCategoria::where(["categoria_id" => $categoria_id])->first();
+      $etiqueta = Etiqueta::where(["eti_descripcion" => $eti_descripcion])->first();
 
-      if (empty($sub_categoria))
+      if (empty($etiqueta))
       {
 
-        ##################################################################################
-        $path_relative = "images/sub_categorias/" ;
-        $name_file     = "sc_imagen";
-        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
-        $sc_imagen    = $image_url ;
-        ##################################################################################
-
-        $sub_categoria = new SubCategoria();
-        $sub_categoria->categoria_id = $categoria_id;
-        $sub_categoria->sc_descripcion = $sc_descripcion;
-        $sub_categoria->sc_imagen = $sc_imagen;
-        $sub_categoria->sc_publicar = $sc_publicar;
-        $sub_categoria->sc_estado = $sc_estado;
+        $etiqueta = new Etiqueta();
+        $etiqueta->eti_descripcion = $eti_descripcion;
+        $etiqueta->eti_publicar = $eti_publicar;
+        $etiqueta->eti_estado = $eti_estado;
         
-        $status = $sub_categoria->save();
+        $status = $etiqueta->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $sub_categoria, "created") ;
+        $this->savedBitacoraTrait( $etiqueta, "created") ;
         
-        $id = $sub_categoria->id;
+        $id = $etiqueta->id;
         
         $message = "Operancion Correcta";
         
@@ -102,9 +91,9 @@ class SubCategoriaController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$sub_categoria],];
+      $data = ["message" => $message, "status" => $status, "data" => [$etiqueta],];
     
-      return redirect()->route('admin-sub-categorias');
+      return redirect()->route('admin-etiquetas');
     
     }
     catch (Exception $e)
@@ -119,9 +108,9 @@ class SubCategoriaController
     try
     {
 
-      $sub_categoria = SubCategoria::find( $id );
+      $etiqueta = Etiqueta::find( $id );
 
-      return view($this->prefixView.'.sub-categorias.edit-sub-categoria')->with(compact('sub_categoria'));
+      return view($this->prefixView.'.etiquetas.edit-etiqueta')->with(compact('etiqueta'));
     
     }
     catch (Exception $e)
@@ -140,45 +129,20 @@ class SubCategoriaController
       $message = "";
 
       $id = $request->input('id');
-      $categoria_id = $request->input('categoria_id');
-      $sc_descripcion = $request->input('sc_descripcion');
-      $sc_imagen = $request->file('sc_imagen');
-      $img_bd     = $request->input('img_bd');
-      $sc_publicar = $request->input('sc_publicar');
+      $eti_descripcion = $request->input('eti_descripcion');
+      $eti_publicar = $request->input('eti_publicar');
 
       if (!empty($id))
       {
-        ##################################################################################
-        $path_relative = "images/sub_categorias/" ;
-        $name_file     = "sc_imagen";
-        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
+        $etiqueta = Etiqueta::find($id);
+        $etiqueta->id = $id;
+        $etiqueta->eti_descripcion = $eti_descripcion;
+        $etiqueta->eti_publicar = $eti_publicar;
         
-        if(empty($image_url))
-        {
-          $image_url = $img_bd ;
-        }
-        
-        $sc_imagen    = $image_url ;
-        ##################################################################################
-
-        $sub_categoria = SubCategoria::find($id);
-        $sub_categoria->id = $id;
-        $sub_categoria->categoria_id = $categoria_id;
-        $sub_categoria->sc_descripcion = $sc_descripcion;
-        $sub_categoria->sc_imagen = $sc_imagen;
-        $sub_categoria->sc_publicar = $sc_publicar;
-        
-        $status = $sub_categoria->save();
+        $status = $etiqueta->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $sub_categoria, "update") ;
-        
-        # remove imagen
-        if($sc_imagen != $img_bd && $status )
-        {
-          if (file_exists($img_bd))
-            unlink($img_bd) ;
-        }
+        $this->savedBitacoraTrait( $etiqueta, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -190,7 +154,7 @@ class SubCategoriaController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-sub-categorias');;
+      return redirect()->route('admin-etiquetas');;
     
     }
     catch (Exception $e)
@@ -217,33 +181,33 @@ class SubCategoriaController
         $estado = 1;
       }
 
-      $sub_categoria = SubCategoria::find( $id ) ;
+      $etiqueta = Etiqueta::find( $id ) ;
 
-      if (!empty($sub_categoria))
+      if (!empty($etiqueta))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $sub_categoria->sc_estado = $estado;
-          $sub_categoria->save();
+          $etiqueta->eti_estado = $estado;
+          $etiqueta->save();
             
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $sub_categoria, "update estado: ".$estado) ;
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $etiqueta, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $sub_categoria->forceDelete();
+          $etiqueta->forceDelete();
         
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $sub_categoria, "delete registro") ;
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $etiqueta, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
         
-        $data = $sub_categoria;
+         $data = $plan;
         
       }
       else
@@ -293,19 +257,19 @@ class SubCategoriaController
           $message = "Registro Ocultado al público";
         }
 
-        $sub_categoria = SubCategoria::find($id);
-        if (!empty($sub_categoria))
+        $etiqueta = Etiqueta::find($id);
+        if ($etiqueta)
         {
-          $sub_categoria->sc_publicar = $publicar;
-          $sub_categoria->save();
+          $etiqueta->eti_publicar = $publicar;
+          $etiqueta->save();
 
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $sub_categoria, "update publicar: ".$publicar) ;
+          $this->savedBitacoraTrait( $etiqueta, "update publicar: ".$publicar) ;
 
           $status = true;
-          $message = $message;
+         $message = $message;
 
-         $data = $sub_categoria;
+         $data = $categoria;
         }
         else
         {
@@ -346,7 +310,7 @@ class SubCategoriaController
     {
       extract($params) ;
 
-      $data = SubCategoria::where("sc_publicar", $sc_publicar)->get();
+      $data = Etiqueta::where("eti_publicar", $eti_publicar)->get();
 
       return $data;
     
@@ -363,7 +327,7 @@ class SubCategoriaController
     try
     {
 
-      $data = SubCategoria::find($id);
+      $data = Etiqueta::find($id);
 
       return $data;
     

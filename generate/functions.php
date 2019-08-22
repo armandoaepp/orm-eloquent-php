@@ -76,13 +76,21 @@ function save($table_name, $class_name, $entities = array(), $prefix = "", $url_
   {
     if (!fieldsNotSaveInController($entity->Field, $prefix) && $index > 0 )
     {
-      $str  .= '      $'.$entity->Field .' = $request->input(\''.$entity->Field .'\');'. PHP_EOL;
+      if($entity->Field == "estado" || $entity->Field == $prefix."estado")
+      {
+        $str  .= '      $'.$entity->Field .' = !empty($request->input(\''.$entity->Field .'\')) ? $request->input(\''.$entity->Field .'\') : 1;'. PHP_EOL;  
+      }
+      else
+      {
+        $str  .= '      $'.$entity->Field .' = $request->input(\''.$entity->Field .'\');'. PHP_EOL;
+      }
     }
     elseif($entity->Field == "imagen" || $entity->Field == $prefix."imagen")
     {
       $str  .= '      $'.$entity->Field .' = $request->file(\''.$entity->Field .'\');'. PHP_EOL; 
       $name_imagen = $entity->Field ; 
     }
+    
   }
 
  
@@ -113,6 +121,7 @@ function save($table_name, $class_name, $entities = array(), $prefix = "", $url_
     {
       $str  .= '        $'.$table_name.'->'.$entity->Field .' = $'.$entity->Field .';'. PHP_EOL;
     }
+    
   }
 
   $str  .= '        ' . PHP_EOL;
@@ -329,8 +338,8 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '            ' . PHP_EOL;
 
-  $str  .= '        # TABLE BITACORA' . PHP_EOL;
-  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "update estado: ".$estado) ;' . PHP_EOL;
+  $str  .= '          # TABLE BITACORA' . PHP_EOL;
+  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update estado: ".$estado) ;' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
 
   $str  .= '          $status = true;' . PHP_EOL;
@@ -339,15 +348,15 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '        }elseif( $historial == "no"  ) {' . PHP_EOL;
   $str  .= '          $'.$table_name.'->forceDelete();' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
-  $str  .= '        # TABLE BITACORA' . PHP_EOL;
-  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "delete registro") ;' . PHP_EOL;
+  $str  .= '          # TABLE BITACORA' . PHP_EOL;
+  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "delete registro") ;' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
 
   $str  .= '          $status = true;' . PHP_EOL;
   $str  .= '          $message = "Registro eliminado de la base de datos";' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
-  $str  .= '         $data = $plan;' . PHP_EOL;
+  $str  .= '        $data = $'.$table_name.';' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
   $str  .= '      }' . PHP_EOL;
   $str  .= '      else' . PHP_EOL;
@@ -486,7 +495,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
 
   $str  .= '' . PHP_EOL;  
   $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
-  $str  .= '        if ($'.$table_name.')' . PHP_EOL;
+  $str  .= '        if (!empty($'.$table_name.'))' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
   $str  .= '          $'.$table_name.'->'. $field_publicar .' = $publicar;' . PHP_EOL;
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
@@ -496,9 +505,9 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar: ".$publicar) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;        
   $str  .= '          $status = true;' . PHP_EOL;
-  $str  .= '         $message = $message;' . PHP_EOL;
+  $str  .= '          $message = $message;' . PHP_EOL;
   $str  .= '' . PHP_EOL;        
-  $str  .= '         $data = $categoria;' . PHP_EOL;
+  $str  .= '         $data = $'.$table_name.';' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
   $str  .= '        else' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;

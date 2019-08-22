@@ -1,20 +1,4 @@
-<?php
-function generateIndex($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
-{
-  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
 
-  $table_sin_guion = str_replace ('-', ' ', $table_amigable);
-
-  $table_plural = str_plural($table_amigable) ;
-  $title = ucwords(str_replace ('-', ' ', $table_plural));
-
-  $prefix =  generatePrefixTable( $table_name ) ;
-  $prefix = !empty($prefix) ? $prefix."_" : "" ;
-
-  // field columns($entities);
-  $fields_col = array_column($entities, 'Field');
-
-$html = '
 <?php
   $sidebar = array(
     "sidebar_class"  => "",
@@ -24,21 +8,21 @@ $html = '
 
 ?>
 
-@extends(\'layouts.app-admin\')
+@extends('layouts.app-admin')
 
-@section(\'content\')
+@section('content')
 
 <nav class="full-content" aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
-      <a href="{{ route(\'admin\') }}">
+      <a href="{{ route('admin') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      '.$title.'
+      Etiquetas
       </span>
     </li>
   </ol>
@@ -48,11 +32,11 @@ $html = '
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-etiquetas') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('etiqueta-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -68,7 +52,7 @@ $html = '
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
+          <i class="fa fa-align-justify"></i> Lista de etiquetas
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -76,35 +60,9 @@ $html = '
           <!--begin: Datatable -->
           <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
             <thead>
-              <tr>';
-              for ($i=0; $i < count( $heads_table) ; $i++)
-              {
-                if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
-                {
-                  $width = '' ;
-                  if ($i == 0) {
-                    $width = ' width="60"' ;
-                  }
-
-                  // ==== Start remove prefix
-                  $field_item = $heads_table[$i] ;
-                  if(!empty($prefix))
-                  {
-                    $field_item = revemoPrefix($field_item, $prefix)  ;
-                  }
-                  $field_item = toCamelCase($field_item);
-
-                  // ==== Start remove prefix
-
-                  $html .= '
-                <th'.$width.'> '.$field_item .' </th> ';
-                }
-              }
-
-          $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
-          $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
-
-    $html .= '                
+              <tr>
+                <th width="60"> Id </th> 
+                <th> Descripcion </th>                 
                 <th width="80"> Estado </th>
                 <th width="80"> Publicar </th>
                 <th width="50"> Acciones </th>
@@ -121,16 +79,16 @@ $html = '
               $title    = "" ;
               $icon_pub = "" ;
 
-              if(!empty($row->'.$prefix_publicar.')){
-                if($row->'.$prefix_publicar.' == "S"){
+              if(!empty($row->eti_publicar)){
+                if($row->eti_publicar == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
-                  $icon_pub = \'<i class="fas fa-times"></i>\';
+                  $icon_pub = '<i class="fas fa-times"></i>';
                 }
                 else {
                   $classBtn =  "btn-outline-success";
                   $title = "Publicar" ;
-                  $icon_pub = \'<i class="fas fa-check"></i>\';
+                  $icon_pub = '<i class="fas fa-check"></i>';
                 }
               }
 
@@ -139,7 +97,7 @@ $html = '
               $class_estado = "";
               $class_disabled = "";
 
-              if ($row->'.$prefix_estado.' == 0) {
+              if ($row->eti_estado == 0) {
                 $title_estado = "Recuperar";
                 $class_estado = "row-disabled";
                 $class_disabled = "disabled";
@@ -150,48 +108,32 @@ $html = '
 
             ?>
 
-              <tr class="<?php echo $class_estado; ?>">'. PHP_EOL;
-
-              for ($i=0; $i < count( $fields_table) ; $i++)
-              {
-                if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
-                {
-                  $html .= '                <td> {{ $row->'.$fields_table[$i].' }} </td> '. PHP_EOL;
-                }
-
-              }
-                           
-              $html .= '                <td>'. PHP_EOL;
-              $html .= '                  <span class="badge badge-pill <?php echo $status[$row->'.$prefix_estado.']["class"] ?>"> '. PHP_EOL;
-              $html .= '                    <?php echo $status[$row->'.$prefix_estado.']["title"] ?> '. PHP_EOL;
-              $html .= '                  </span>'. PHP_EOL;
-              $html .= '                </td>'. PHP_EOL;
-
-              if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
-              {
-
-                $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
-                $html .= '                <td class="text-center">' . PHP_EOL;
-                $html .= '                 <span class="sr-only"><?php echo $row->'. $name_publicar .'; ?></span>' . PHP_EOL;
-                $html .= '                 <button onclick="modalPublicar(event, <?php echo $row->'. $fields_table[0] .' ?>, `<?php echo $row->'. $fields_table[1] .' ?>` ,`<?php echo $title ?>`, `<?php echo $row->'. $name_publicar .';  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.\' \' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >' . PHP_EOL;
-                $html .= '                   <?php echo $icon_pub ;?>' . PHP_EOL;
-                $html .= '                 </button>' . PHP_EOL;
-                $html .= '                </td>' . PHP_EOL;
-              }
-
-
-            $html .= '                
+              <tr class="<?php echo $class_estado; ?>">
+                <td> {{ $row->id }} </td> 
+                <td> {{ $row->eti_descripcion }} </td> 
+                <td>
+                  <span class="badge badge-pill <?php echo $status[$row->eti_estado]["class"] ?>"> 
+                    <?php echo $status[$row->eti_estado]["title"] ?> 
+                  </span>
+                </td>
+                <td class="text-center">
+                 <span class="sr-only"><?php echo $row->eti_publicar; ?></span>
+                 <button onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->eti_descripcion ?>` ,`<?php echo $title ?>`, `<?php echo $row->eti_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
+                   <?php echo $icon_pub ;?>
+                 </button>
+                </td>
+                
                 <td nowrap>
                   <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                    href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
+                    href="{{ route('etiqueta-edit',['id' => $row->id]) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                   <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete(event,{{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>">
+                  onclick="modalDelete(event,{{$row->id}}, `{{$row->eti_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->eti_estado}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
-                    {{ $row->'.$prefix_estado.' }}
+                    {{ $row->eti_estado }}
                   </span>
                 </td>
 
@@ -214,7 +156,7 @@ $html = '
 <!-- end:: Content -->
 @endsection
 
-@section(\'modal\')
+@section('modal')
 
 <!-- Modal Delete -->
 <form id="formModal">
@@ -303,9 +245,9 @@ $html = '
 @endsection
 
 
-@section(\'script\')
+@section('script')
 
-@include(\'shared.datatables\')
+@include('shared.datatables')
 
 <script>
   // modals
@@ -313,17 +255,17 @@ $html = '
     function processFormModal(event) {
 
       event.preventDefault();
-      $("#alertModal").html(\'\');
+      $("#alertModal").html('');
 
       let inputs = $("#formModal").serializeFormJSON();
       inputs.id = $("#idRowModal").val();
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api = "{{ route(\''.$table_amigable.'-delete\') }}";
+      let url_api = "{{ route('etiqueta-delete') }}";
 
       axios({
-        method: \'post\',
+        method: 'post',
         url: url_api,
         data: params,
       }).then(function (response) {
@@ -365,7 +307,7 @@ $html = '
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> '. $table_sin_guion .': <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> etiqueta: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 
@@ -380,11 +322,8 @@ $html = '
     }
     $("#myModal").modal("show");
   }
-</script>' . PHP_EOL ;
-if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
-{
+</script>
 
-$html .= '
 <script>
   // modals publicar
   (function ($) 
@@ -400,7 +339,7 @@ $html .= '
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api_pub = "{{ route(\''.$table_amigable.'-publish\') }}";
+      let url_api_pub = "{{ route('etiqueta-publish') }}";
 
       axios({
         method: "post",
@@ -462,12 +401,6 @@ $html .= '
   } 
 
 </script>
-' . PHP_EOL ;
-}
 
-$html .= '
+
 @endsection
-';
-
-return $html ;
-}

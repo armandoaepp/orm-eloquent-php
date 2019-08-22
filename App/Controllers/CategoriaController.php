@@ -65,7 +65,7 @@ class CategoriaController
       $cat_descripcion = $request->input('cat_descripcion');
       $cat_imagen = $request->file('cat_imagen');
       $cat_publicar = $request->input('cat_publicar');
-      $cat_estado = $request->input('cat_estado');
+      $cat_estado = !empty($request->input('cat_estado')) ? $request->input('cat_estado') : 1;
 
       $categoria = Categoria::where(["cat_descripcion" => $cat_descripcion])->first();
 
@@ -223,8 +223,8 @@ class CategoriaController
           $categoria->cat_estado = $estado;
           $categoria->save();
             
-        # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "update estado: ".$estado) ;
+          # TABLE BITACORA
+          $this->savedBitacoraTrait( $categoria, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
@@ -232,14 +232,14 @@ class CategoriaController
         }elseif( $historial == "no"  ) {
           $categoria->forceDelete();
         
-        # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "delete registro") ;
+          # TABLE BITACORA
+          $this->savedBitacoraTrait( $categoria, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
         
-         $data = $plan;
+        $data = $categoria;
         
       }
       else
@@ -290,7 +290,7 @@ class CategoriaController
         }
 
         $categoria = Categoria::find($id);
-        if ($categoria)
+        if (!empty($categoria))
         {
           $categoria->cat_publicar = $publicar;
           $categoria->save();
@@ -299,7 +299,7 @@ class CategoriaController
           $this->savedBitacoraTrait( $categoria, "update publicar: ".$publicar) ;
 
           $status = true;
-         $message = $message;
+          $message = $message;
 
          $data = $categoria;
         }
