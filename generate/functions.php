@@ -371,37 +371,11 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '    {' . PHP_EOL;
   $str  .= '      return \Response::json([' . PHP_EOL;
   $str  .= '                "message" => "Operación fallida en el servidor",' . PHP_EOL;
-  $str  .= '                "status"  => $status,' . PHP_EOL;
+  $str  .= '                "status"  => false,' . PHP_EOL;
   $str  .= '                "errors"  => [$e->getMessage(), ],' . PHP_EOL;
   $str  .= '                "data"    => [],' . PHP_EOL;
   $str  .= '              ]);' . PHP_EOL;
   // $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
-  $str  .= '    }' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '  }' . PHP_EOL;
-  // $str  .= '' . PHP_EOL;
-
-  return $str ;
-}
-
-# Method find for controllers
-function find($table_name, $class_name, $entities = array())
-{
-
-  $str  = '' . PHP_EOL;
-  $str  .= '  public function find( $'.$entities[0]->Field.' )' . PHP_EOL;
-  $str  .= '  {' . PHP_EOL;
-  $str  .= '    try' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      $data = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      return $data;' . PHP_EOL;
-  $str  .= '    ' . PHP_EOL;
-  $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -484,31 +458,52 @@ function getByStatus($table_name, $class_name, $entities = array())
 }
 
 # Method updatePublish for controllers
-function updatePublish($table_name, $class_name, $entities = array())
+function updatePublish($table_name, $class_name, $entities = array(), $field_publicar = "")
 {
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function updatePublish( $params = array() )' . PHP_EOL;
+  $str  .= '  public function updatePublish( Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '      extract($params) ;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL; 
   $str  .= '      $status  = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
+  $str  .= '' . PHP_EOL;  
+  $str  .= '      $id = $request->input("id");' . PHP_EOL;
+  $str  .= '      $publicar = $request->input("publicar");' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      if (empty($'.$entities[0]->Field.'))' . PHP_EOL;
+  $str  .= '      if (!empty($'.$entities[0]->Field.'))' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
+  $str  .= '' . PHP_EOL;  
+  //$str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
+  $str  .= '        if ($publicar == "N") {'.PHP_EOL ;
+  $str  .= '          $publicar = "S";'.PHP_EOL ;
+  $str  .= '          $message = "Registro Publicado";'.PHP_EOL ;
+  $str  .= '        } else {'.PHP_EOL ;
+  $str  .= '          $publicar = "N";'.PHP_EOL ;
+  $str  .= '          $message = "Registro Ocultado al público";'.PHP_EOL ;
+  $str  .= '        }'.PHP_EOL ;
+
+  $str  .= '' . PHP_EOL;  
   $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
   $str  .= '        if ($'.$table_name.')' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
-  $str  .= '          $'.$table_name.'->publish = $publish;' . PHP_EOL;
+  $str  .= '          $'.$table_name.'->'. $field_publicar .' = $publicar;' . PHP_EOL;
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '' . PHP_EOL;
+
+  $str  .= '          # TABLE BITACORA' . PHP_EOL;
+  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar: ".$publicar) ;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;        
   $str  .= '          $status = true;' . PHP_EOL;
-  $str  .= '          $message = "Operación Correcta" ;' . PHP_EOL;
-  $str  .= '        }else{' . PHP_EOL;
-  $str  .= '          $message = "¡El identificador no exite!" ; ;' . PHP_EOL;
+  $str  .= '         $message = $message;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;        
+  $str  .= '         $data = $categoria;' . PHP_EOL;
+  $str  .= '        }' . PHP_EOL;
+  $str  .= '        else' . PHP_EOL;
+  $str  .= '        {' . PHP_EOL;
+  $str  .= '          $message = "¡El registro no exite o el identificador es incorrecto!";' . PHP_EOL;
+  $str  .= '          $data = $request->all();' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
 
   $str  .= '        ' . PHP_EOL;
@@ -516,10 +511,48 @@ function updatePublish($table_name, $class_name, $entities = array())
   $str  .= '      else' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
   $str  .= '        $message = "¡El identificador es incorrecto!";' . PHP_EOL;
+  $str  .= '        $data = $request->all();' . PHP_EOL;
   $str  .= '      }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      $data = ["message" => $message, "status" => $status, "data" =>[],];' . PHP_EOL;
+  //$str  .= '      $data = ["message" => $message, "status" => $status, "data" =>[],];' . PHP_EOL;
+  $str  .='        return \Response::json([' . PHP_EOL;
+  $str  .='                "message" => $message,' . PHP_EOL;
+  $str  .='                "status"  => $status,' . PHP_EOL;
+  $str  .='                "errors"  => [],' . PHP_EOL;
+  $str  .='                "data"    => [$data],' . PHP_EOL;
+  $str  .='              ]);' . PHP_EOL; 
   $str  .= '    ' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .='        return \Response::json([' . PHP_EOL;
+  $str  .='                "message" => "Operación fallida en el servidor",' . PHP_EOL;
+  $str  .='                "status"  => false,' . PHP_EOL;
+  $str  .='                "errors"  => [$e->getMessage()],' . PHP_EOL;
+  $str  .='                "data"    => [],' . PHP_EOL;
+  $str  .='              ]);' . PHP_EOL; 
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
+
+# Method getPublished for controllers
+function getPublished($table_name, $class_name, $entities = array(), $field_publicar = "")
+{
+
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function getPublished(  $params = array()  )' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+    $str  .= '      extract($params) ;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::where("'.$field_publicar.'", $'. $field_publicar .')->get();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
   $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
@@ -534,18 +567,17 @@ function updatePublish($table_name, $class_name, $entities = array())
   return $str ;
 }
 
-# Method getPublished for controllers
-function getPublished($table_name, $class_name, $entities = array())
+# Method find for controllers
+function find($table_name, $class_name, $entities = array())
 {
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function getPublished(  $params = array()  )' . PHP_EOL;
+  $str  .= '  public function find( $'.$entities[0]->Field.' )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-    $str  .= '      extract($params) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      $data = '.$class_name.'::where("publish", $publish)->get();' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;

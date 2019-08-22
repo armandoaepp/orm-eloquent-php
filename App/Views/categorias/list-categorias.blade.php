@@ -201,7 +201,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
           <button type="submit" class="btn btn-outline-danger" id="btn-send">Eliminar </button>
         </div>
         <div class="modal-body py-0">
@@ -261,14 +261,12 @@
       }).catch(function (error) {
         console.log(error);
       });
-
-
     }
 
     $("#formModal").submit(processFormModal);
 
+    
   })(jQuery);
-
 
   // modal DELETE
   function modalDelete(id, textRow, title, estado) {
@@ -278,7 +276,7 @@
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> de categorias: <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> categoria: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 
@@ -293,7 +291,82 @@
     }
     $("#myModal").modal("show");
   }
+</script>
+
+<script>
+  // modals publicar
+  (function ($) 
+  {
+    /* Publicar */
+    function processFormModalPublicar(event) {
+
+      event.preventDefault();
+      $("#alertModalPublicar").html("");
+
+      let inputs = $("#formModalPublicar").serializeFormJSON();
+      inputs.id = $("#idPublicar").val();
+      // let params = JSON.stringify(inputs);
+      let params = inputs;
+
+      let url_api_pub = "{{ route('categoria-publucar') }}";
+
+      axios({
+        method: "post",
+        url: url_api_pub,
+        data: params,
+      }).then(function (response) {
+
+        var data = response.data;
+        console.log(data);
+
+        if (data.status && data.data) {
+          $("#myModalPublicar").modal("hide");
+          $("#formModalPublicar")[0].reset();
+          location.reload();
+        }
+        else if (!data.status && data.errors) {
+          $("#alertModalPublicar").html("Error: " + data.message);
+          console.log(data.errors);
+        }
+        else if (!data.status) {
+          $("#alertModalPublicar").html("Error: " + data.message);
+          console.log(data);
+        }
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    $("#formModalPublicar").submit(processFormModalPublicar); 
+    
+  })(jQuery);
+
+  // modal PUBLICAR
+  function modalPublicar(id, textRow, title, publicar) {
+    $("#idPublicar").val(id);
+    $("#publicar").val(publicar);
+
+    var text = `¿Esta seguro de <strong> ${title} </strong>: <strong> ${textRow} </strong> ?`;
+    $("#dataTextModalPublicar").html(text);
+    $("#btn-send-publicar").text(title);
+
+    $("#btn-send-publicar").removeClass("btn-outline-success");
+    $("#btn-send-publicar").removeClass("btn-outline-danger");
+
+    if (publicar.toLowerCase() === "n") {
+      $("#btn-send-publicar").addClass("btn-outline-success");
+      $("#modalTitlePublicar span").text("Publicar");
+    }
+    else{
+      $("#btn-send-publicar").addClass("btn-outline-danger");
+      $("#modalTitlePublicar span").text("Desactivar al Público");
+    }
+
+    $("#myModalPublicar").modal("show");
+  } 
 
 </script>
+
 
 @endsection

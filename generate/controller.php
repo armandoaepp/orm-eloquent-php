@@ -9,7 +9,7 @@ function generateController($table_name, $class_name, $entities = array() )
   $table_plural = str_plural($table_amigable_sin_guion) ;
   $url_friendly_plural = str_replace (' ', '-', $table_plural);
 
-  // var_dump($entities);
+  // field columns($entities);
   $fields_col = array_column($entities, 'Field');
 
   $class_controller = $class_name.'Controller' ;
@@ -57,19 +57,23 @@ function generateController($table_name, $class_name, $entities = array() )
   $str .=  edit($table_name, $class_name, $entities);
   $str .=  update($table_name, $class_name, $entities,$prefix, $url_friendly_plural);
   $str .=  delete($table_name, $class_name, $entities, $prefix);
-  $str .=  find($table_name, $class_name, $entities, $prefix);
 
-  if ( in_array('estado', $fields_col) )
+
+  /*if ( in_array('estado', $fields_col) || in_array($prefix.'estado', $fields_col))
   {
     $str .=  updateStatus($table_name, $class_name, $entities);
     $str .=  getByStatus($table_name, $class_name, $entities);
+  }*/
+
+  if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
+  {
+    $field_publicar = (in_array("publicar", $fields_col) ) ? 'publicar' : $prefix."publicar" ;
+
+    $str .=  updatePublish($table_name, $class_name, $entities, $field_publicar);
+    $str .=  getPublished($table_name, $class_name, $entities, $field_publicar);
   }
 
-  if ( in_array('publish', $fields_col) )
-  {
-    $str .=  updatePublish($table_name, $class_name, $entities);
-    $str .=  getPublished($table_name, $class_name, $entities);
-  }
+  $str .=  find($table_name, $class_name, $entities, $prefix);
 
   $str .= '}';
 
