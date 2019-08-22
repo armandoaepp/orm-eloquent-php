@@ -104,10 +104,15 @@ $html = '
           $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
           $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
-    $html .= '                
-                <th width="80"> Estado </th>
-                <th width="80"> Publicar </th>
-                <th width="50"> Acciones </th>
+    $html .= '                <th width="80"> Publicado </th>' . PHP_EOL ;  
+    if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+    {
+      $html .= '                <th width="80"> Estado </th>' . PHP_EOL ;    
+    }
+
+    $html .= '                <th width="50"> Acciones </th>' . PHP_EOL ;  
+
+    $html .= ' 
               </tr>
             </thead>
             <tbody>
@@ -120,17 +125,20 @@ $html = '
               $classBtn = "" ;
               $title    = "" ;
               $icon_pub = "" ;
+              $publicado = "";
 
               if(!empty($row->'.$prefix_publicar.')){
                 if($row->'.$prefix_publicar.' == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
                   $icon_pub = \'<i class="fas fa-times"></i>\';
+                  $publicado = \'<span class="badge badge-pill badge-success"> SI </span>\';
                 }
                 else {
                   $classBtn =  "btn-outline-success";
                   $title = "Publicar" ;
                   $icon_pub = \'<i class="fas fa-check"></i>\';
+                  $publicado = \'<span class="badge badge-pill badge-danger"> NO </span>\';
                 }
               }
 
@@ -160,41 +168,72 @@ $html = '
                 }
 
               }
+
+              if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+              {
+                $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+                $html .= '                <td class="text-center">'. PHP_EOL;
+                $html .= '                  <?php echo $publicado; ?>'. PHP_EOL; 
+                $html .= '                </td>'. PHP_EOL;
+              }
+
                            
-              $html .= '                <td>'. PHP_EOL;
+              $html .= '                <td class="text-center">'. PHP_EOL;
               $html .= '                  <span class="badge badge-pill <?php echo $status[$row->'.$prefix_estado.']["class"] ?>"> '. PHP_EOL;
               $html .= '                    <?php echo $status[$row->'.$prefix_estado.']["title"] ?> '. PHP_EOL;
               $html .= '                  </span>'. PHP_EOL;
               $html .= '                </td>'. PHP_EOL;
 
+              $html .= '                <td class="text-center">'. PHP_EOL;
+              $html .='                  <div class="dropdown">' .PHP_EOL ;
+              $html .='                    <button class="btn btn-outline-primary btn-sm lh-1 btn-table dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' .PHP_EOL ;
+              $html .='                        <i class="fas fa-ellipsis-h"></i>' .PHP_EOL ;
+              $html .='                    </button>' .PHP_EOL ;
+              $html .='                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">' .PHP_EOL ;
+              $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" >' .PHP_EOL ;
+              $html .='                        <i class="far fa-edit"></i> Editar' .PHP_EOL ;
+              $html .='                      </a>' .PHP_EOL ;
+              $html .='                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>" >' .PHP_EOL ;
+              $html .='                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>' .PHP_EOL ;
+              $html .='                      </a>' .PHP_EOL ;
+              
               if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
               {
-
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+                $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" onclick="modalPublicar(event, <?php echo $row->'. $fields_table[0] .' ?>, `<?php echo $row->'. $fields_table[1] .' ?>` ,`<?php echo $title ?>`, `<?php echo $row->'. $name_publicar .';  ?>`);" >' .PHP_EOL ;
+                $html .='                        <?php echo $icon_pub ;?> <?php echo $title; ?>' .PHP_EOL ;
+                $html .='                      </a>' .PHP_EOL ;
+              }
+              $html .='                    </div>' .PHP_EOL ;
+              $html .='                  </div>' .PHP_EOL ;
+              $html .= '                </td>'. PHP_EOL;
+
+              /*if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+              {
+                $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+
                 $html .= '                <td class="text-center">' . PHP_EOL;
                 $html .= '                 <span class="sr-only"><?php echo $row->'. $name_publicar .'; ?></span>' . PHP_EOL;
                 $html .= '                 <button onclick="modalPublicar(event, <?php echo $row->'. $fields_table[0] .' ?>, `<?php echo $row->'. $fields_table[1] .' ?>` ,`<?php echo $title ?>`, `<?php echo $row->'. $name_publicar .';  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.\' \' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >' . PHP_EOL;
                 $html .= '                   <?php echo $icon_pub ;?>' . PHP_EOL;
                 $html .= '                 </button>' . PHP_EOL;
                 $html .= '                </td>' . PHP_EOL;
-              }
+              }*/
 
 
-            $html .= '                
+            /*$html .= '                
                 <td nowrap>
-                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                    href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
+                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
-                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete(event,{{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>">
+                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table" onclick="modalDelete(event,{{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                   <span class="sr-only">
                     {{ $row->'.$prefix_estado.' }}
                   </span>
-                </td>
-
+                </td>'.PHP_EOL ;*/
+          $html .= '
               </tr>
             @endforeach
             </tbody>

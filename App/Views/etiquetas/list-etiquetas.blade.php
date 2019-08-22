@@ -64,8 +64,7 @@
                 <th width="60"> Id </th> 
                 <th> Descripcion </th>                 
                 <th width="80"> Estado </th>
-                <th width="80"> Publicar </th>
-                <th width="50"> Acciones </th>
+                <th width="50"> Acciones </th> 
               </tr>
             </thead>
             <tbody>
@@ -116,25 +115,23 @@
                     <?php echo $status[$row->eti_estado]["title"] ?> 
                   </span>
                 </td>
-                <td class="text-center">
-                 <span class="sr-only"><?php echo $row->eti_publicar; ?></span>
-                 <button onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->eti_descripcion ?>` ,`<?php echo $title ?>`, `<?php echo $row->eti_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
-                   <?php echo $icon_pub ;?>
-                 </button>
-                </td>
-                
-                <td nowrap>
-                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>"
-                    href="{{ route('etiqueta-edit',['id' => $row->id]) }}" title="Editar">
-                    <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table"
-                  onclick="modalDelete(event,{{$row->id}}, `{{$row->eti_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->eti_estado}}`);" title="<?php echo $title_estado; ?>">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                  <span class="sr-only">
-                    {{ $row->eti_estado }}
-                  </span>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-outline-primary btn-sm lh-1 btn-table dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route('etiqueta-edit',['id' => $row->id]) }}" >
+                        <i class="far fa-edit"></i> Editar
+                      </a>
+                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->id}}, `{{$row->eti_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->eti_estado}}`);" title="<?php echo $title_estado; ?>" >
+                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
+                      </a>
+                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->eti_descripcion ?>` ,`<?php echo $title ?>`, `<?php echo $row->eti_publicar;  ?>`);" >
+                        <?php echo $icon_pub ;?> <?php echo $title; ?>
+                      </a>
+                    </div>
+                  </div>
                 </td>
 
               </tr>

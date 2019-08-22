@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Sub Categorias
+      Tipo Media
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route('admin-sub-categorias') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-tipo-media') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('sub-categoria-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('tipo-media-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -52,7 +52,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de sub-categorias
+          <i class="fa fa-align-justify"></i> Lista de tipo-media
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -62,12 +62,9 @@
             <thead>
               <tr>
                 <th width="60"> Id </th> 
-                <th> Categoria Id </th> 
-                <th> Descripcion </th>                 
-                <th width="80"> Estado </th>
+                <th> Descripcion </th>                 <th width="80"> Publicado </th>
                 <th width="50"> Acciones </th>
-                <th width="80"> Publicar </th>
-                <th width="50"> Acciones </th>
+ 
               </tr>
             </thead>
             <tbody>
@@ -80,17 +77,20 @@
               $classBtn = "" ;
               $title    = "" ;
               $icon_pub = "" ;
+              $publicado = "";
 
-              if(!empty($row->sc_publicar)){
-                if($row->sc_publicar == "S"){
+              if(!empty($row->tm_publicar)){
+                if($row->tm_publicar == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
                   $icon_pub = '<i class="fas fa-times"></i>';
+                  $publicado = '<span class="badge badge-pill badge-success"> SI </span>';
                 }
                 else {
                   $classBtn =  "btn-outline-success";
                   $title = "Publicar" ;
                   $icon_pub = '<i class="fas fa-check"></i>';
+                  $publicado = '<span class="badge badge-pill badge-danger"> NO </span>';
                 }
               }
 
@@ -99,7 +99,7 @@
               $class_estado = "";
               $class_disabled = "";
 
-              if ($row->sc_estado == 0) {
+              if ($row->tm_estado == 0) {
                 $title_estado = "Recuperar";
                 $class_estado = "row-disabled";
                 $class_disabled = "disabled";
@@ -112,48 +112,26 @@
 
               <tr class="<?php echo $class_estado; ?>">
                 <td> {{ $row->id }} </td> 
-                <td> {{ $row->categoria_id }} </td> 
-                <td> {{ $row->sc_descripcion }} </td> 
-                <td>
-                  <span class="badge badge-pill <?php echo $status[$row->sc_estado]["class"] ?>"> 
-                    <?php echo $status[$row->sc_estado]["title"] ?> 
+                <td> {{ $row->tm_descripcion }} </td> 
+                <td class="text-center">
+                  <span class="badge badge-pill <?php echo $status[$row->tm_estado]["class"] ?>"> 
+                    <?php echo $status[$row->tm_estado]["title"] ?> 
                   </span>
                 </td>
-                <td>
+                <td class="text-center">
                   <div class="dropdown">
                     <button class="btn btn-outline-primary btn-sm lh-1 btn-table dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-h"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route('sub-categoria-edit',['id' => $row->id]) }}" >
+                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route('tipo-media-edit',['id' => $row->id]) }}" >
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->id}}, `{{$row->categoria_id}}`,`<?php echo $title_estado ?>`,`{{$row->sc_estado}}`);" title="<?php echo $title_estado; ?>" >
-                        <i class="far fa-trash-alt"></i> Eliminar
-                      </a>
-                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->categoria_id ?>` ,`<?php echo $title ?>`, `<?php echo $row->sc_publicar;  ?>`);" >
-                        <?php echo $icon_pub ;?> <?php echo $title; ?>
+                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->id}}, `{{$row->tm_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->tm_estado}}`);" title="<?php echo $title_estado; ?>" >
+                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
                       </a>
                     </div>
                   </div>
-                </td>
-                <td class="text-center">
-                 <span class="sr-only"><?php echo $row->sc_publicar; ?></span>
-                 <button onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->categoria_id ?>` ,`<?php echo $title ?>`, `<?php echo $row->sc_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
-                   <?php echo $icon_pub ;?>
-                 </button>
-                </td>
-                
-                <td nowrap>
-                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route('sub-categoria-edit',['id' => $row->id]) }}" title="Editar">
-                    <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table" onclick="modalDelete(event,{{$row->id}}, `{{$row->categoria_id}}`,`<?php echo $title_estado ?>`,`{{$row->sc_estado}}`);" title="<?php echo $title_estado; ?>">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                  <span class="sr-only">
-                    {{ $row->sc_estado }}
-                  </span>
                 </td>
 
               </tr>
@@ -281,7 +259,7 @@
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api = "{{ route('sub-categoria-delete') }}";
+      let url_api = "{{ route('tipo-media-delete') }}";
 
       axios({
         method: 'post',
@@ -326,7 +304,7 @@
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> sub categoria: <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> tipo media: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 
@@ -342,84 +320,5 @@
     $("#myModal").modal("show");
   }
 </script>
-
-<script>
-  // modals publicar
-  (function ($) 
-  {
-    /* Publicar */
-    function processFormModalPublicar(event) {
-
-      event.preventDefault();
-      $("#alertModalPublicar").html("");
-
-      let inputs = $("#formModalPublicar").serializeFormJSON();
-      inputs.id = $("#idPublicar").val();
-      // let params = JSON.stringify(inputs);
-      let params = inputs;
-
-      let url_api_pub = "{{ route('sub-categoria-publish') }}";
-
-      axios({
-        method: "post",
-        url: url_api_pub,
-        data: params,
-      }).then(function (response) {
-
-        var data = response.data;
-        console.log(data);
-
-        if (data.status && data.data) {
-          $("#myModalPublicar").modal("hide");
-          $("#formModalPublicar")[0].reset();
-          location.reload();
-        }
-        else if (!data.status && data.errors) {
-          $("#alertModalPublicar").html("Error: " + data.message);
-          console.log(data.errors);
-        }
-        else if (!data.status) {
-          $("#alertModalPublicar").html("Error: " + data.message);
-          console.log(data);
-        }
-
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-
-    $("#formModalPublicar").submit(processFormModalPublicar); 
-    
-  })(jQuery);
-
-  // modal PUBLICAR
-  function modalPublicar(event, id, textRow, title, publicar) {
-    
-    event.preventDefault();
-
-    $("#idPublicar").val(id);
-    $("#publicar").val(publicar);
-
-    var text = `¿Esta seguro de <strong> ${title} </strong>: <strong> ${textRow} </strong> ?`;
-    $("#dataTextModalPublicar").html(text);
-    $("#btn-send-publicar").text(title);
-
-    $("#btn-send-publicar").removeClass("btn-outline-success");
-    $("#btn-send-publicar").removeClass("btn-outline-danger");
-
-    if (publicar.toLowerCase() === "n") {
-      $("#btn-send-publicar").addClass("btn-outline-success");
-      $("#modalTitlePublicar span").text("Publicar");
-    }
-    else{
-      $("#btn-send-publicar").addClass("btn-outline-danger");
-      $("#modalTitlePublicar span").text("Desactivar al Público");
-    }
-
-    $("#myModalPublicar").modal("show");
-  } 
-
-</script>
-
 
 @endsection

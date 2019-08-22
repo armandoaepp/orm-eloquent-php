@@ -64,7 +64,7 @@ class EtiquetaController
 
       $eti_descripcion = $request->input('eti_descripcion');
       $eti_publicar = $request->input('eti_publicar');
-      $eti_estado = $request->input('eti_estado');
+      $eti_estado = !empty($request->input('eti_estado')) ? $request->input('eti_estado') : 1;
 
       $etiqueta = Etiqueta::where(["eti_descripcion" => $eti_descripcion])->first();
 
@@ -191,8 +191,8 @@ class EtiquetaController
           $etiqueta->eti_estado = $estado;
           $etiqueta->save();
             
-        # TABLE BITACORA
-        $this->savedBitacoraTrait( $etiqueta, "update estado: ".$estado) ;
+          # TABLE BITACORA
+          $this->savedBitacoraTrait( $etiqueta, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
@@ -200,14 +200,14 @@ class EtiquetaController
         }elseif( $historial == "no"  ) {
           $etiqueta->forceDelete();
         
-        # TABLE BITACORA
-        $this->savedBitacoraTrait( $etiqueta, "delete registro") ;
+          # TABLE BITACORA
+          $this->savedBitacoraTrait( $etiqueta, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
         
-         $data = $plan;
+        $data = $etiqueta;
         
       }
       else
@@ -258,7 +258,7 @@ class EtiquetaController
         }
 
         $etiqueta = Etiqueta::find($id);
-        if ($etiqueta)
+        if (!empty($etiqueta))
         {
           $etiqueta->eti_publicar = $publicar;
           $etiqueta->save();
@@ -267,9 +267,9 @@ class EtiquetaController
           $this->savedBitacoraTrait( $etiqueta, "update publicar: ".$publicar) ;
 
           $status = true;
-         $message = $message;
+          $message = $message;
 
-         $data = $categoria;
+         $data = $etiqueta;
         }
         else
         {
