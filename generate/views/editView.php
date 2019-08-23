@@ -119,7 +119,7 @@ $html .= '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <select class="custom-select" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '">'.PHP_EOL;
+                    $html .= '                    <select class="custom-select select2-box" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '">'.PHP_EOL;
                     $html .= '                      <option value="" selected disabled hidden>Seleccionar </option> '.PHP_EOL;
                     $html .= '                      <option value="text">text</option>'.PHP_EOL;
                     $html .= '                    </select>'.PHP_EOL;
@@ -170,10 +170,14 @@ $html .= '
 
                   $html .= '                <div class="col-md-12 text-center">' . PHP_EOL ;
                   $html .= '                  <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="{{ $'. $table_name .'->'.$name_file_imagen.' }}">' . PHP_EOL ;
+
+                  $html .= '                  @if(!empty($'. $table_name .'->'.$name_file_imagen.'))' . PHP_EOL ;
                   $html .= '                  <img src="{{ url($'. $table_name .'->'.$name_file_imagen.') }}" class="img-fluid img-view-edit mb-2">' . PHP_EOL ;
+                  $html .= '                  <hr>' . PHP_EOL ;
+                  $html .= '                  @endif' . PHP_EOL ;
+
                   $html .= '                </div>' . PHP_EOL ;
                   $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
-                  $html .= '                  <hr>' . PHP_EOL ;
                   $html .= '                  <div class="form-group">' . PHP_EOL ;
                   $html .= '                    <div class="input-group mb-2">' . PHP_EOL ;
                   $html .= '                      <div class="input-group-prepend">' . PHP_EOL ;

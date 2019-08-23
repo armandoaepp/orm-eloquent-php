@@ -66,7 +66,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="categoria_id">Categoria Id: </label>
-                    <select class="custom-select" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                    <select class="custom-select select2-box" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
                       <option value="" selected disabled hidden>Seleccionar </option> 
                       <option value="text">text</option>
                     </select>
@@ -96,10 +96,12 @@
 
                 <div class="col-md-12 text-center">
                   <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="{{ $sub_categoria->sc_imagen }}">
+                  @if(!empty($sub_categoria->sc_imagen))
                   <img src="{{ url($sub_categoria->sc_imagen) }}" class="img-fluid img-view-edit mb-2">
+                  <hr>
+                  @endif
                 </div>
                 <div class="col-12 mb-3">
-                  <hr>
                   <div class="form-group">
                     <div class="input-group mb-2">
                       <div class="input-group-prepend">

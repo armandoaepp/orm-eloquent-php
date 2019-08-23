@@ -62,7 +62,7 @@ $html = '
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route(\''.$table_amigable.'-save\') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route(\''.$table_amigable.'-store\') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">' . PHP_EOL;
@@ -97,7 +97,7 @@ $html = '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item . ': </label>' . PHP_EOL;
-                    $html .= '                    <select class="custom-select" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '">'.PHP_EOL;
+                    $html .= '                    <select class="custom-select select2-box" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '">'.PHP_EOL;
                     $html .= '                      <option value="" selected disabled hidden>Seleccionar </option> '.PHP_EOL;
                     $html .= '                      <option value="text">text</option>'.PHP_EOL;
                     $html .= '                    </select>'.PHP_EOL;

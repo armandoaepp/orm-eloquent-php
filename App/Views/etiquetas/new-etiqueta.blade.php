@@ -45,7 +45,7 @@
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('etiqueta-save') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('etiqueta-store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">

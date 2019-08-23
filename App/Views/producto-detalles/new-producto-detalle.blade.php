@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-tipo-media') }}" class="">
-        <i class="fa fa-align-justify"></i> Tipo Media
+      <a href="{{ route('admin-producto-detalles') }}" class="">
+        <i class="fa fa-align-justify"></i> Producto Detalles
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Tipo Media
+      Nuevo Producto Detalle
       </span>
     </li>
   </ol>
@@ -40,19 +40,29 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Tipo Media
+          <i class="fa fa-align-justify"></i> Nuevo Producto Detalle
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('tipo-media-store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('producto-detalle-store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="tm_descripcion">Descripcion: </label>
-                    <input type="text" class="form-control" name="tm_descripcion" id="tm_descripcion" placeholder="Descripcion">
+                    <label for="producto_id">Producto Id: </label>
+                    <select class="custom-select select2-box" name="producto_id" id="producto_id" placeholder="Producto Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="pd_descripcion">Descripcion: </label>
+                    <textarea class="form-control ckeditor" name="pd_descripcion" id="pd_descripcion" placeholder="Descripcion" cols="30" rows="6"></textarea>
                   </div>
                 </div>
 
@@ -61,7 +71,7 @@
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-tipo-media') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-producto-detalles') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>

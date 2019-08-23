@@ -56,7 +56,7 @@ $html = '
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-brand btn-elevate btn-elevate-air btn-sm" role="button">
+      <a href="{{ route(\''.$table_amigable.'-create\') }}" class="btn btn-brand btn-elevate btn-elevate-air btn-sm" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>

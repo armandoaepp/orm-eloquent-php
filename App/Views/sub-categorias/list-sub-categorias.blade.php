@@ -36,7 +36,7 @@
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('sub-categoria-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('sub-categoria-create') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -63,11 +63,11 @@
               <tr>
                 <th width="60"> Id </th> 
                 <th> Categoria Id </th> 
-                <th> Descripcion </th>                 
+                <th> Descripcion </th> 
+                <th width="80"> Publicado </th>
                 <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
-                <th width="80"> Publicar </th>
-                <th width="50"> Acciones </th>
+ 
               </tr>
             </thead>
             <tbody>
@@ -80,17 +80,20 @@
               $classBtn = "" ;
               $title    = "" ;
               $icon_pub = "" ;
+              $publicado = "";
 
               if(!empty($row->sc_publicar)){
                 if($row->sc_publicar == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
                   $icon_pub = '<i class="fas fa-times"></i>';
+                  $publicado = '<span class="badge badge-pill badge-success"> SI </span>';
                 }
                 else {
                   $classBtn =  "btn-outline-success";
                   $title = "Publicar" ;
                   $icon_pub = '<i class="fas fa-check"></i>';
+                  $publicado = '<span class="badge badge-pill badge-danger"> NO </span>';
                 }
               }
 
@@ -111,15 +114,18 @@
             ?>
 
               <tr class="<?php echo $class_estado; ?>">
-                <td> {{ $row->id }} </td> 
+                <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
                 <td> {{ $row->categoria_id }} </td> 
                 <td> {{ $row->sc_descripcion }} </td> 
-                <td>
+                <td class="text-center">
+                  <?php echo $publicado; ?>
+                </td>
+                <td class="text-center">
                   <span class="badge badge-pill <?php echo $status[$row->sc_estado]["class"] ?>"> 
                     <?php echo $status[$row->sc_estado]["title"] ?> 
                   </span>
                 </td>
-                <td>
+                <td class="text-center">
                   <div class="dropdown">
                     <button class="btn btn-outline-primary btn-sm lh-1 btn-table dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-h"></i>
@@ -129,31 +135,13 @@
                         <i class="far fa-edit"></i> Editar
                       </a>
                       <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->id}}, `{{$row->categoria_id}}`,`<?php echo $title_estado ?>`,`{{$row->sc_estado}}`);" title="<?php echo $title_estado; ?>" >
-                        <i class="far fa-trash-alt"></i> Eliminar
+                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
                       </a>
                       <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->categoria_id ?>` ,`<?php echo $title ?>`, `<?php echo $row->sc_publicar;  ?>`);" >
                         <?php echo $icon_pub ;?> <?php echo $title; ?>
                       </a>
                     </div>
                   </div>
-                </td>
-                <td class="text-center">
-                 <span class="sr-only"><?php echo $row->sc_publicar; ?></span>
-                 <button onclick="modalPublicar(event, <?php echo $row->id ?>, `<?php echo $row->categoria_id ?>` ,`<?php echo $title ?>`, `<?php echo $row->sc_publicar;  ?>`);" class="btn btn-sm lh-1 btn-table <?php echo $classBtn.' ' .$class_disabled; ; ?> " title="<?php echo $title; ?>" >
-                   <?php echo $icon_pub ;?>
-                 </button>
-                </td>
-                
-                <td nowrap>
-                  <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route('sub-categoria-edit',['id' => $row->id]) }}" title="Editar">
-                    <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  <button class="btn btn-outline-danger btn-sm lh-1 btn-table" onclick="modalDelete(event,{{$row->id}}, `{{$row->categoria_id}}`,`<?php echo $title_estado ?>`,`{{$row->sc_estado}}`);" title="<?php echo $title_estado; ?>">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                  <span class="sr-only">
-                    {{ $row->sc_estado }}
-                  </span>
                 </td>
 
               </tr>

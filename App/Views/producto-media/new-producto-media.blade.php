@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-sub-categorias') }}" class="">
-        <i class="fa fa-align-justify"></i> Sub Categorias
+      <a href="{{ route('admin-producto-media') }}" class="">
+        <i class="fa fa-align-justify"></i> Producto Media
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Sub Categoria
+      Nuevo Producto Media
       </span>
     </li>
   </ol>
@@ -40,19 +40,19 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Sub Categoria
+          <i class="fa fa-align-justify"></i> Nuevo Producto Media
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('sub-categoria-store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('producto-media-store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="categoria_id">Categoria Id: </label>
-                    <select class="custom-select select2-box" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                    <label for="producto_id">Producto Id: </label>
+                    <select class="custom-select select2-box" name="producto_id" id="producto_id" placeholder="Producto Id">
                       <option value="" selected disabled hidden>Seleccionar </option> 
                       <option value="text">text</option>
                     </select>
@@ -61,41 +61,34 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="sc_descripcion">Descripcion: </label>
-                    <input type="text" class="form-control" name="sc_descripcion" id="sc_descripcion" placeholder="Descripcion">
+                    <label for="tipo_media_id">Tipo Media Id: </label>
+                    <select class="custom-select select2-box" name="tipo_media_id" id="tipo_media_id" placeholder="Tipo Media Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="email" class="d-block">Publicar </label>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="sc_publicar" id="si" value="S" checked="checked">
-                      <label class="form-check-label" for="si">SI</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="sc_publicar" id="no" value="N">
-                      <label class="form-check-label" for="no">NO</label>
-                    </div>
+                    <label for="pm_jerarquia">Jerarquia: </label>
+                    <input type="text" class="form-control" name="pm_jerarquia" id="pm_jerarquia" placeholder="Jerarquia">
                   </div>
                 </div>
 
-                <div class="col-12 mb-3">
+                <div class="col-md-12">
                   <div class="form-group">
-                    <label for="sc_imagen">Imagen:</label>
-                    <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="sc_imagen" id="sc_imagen" required placeholder="Imagen" accept="image/*">
+                    <label for="pm_descripcion">Descripcion: </label>
+                    <input type="text" class="form-control" name="pm_descripcion" id="pm_descripcion" placeholder="Descripcion">
                   </div>
                 </div>
 
-                <div class="col-12 mb-3">
-                  <div class="preview-img" data-img-preview="preview-images-id"></div>
-                </div>
 
               </div>
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-sub-categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-producto-media') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>

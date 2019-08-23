@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Etiqueta; 
+use App\Models\Producto; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class EtiquetaController
+class ProductoController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class EtiquetaController
     try
     {
 
-      $data = Etiqueta::get();
+      $data = Producto::get();
 
-      return view($this->prefixView.'.etiquetas.list-etiquetas')->with(compact('data'));
+      return view($this->prefixView.'.productos.list-productos')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -45,7 +45,7 @@ class EtiquetaController
     try
     {
 
-      return view($this->prefixView.'.etiquetas.new-etiqueta');
+      return view($this->prefixView.'.productos.new-producto');
     
     }
     catch (Exception $e)
@@ -62,26 +62,42 @@ class EtiquetaController
       $status  = false;
       $message = "";
 
-      $eti_descripcion = $request->input('eti_descripcion');
-      $eti_publicar = $request->input('eti_publicar');
-      $eti_estado = !empty($request->input('eti_estado')) ? $request->input('eti_estado') : 1;
+      $sub_categoria_id = $request->input('sub_categoria_id');
+      $categoria_id = $request->input('categoria_id');
+      $codigo = $request->input('codigo');
+      $descripcion = $request->input('descripcion');
+      $glosa = $request->input('glosa');
+      $precio = $request->input('precio');
+      $descuento = $request->input('descuento');
+      $precio_descuento = $request->input('precio_descuento');
+      $num_visitas = $request->input('num_visitas');
+      $publicar = $request->input('publicar');
+      $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
-      $etiqueta = Etiqueta::where(["eti_descripcion" => $eti_descripcion])->first();
+      $producto = Producto::where(["sub_categoria_id" => $sub_categoria_id])->first();
 
-      if (empty($etiqueta))
+      if (empty($producto))
       {
 
-        $etiqueta = new Etiqueta();
-        $etiqueta->eti_descripcion = $eti_descripcion;
-        $etiqueta->eti_publicar = $eti_publicar;
-        $etiqueta->eti_estado = $eti_estado;
+        $producto = new Producto();
+        $producto->sub_categoria_id = $sub_categoria_id;
+        $producto->categoria_id = $categoria_id;
+        $producto->codigo = $codigo;
+        $producto->descripcion = $descripcion;
+        $producto->glosa = $glosa;
+        $producto->precio = $precio;
+        $producto->descuento = $descuento;
+        $producto->precio_descuento = $precio_descuento;
+        $producto->num_visitas = $num_visitas;
+        $producto->publicar = $publicar;
+        $producto->estado = $estado;
         
-        $status = $etiqueta->save();
+        $status = $producto->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $etiqueta, "created") ;
+        $this->savedBitacoraTrait( $producto, "created") ;
         
-        $id = $etiqueta->id;
+        $id = $producto->id;
         
         $message = "Operancion Correcta";
         
@@ -91,9 +107,9 @@ class EtiquetaController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$etiqueta],];
+      $data = ["message" => $message, "status" => $status, "data" => [$producto],];
     
-      return redirect()->route('admin-etiquetas');
+      return redirect()->route('admin-productos');
     
     }
     catch (Exception $e)
@@ -108,9 +124,9 @@ class EtiquetaController
     try
     {
 
-      $etiqueta = Etiqueta::find( $id );
+      $producto = Producto::find( $id );
 
-      return view($this->prefixView.'.etiquetas.edit-etiqueta')->with(compact('etiqueta'));
+      return view($this->prefixView.'.productos.edit-producto')->with(compact('producto'));
     
     }
     catch (Exception $e)
@@ -129,20 +145,36 @@ class EtiquetaController
       $message = "";
 
       $id = $request->input('id');
-      $eti_descripcion = $request->input('eti_descripcion');
-      $eti_publicar = $request->input('eti_publicar');
+      $sub_categoria_id = $request->input('sub_categoria_id');
+      $categoria_id = $request->input('categoria_id');
+      $codigo = $request->input('codigo');
+      $descripcion = $request->input('descripcion');
+      $glosa = $request->input('glosa');
+      $precio = $request->input('precio');
+      $descuento = $request->input('descuento');
+      $precio_descuento = $request->input('precio_descuento');
+      $num_visitas = $request->input('num_visitas');
+      $publicar = $request->input('publicar');
 
       if (!empty($id))
       {
-        $etiqueta = Etiqueta::find($id);
-        $etiqueta->id = $id;
-        $etiqueta->eti_descripcion = $eti_descripcion;
-        $etiqueta->eti_publicar = $eti_publicar;
+        $producto = Producto::find($id);
+        $producto->id = $id;
+        $producto->sub_categoria_id = $sub_categoria_id;
+        $producto->categoria_id = $categoria_id;
+        $producto->codigo = $codigo;
+        $producto->descripcion = $descripcion;
+        $producto->glosa = $glosa;
+        $producto->precio = $precio;
+        $producto->descuento = $descuento;
+        $producto->precio_descuento = $precio_descuento;
+        $producto->num_visitas = $num_visitas;
+        $producto->publicar = $publicar;
         
-        $status = $etiqueta->save();
+        $status = $producto->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $etiqueta, "update") ;
+        $this->savedBitacoraTrait( $producto, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -154,7 +186,7 @@ class EtiquetaController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-etiquetas');;
+      return redirect()->route('admin-productos');;
     
     }
     catch (Exception $e)
@@ -181,33 +213,33 @@ class EtiquetaController
         $estado = 1;
       }
 
-      $etiqueta = Etiqueta::find( $id ) ;
+      $producto = Producto::find( $id ) ;
 
-      if (!empty($etiqueta))
+      if (!empty($producto))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $etiqueta->eti_estado = $estado;
-          $etiqueta->save();
+          $producto->estado = $estado;
+          $producto->save();
             
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $etiqueta, "update estado: ".$estado) ;
+          $this->savedBitacoraTrait( $producto, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $etiqueta->forceDelete();
+          $producto->forceDelete();
         
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $etiqueta, "delete registro") ;
+          $this->savedBitacoraTrait( $producto, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
         
-        $data = $etiqueta;
+        $data = $producto;
         
       }
       else
@@ -257,19 +289,19 @@ class EtiquetaController
           $message = "Registro Ocultado al público";
         }
 
-        $etiqueta = Etiqueta::find($id);
-        if (!empty($etiqueta))
+        $producto = Producto::find($id);
+        if (!empty($producto))
         {
-          $etiqueta->eti_publicar = $publicar;
-          $etiqueta->save();
+          $producto->publicar = $publicar;
+          $producto->save();
 
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $etiqueta, "update publicar: ".$publicar) ;
+          $this->savedBitacoraTrait( $producto, "update publicar: ".$publicar) ;
 
           $status = true;
           $message = $message;
 
-         $data = $etiqueta;
+         $data = $producto;
         }
         else
         {
@@ -310,7 +342,7 @@ class EtiquetaController
     {
       extract($params) ;
 
-      $data = Etiqueta::where("eti_publicar", $eti_publicar)->get();
+      $data = Producto::where("publicar", $publicar)->get();
 
       return $data;
     
@@ -327,7 +359,7 @@ class EtiquetaController
     try
     {
 
-      $data = Etiqueta::find($id);
+      $data = Producto::find($id);
 
       return $data;
     

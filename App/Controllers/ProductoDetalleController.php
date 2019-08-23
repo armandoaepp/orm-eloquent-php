@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\TipoMedia; 
+use App\Models\ProductoDetalle; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class TipoMediaController
+class ProductoDetalleController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class TipoMediaController
     try
     {
 
-      $data = TipoMedia::get();
+      $data = ProductoDetalle::get();
 
-      return view($this->prefixView.'.tipo-media.list-tipo-media')->with(compact('data'));
+      return view($this->prefixView.'.producto-detalles.list-producto-detalles')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -45,7 +45,7 @@ class TipoMediaController
     try
     {
 
-      return view($this->prefixView.'.tipo-media.new-tipo-media');
+      return view($this->prefixView.'.producto-detalles.new-producto-detalle');
     
     }
     catch (Exception $e)
@@ -62,24 +62,26 @@ class TipoMediaController
       $status  = false;
       $message = "";
 
-      $tm_descripcion = $request->input('tm_descripcion');
-      $tm_estado = !empty($request->input('tm_estado')) ? $request->input('tm_estado') : 1;
+      $producto_id = $request->input('producto_id');
+      $pd_descripcion = $request->input('pd_descripcion');
+      $pd_estado = !empty($request->input('pd_estado')) ? $request->input('pd_estado') : 1;
 
-      $tipo_media = TipoMedia::where(["tm_descripcion" => $tm_descripcion])->first();
+      $producto_detalle = ProductoDetalle::where(["producto_id" => $producto_id])->first();
 
-      if (empty($tipo_media))
+      if (empty($producto_detalle))
       {
 
-        $tipo_media = new TipoMedia();
-        $tipo_media->tm_descripcion = $tm_descripcion;
-        $tipo_media->tm_estado = $tm_estado;
+        $producto_detalle = new ProductoDetalle();
+        $producto_detalle->producto_id = $producto_id;
+        $producto_detalle->pd_descripcion = $pd_descripcion;
+        $producto_detalle->pd_estado = $pd_estado;
         
-        $status = $tipo_media->save();
+        $status = $producto_detalle->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $tipo_media, "created") ;
+        $this->savedBitacoraTrait( $producto_detalle, "created") ;
         
-        $id = $tipo_media->id;
+        $id = $producto_detalle->id;
         
         $message = "Operancion Correcta";
         
@@ -89,9 +91,9 @@ class TipoMediaController
         $message = "¡El registro ya existe!";
       }
 
-      $data = ["message" => $message, "status" => $status, "data" => [$tipo_media],];
+      $data = ["message" => $message, "status" => $status, "data" => [$producto_detalle],];
     
-      return redirect()->route('admin-tipo-media');
+      return redirect()->route('admin-producto-detalles');
     
     }
     catch (Exception $e)
@@ -106,9 +108,9 @@ class TipoMediaController
     try
     {
 
-      $tipo_media = TipoMedia::find( $id );
+      $producto_detalle = ProductoDetalle::find( $id );
 
-      return view($this->prefixView.'.tipo-media.edit-tipo-media')->with(compact('tipo_media'));
+      return view($this->prefixView.'.producto-detalles.edit-producto-detalle')->with(compact('producto_detalle'));
     
     }
     catch (Exception $e)
@@ -127,18 +129,20 @@ class TipoMediaController
       $message = "";
 
       $id = $request->input('id');
-      $tm_descripcion = $request->input('tm_descripcion');
+      $producto_id = $request->input('producto_id');
+      $pd_descripcion = $request->input('pd_descripcion');
 
       if (!empty($id))
       {
-        $tipo_media = TipoMedia::find($id);
-        $tipo_media->id = $id;
-        $tipo_media->tm_descripcion = $tm_descripcion;
+        $producto_detalle = ProductoDetalle::find($id);
+        $producto_detalle->id = $id;
+        $producto_detalle->producto_id = $producto_id;
+        $producto_detalle->pd_descripcion = $pd_descripcion;
         
-        $status = $tipo_media->save();
+        $status = $producto_detalle->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $tipo_media, "update") ;
+        $this->savedBitacoraTrait( $producto_detalle, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -150,7 +154,7 @@ class TipoMediaController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-tipo-media');;
+      return redirect()->route('admin-producto-detalles');;
     
     }
     catch (Exception $e)
@@ -177,33 +181,33 @@ class TipoMediaController
         $estado = 1;
       }
 
-      $tipo_media = TipoMedia::find( $id ) ;
+      $producto_detalle = ProductoDetalle::find( $id ) ;
 
-      if (!empty($tipo_media))
+      if (!empty($producto_detalle))
       {
         #conservar en base de datos
         if ( $historial == "si" )
         {
-          $tipo_media->tm_estado = $estado;
-          $tipo_media->save();
+          $producto_detalle->pd_estado = $estado;
+          $producto_detalle->save();
             
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $tipo_media, "update estado: ".$estado) ;
+          $this->savedBitacoraTrait( $producto_detalle, "update estado: ".$estado) ;
         
           $status = true;
           $message = "Registro Eliminado";
             
         }elseif( $historial == "no"  ) {
-          $tipo_media->forceDelete();
+          $producto_detalle->forceDelete();
         
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $tipo_media, "delete registro") ;
+          $this->savedBitacoraTrait( $producto_detalle, "delete registro") ;
         
           $status = true;
           $message = "Registro eliminado de la base de datos";
         }
         
-        $data = $tipo_media;
+        $data = $producto_detalle;
         
       }
       else
@@ -237,7 +241,7 @@ class TipoMediaController
     try
     {
 
-      $data = TipoMedia::find($id);
+      $data = ProductoDetalle::find($id);
 
       return $data;
     

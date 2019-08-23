@@ -40,7 +40,7 @@ class SubCategoriaController
 
   }
 
-  public function newRegister( Request $request )
+  public function create( Request $request )
   {
     try
     {
@@ -55,7 +55,7 @@ class SubCategoriaController
 
   }
 
-  public function save( Request $request )
+  public function store( Request $request )
   {
     try
     {

@@ -52,8 +52,8 @@ function generateController($table_name, $class_name, $entities = array() )
 
 
   $str .=  getAll($table_name, $class_name, $entities);
-  $str .=  newRegister($table_name, $class_name, $entities);
-  $str .=  save($table_name, $class_name, $entities, $prefix, $url_friendly_plural);
+  $str .=  create($table_name, $class_name, $entities);
+  $str .=  store($table_name, $class_name, $entities, $prefix, $url_friendly_plural);
   $str .=  edit($table_name, $class_name, $entities);
   $str .=  update($table_name, $class_name, $entities,$prefix, $url_friendly_plural);
   $str .=  delete($table_name, $class_name, $entities, $prefix);

@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Tipo Media
+      Producto Detalles
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route('admin-tipo-media') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-producto-detalles') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('tipo-media-create') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('producto-detalle-create') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -52,16 +52,17 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de tipo-media
+          <i class="fa fa-align-justify"></i> Lista de producto-detalles
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-
+        <div class="card-body">          
+          <!-- <div class="table-responsive"> -->
+          
           <!--begin: Datatable -->
-          <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
+          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap">
             <thead>
               <tr>
                 <th width="60"> Id </th> 
+                <th> Producto Id </th> 
                 <th> Descripcion </th> 
                 <th width="80"> Publicado </th>
                 <th width="50"> Acciones </th>
@@ -79,8 +80,8 @@
               $icon_pub = "" ;
               $publicado = "";
 
-              if(!empty($row->tm_publicar)){
-                if($row->tm_publicar == "S"){
+              if(!empty($row->pd_publicar)){
+                if($row->pd_publicar == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
                   $icon_pub = '<i class="fas fa-times"></i>';
@@ -99,7 +100,7 @@
               $class_estado = "";
               $class_disabled = "";
 
-              if ($row->tm_estado == 0) {
+              if ($row->pd_estado == 0) {
                 $title_estado = "Recuperar";
                 $class_estado = "row-disabled";
                 $class_disabled = "disabled";
@@ -112,10 +113,11 @@
 
               <tr class="<?php echo $class_estado; ?>">
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->tm_descripcion }} </td> 
+                <td> {{ $row->producto_id }} </td> 
+                <td> {{ $row->pd_descripcion }} </td> 
                 <td class="text-center">
-                  <span class="badge badge-pill <?php echo $status[$row->tm_estado]["class"] ?>"> 
-                    <?php echo $status[$row->tm_estado]["title"] ?> 
+                  <span class="badge badge-pill <?php echo $status[$row->pd_estado]["class"] ?>"> 
+                    <?php echo $status[$row->pd_estado]["title"] ?> 
                   </span>
                 </td>
                 <td class="text-center">
@@ -124,10 +126,10 @@
                         <i class="fas fa-ellipsis-h"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route('tipo-media-edit',['id' => $row->id]) }}" >
+                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route('producto-detalle-edit',['id' => $row->id]) }}" >
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->id}}, `{{$row->tm_descripcion}}`,`<?php echo $title_estado ?>`,`{{$row->tm_estado}}`);" title="<?php echo $title_estado; ?>" >
+                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->id}}, `{{$row->producto_id}}`,`<?php echo $title_estado ?>`,`{{$row->pd_estado}}`);" title="<?php echo $title_estado; ?>" >
                         <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
                       </a>
                     </div>
@@ -138,10 +140,10 @@
             @endforeach
             </tbody>
           </table>
-
           <!--end: Datatable -->
 
-          </div>
+          
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -259,7 +261,7 @@
       // let params = JSON.stringify(inputs);
       let params = inputs;
 
-      let url_api = "{{ route('tipo-media-delete') }}";
+      let url_api = "{{ route('producto-detalle-delete') }}";
 
       axios({
         method: 'post',
@@ -304,7 +306,7 @@
     $("#modalHistorial").addClass("d-none");
     $("#modalTitle span").text("Eliminar");
 
-    var text = `¿Esta seguro de <strong> ${title} </strong> tipo media: <strong> ${textRow} </strong> ?`;
+    var text = `¿Esta seguro de <strong> ${title} </strong> producto detalle: <strong> ${textRow} </strong> ?`;
     $("#dataTextModal").html(text);
     $("#btn-send").text(title);
 

@@ -30,13 +30,13 @@ function getAll($table_name, $class_name, $entities = array())
   return $str ;
 }
 
-function newRegister($table_name, $class_name, $entities = array())
+function create($table_name, $class_name, $entities = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function newRegister( Request $request )' . PHP_EOL;
+  $str  .= '  public function create( Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -55,14 +55,14 @@ function newRegister($table_name, $class_name, $entities = array())
   return $str ;
 }
 
-# Method save for controllers
-function save($table_name, $class_name, $entities = array(), $prefix = "", $url_friendly_plural = "")
+# Method store for controllers
+function store($table_name, $class_name, $entities = array(), $prefix = "", $url_friendly_plural = "")
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function save( Request $request )' . PHP_EOL;
+  $str  .= '  public function store( Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;

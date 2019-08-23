@@ -36,7 +36,7 @@
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('etiqueta-new') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('etiqueta-create') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -62,9 +62,10 @@
             <thead>
               <tr>
                 <th width="60"> Id </th> 
-                <th> Descripcion </th>                 
+                <th> Descripcion </th> 
+                <th width="80"> Publicado </th>
                 <th width="80"> Estado </th>
-                <th width="50"> Acciones </th> 
+                <th width="50"> Acciones </th>
               </tr>
             </thead>
             <tbody>
@@ -77,17 +78,20 @@
               $classBtn = "" ;
               $title    = "" ;
               $icon_pub = "" ;
+              $publicado = "";
 
               if(!empty($row->eti_publicar)){
                 if($row->eti_publicar == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
                   $icon_pub = '<i class="fas fa-times"></i>';
+                  $publicado = '<span class="badge badge-pill badge-success"> SI </span>';
                 }
                 else {
                   $classBtn =  "btn-outline-success";
                   $title = "Publicar" ;
                   $icon_pub = '<i class="fas fa-check"></i>';
+                  $publicado = '<span class="badge badge-pill badge-danger"> NO </span>';
                 }
               }
 
@@ -108,14 +112,17 @@
             ?>
 
               <tr class="<?php echo $class_estado; ?>">
-                <td> {{ $row->id }} </td> 
+                <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
                 <td> {{ $row->eti_descripcion }} </td> 
-                <td>
+                <td class="text-center">
+                  <?php echo $publicado; ?>
+                </td>
+                <td class="text-center">
                   <span class="badge badge-pill <?php echo $status[$row->eti_estado]["class"] ?>"> 
                     <?php echo $status[$row->eti_estado]["title"] ?> 
                   </span>
                 </td>
-                <td>
+                <td class="text-center">
                   <div class="dropdown">
                     <button class="btn btn-outline-primary btn-sm lh-1 btn-table dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-h"></i>

@@ -52,7 +52,7 @@ $html = '
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-new\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route(\''.$table_amigable.'-create\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -70,13 +70,13 @@ $html = '
         <div class="card-header bg-white">
           <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-
+        <div class="card-body">          
+          <!-- <div class="table-responsive"> -->
+          
           <!--begin: Datatable -->
-          <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
+          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap">
             <thead>
-              <tr>';
+              <tr>' . PHP_EOL;
               for ($i=0; $i < count( $heads_table) ; $i++)
               {
                 if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
@@ -96,8 +96,7 @@ $html = '
 
                   // ==== Start remove prefix
 
-                  $html .= '
-                <th'.$width.'> '.$field_item .' </th> ';
+                  $html .= '                <th'.$width.'> '.$field_item .' </th> '  . PHP_EOL ;
                 }
               }
 
@@ -112,8 +111,7 @@ $html = '
 
     $html .= '                <th width="50"> Acciones </th>' . PHP_EOL ;  
 
-    $html .= ' 
-              </tr>
+    $html .= '              </tr>
             </thead>
             <tbody>
 
@@ -164,7 +162,14 @@ $html = '
               {
                 if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
                 {
-                  $html .= '                <td> {{ $row->'.$fields_table[$i].' }} </td> '. PHP_EOL;
+                  if($i == 0)
+                  {
+                    $html .= '                <td> {{ str_pad($row->'.$fields_table[$i].', 3, "0", STR_PAD_LEFT) }} </td> '. PHP_EOL;
+                  }
+                  else
+                  {
+                    $html .= '                <td> {{ $row->'.$fields_table[$i].' }} </td> '. PHP_EOL;
+                  }
                 }
 
               }
@@ -238,10 +243,10 @@ $html = '
             @endforeach
             </tbody>
           </table>
-
           <!--end: Datatable -->
 
-          </div>
+          
+          <!-- </div> -->
         </div>
       </div>
     </div>

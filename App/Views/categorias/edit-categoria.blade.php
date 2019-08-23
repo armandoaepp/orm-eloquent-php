@@ -86,10 +86,12 @@
 
                 <div class="col-md-12 text-center">
                   <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="{{ $categoria->cat_imagen }}">
+                  @if(!empty($categoria->cat_imagen))
                   <img src="{{ url($categoria->cat_imagen) }}" class="img-fluid img-view-edit mb-2">
+                  <hr>
+                  @endif
                 </div>
                 <div class="col-12 mb-3">
-                  <hr>
                   <div class="form-group">
                     <div class="input-group mb-2">
                       <div class="input-group-prepend">
