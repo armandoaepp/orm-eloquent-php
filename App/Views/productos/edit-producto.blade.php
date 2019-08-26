@@ -92,15 +92,8 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="descripcion">Descripcion: </label>
-                    <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion" value="{{ $producto->descripcion }}" >
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="glosa">Glosa: </label>
-                    <input type="text" class="form-control" name="glosa" id="glosa" placeholder="Glosa" value="{{ $producto->glosa }}" >
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" value="{{ $producto->nombre }}" >
                   </div>
                 </div>
 
@@ -128,7 +121,14 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_visitas">Num Visitas: </label>
-                    <input type="text" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas" value="{{ $producto->num_visitas }}" >
+                    <input type="number" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas" value="{{ $producto->num_visitas }}" >
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="glosa">Glosa: </label>
+                    <input type="text" class="form-control" name="glosa" id="glosa" placeholder="Glosa" value="{{ $producto->glosa }}" >
                   </div>
                 </div>
 

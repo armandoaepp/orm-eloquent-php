@@ -74,7 +74,7 @@ $html = '
           <!-- <div class="table-responsive"> -->
           
           <!--begin: Datatable -->
-          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap">
+          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
             <thead>
               <tr>' . PHP_EOL;
               for ($i=0; $i < count( $heads_table) ; $i++)

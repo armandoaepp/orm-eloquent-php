@@ -78,15 +78,8 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="descripcion">Descripcion: </label>
-                    <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion">
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="glosa">Glosa: </label>
-                    <input type="text" class="form-control" name="glosa" id="glosa" placeholder="Glosa">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
                   </div>
                 </div>
 
@@ -114,7 +107,14 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_visitas">Num Visitas: </label>
-                    <input type="text" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas">
+                    <input type="number" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="glosa">Glosa: </label>
+                    <input type="text" class="form-control" name="glosa" id="glosa" placeholder="Glosa">
                   </div>
                 </div>
 

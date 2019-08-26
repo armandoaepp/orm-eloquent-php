@@ -65,12 +65,12 @@
                 <th> Sub Categoria Id </th> 
                 <th> Categoria Id </th> 
                 <th> Codigo </th> 
-                <th> Descripcion </th> 
-                <th> Glosa </th> 
+                <th> Nombre </th> 
                 <th> Precio </th> 
                 <th> Descuento </th> 
                 <th> Precio Descuento </th> 
                 <th> Num Visitas </th> 
+                <th> Glosa </th> 
                 <th width="80"> Publicado </th>
                 <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
@@ -124,12 +124,12 @@
                 <td> {{ $row->sub_categoria_id }} </td> 
                 <td> {{ $row->categoria_id }} </td> 
                 <td> {{ $row->codigo }} </td> 
-                <td> {{ $row->descripcion }} </td> 
-                <td> {{ $row->glosa }} </td> 
+                <td> {{ $row->nombre }} </td> 
                 <td> {{ $row->precio }} </td> 
                 <td> {{ $row->descuento }} </td> 
                 <td> {{ $row->precio_descuento }} </td> 
                 <td> {{ $row->num_visitas }} </td> 
+                <td> {{ $row->glosa }} </td> 
                 <td class="text-center">
                   <?php echo $publicado; ?>
                 </td>

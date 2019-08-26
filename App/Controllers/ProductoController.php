@@ -65,12 +65,12 @@ class ProductoController
       $sub_categoria_id = $request->input('sub_categoria_id');
       $categoria_id = $request->input('categoria_id');
       $codigo = $request->input('codigo');
-      $descripcion = $request->input('descripcion');
-      $glosa = $request->input('glosa');
+      $nombre = $request->input('nombre');
       $precio = $request->input('precio');
       $descuento = $request->input('descuento');
       $precio_descuento = $request->input('precio_descuento');
       $num_visitas = $request->input('num_visitas');
+      $glosa = $request->input('glosa');
       $publicar = $request->input('publicar');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
@@ -83,12 +83,12 @@ class ProductoController
         $producto->sub_categoria_id = $sub_categoria_id;
         $producto->categoria_id = $categoria_id;
         $producto->codigo = $codigo;
-        $producto->descripcion = $descripcion;
-        $producto->glosa = $glosa;
+        $producto->nombre = $nombre;
         $producto->precio = $precio;
         $producto->descuento = $descuento;
         $producto->precio_descuento = $precio_descuento;
         $producto->num_visitas = $num_visitas;
+        $producto->glosa = $glosa;
         $producto->publicar = $publicar;
         $producto->estado = $estado;
         
@@ -148,12 +148,12 @@ class ProductoController
       $sub_categoria_id = $request->input('sub_categoria_id');
       $categoria_id = $request->input('categoria_id');
       $codigo = $request->input('codigo');
-      $descripcion = $request->input('descripcion');
-      $glosa = $request->input('glosa');
+      $nombre = $request->input('nombre');
       $precio = $request->input('precio');
       $descuento = $request->input('descuento');
       $precio_descuento = $request->input('precio_descuento');
       $num_visitas = $request->input('num_visitas');
+      $glosa = $request->input('glosa');
       $publicar = $request->input('publicar');
 
       if (!empty($id))
@@ -163,12 +163,12 @@ class ProductoController
         $producto->sub_categoria_id = $sub_categoria_id;
         $producto->categoria_id = $categoria_id;
         $producto->codigo = $codigo;
-        $producto->descripcion = $descripcion;
-        $producto->glosa = $glosa;
+        $producto->nombre = $nombre;
         $producto->precio = $precio;
         $producto->descuento = $descuento;
         $producto->precio_descuento = $precio_descuento;
         $producto->num_visitas = $num_visitas;
+        $producto->glosa = $glosa;
         $producto->publicar = $publicar;
         
         $status = $producto->save();
