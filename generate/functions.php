@@ -78,7 +78,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
     {
       if($entity->Field == "estado" || $entity->Field == $prefix."estado")
       {
-        $str  .= '      $'.$entity->Field .' = !empty($request->input(\''.$entity->Field .'\')) ? $request->input(\''.$entity->Field .'\') : 1;'. PHP_EOL;  
+        $str  .= '      $'.$entity->Field .' = !empty($request->input(\''.$entity->Field .'\')) ? $request->input(\''.$entity->Field .'\') : 1;'. PHP_EOL;
       }
       else
       {
@@ -87,13 +87,13 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
     }
     elseif($entity->Field == "imagen" || $entity->Field == $prefix."imagen")
     {
-      $str  .= '      $'.$entity->Field .' = $request->file(\''.$entity->Field .'\');'. PHP_EOL; 
-      $name_imagen = $entity->Field ; 
+      $str  .= '      $'.$entity->Field .' = $request->file(\''.$entity->Field .'\');'. PHP_EOL;
+      $name_imagen = $entity->Field ;
     }
-    
+
   }
 
- 
+
 
   $str  .= '' . PHP_EOL;
   $str  .= '      $'.$table_name.' = '.$class_name.'::where(["'.$entities[1]->Field.'" => $'.$entities[1]->Field.'])->first();' . PHP_EOL;
@@ -103,7 +103,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
   $str  .= '' . PHP_EOL;
 
   if(!empty($name_imagen))
-  {    
+  {
     $str  .= '        ##################################################################################' . PHP_EOL;
     $str  .= '        $path_relative = "images/'. $url_friendly_plural .'/" ;' . PHP_EOL;
     $str  .= '        $name_file     = "'. $name_imagen .'";' . PHP_EOL;
@@ -112,7 +112,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
     $str  .= '        ##################################################################################' . PHP_EOL;
     $str  .= '' . PHP_EOL;
   }
-  
+
   $str  .= '        $'.$table_name.' = new '.$class_name.'();' . PHP_EOL;
 
   foreach ($entities as $index => $entity)
@@ -121,7 +121,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
     {
       $str  .= '        $'.$table_name.'->'.$entity->Field .' = $'.$entity->Field .';'. PHP_EOL;
     }
-    
+
   }
 
   $str  .= '        ' . PHP_EOL;
@@ -209,12 +209,12 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
     if (!fieldsNotUpdateInController($entity->Field, $prefix) )
     {
       $str  .= '      $'.$entity->Field .' = $request->input(\''.$entity->Field .'\');'. PHP_EOL;
-    }    
+    }
     elseif($entity->Field == "imagen" || $entity->Field == $prefix."imagen")
     {
       $str  .= '      $'.$entity->Field .' = $request->file(\''.$entity->Field .'\');'. PHP_EOL;
       $str  .= '      $img_bd     = $request->input(\'img_bd\');'. PHP_EOL;
-      $name_imagen = $entity->Field ; 
+      $name_imagen = $entity->Field ;
     }
   }
   $str  .= '' . PHP_EOL;
@@ -222,7 +222,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $str  .= '      {' . PHP_EOL;
 
   if(!empty($name_imagen))
-  {    
+  {
     $str  .= '        ##################################################################################' . PHP_EOL;
     $str  .= '        $path_relative = "images/'. $url_friendly_plural .'/" ;' . PHP_EOL;
     $str  .= '        $name_file     = "'. $name_imagen .'";' . PHP_EOL;
@@ -247,7 +247,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
     {
       $str  .= '        $'.$table_name.'->'.$entity->Field .' = $'.$entity->Field .';'. PHP_EOL;
     }
-    
+
   }
 
   $str  .= '        ' . PHP_EOL;
@@ -259,7 +259,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $str  .= '        ' . PHP_EOL;
 
   if(!empty($name_imagen))
-  { 
+  {
     $str  .= '        # remove imagen' . PHP_EOL;
     $str  .= '        if($'. $name_imagen .' != $img_bd && $status )' . PHP_EOL;
     $str  .= '        {' . PHP_EOL;
@@ -304,7 +304,7 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $fields = array_column($entities, 'Field');
 
   $name_estado = (in_array("estado", $fields) ) ? 'estado' : $prefix."estado" ;
-  
+
   $str  = '' . PHP_EOL;
   $str  .= '  public function delete( Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
@@ -474,16 +474,16 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '  public function updatePublish( Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL; 
+  $str  .= '    {' . PHP_EOL;
   $str  .= '      $status  = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
-  $str  .= '' . PHP_EOL;  
+  $str  .= '' . PHP_EOL;
   $str  .= '      $id = $request->input("id");' . PHP_EOL;
   $str  .= '      $publicar = $request->input("publicar");' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      if (!empty($'.$entities[0]->Field.'))' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
-  $str  .= '' . PHP_EOL;  
+  $str  .= '' . PHP_EOL;
   //$str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
   $str  .= '        if ($publicar == "N") {'.PHP_EOL ;
   $str  .= '          $publicar = "S";'.PHP_EOL ;
@@ -493,7 +493,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '          $message = "Registro Ocultado al público";'.PHP_EOL ;
   $str  .= '        }'.PHP_EOL ;
 
-  $str  .= '' . PHP_EOL;  
+  $str  .= '' . PHP_EOL;
   $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
   $str  .= '        if (!empty($'.$table_name.'))' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
@@ -503,10 +503,10 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
 
   $str  .= '          # TABLE BITACORA' . PHP_EOL;
   $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar: ".$publicar) ;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;        
+  $str  .= '' . PHP_EOL;
   $str  .= '          $status = true;' . PHP_EOL;
   $str  .= '          $message = $message;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;        
+  $str  .= '' . PHP_EOL;
   $str  .= '         $data = $'.$table_name.';' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
   $str  .= '        else' . PHP_EOL;
@@ -529,7 +529,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .='                "status"  => $status,' . PHP_EOL;
   $str  .='                "errors"  => [],' . PHP_EOL;
   $str  .='                "data"    => [$data],' . PHP_EOL;
-  $str  .='              ]);' . PHP_EOL; 
+  $str  .='              ]);' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (Exception $e)' . PHP_EOL;
@@ -539,7 +539,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .='                "status"  => false,' . PHP_EOL;
   $str  .='                "errors"  => [$e->getMessage()],' . PHP_EOL;
   $str  .='                "data"    => [],' . PHP_EOL;
-  $str  .='              ]);' . PHP_EOL; 
+  $str  .='              ]);' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;

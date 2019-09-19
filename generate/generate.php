@@ -43,7 +43,7 @@ $class_name = Inflector::classify($table_name);
 echo createFoldersApp()."<br>" ;
 
 // Generation Model
-echo generateModel($table_name, $class_name, $entities ) ."<br>" ;
+echo generateModel($table_name, $class_name, $entities , $fields_col) ."<br>" ;
 
 // Generation Controller
 echo generateController($table_name, $class_name, $entities ) ."<br>" ;
