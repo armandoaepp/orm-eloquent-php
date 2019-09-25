@@ -52,7 +52,10 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="tipo_telefono_id">Tipo Telefono Id: </label>
-                    <input type="text" class="form-control" name="tipo_telefono_id" id="tipo_telefono_id" placeholder="Tipo Telefono Id">
+                    <select class="custom-select select2-box" name="tipo_telefono_id" id="tipo_telefono_id" placeholder="Tipo Telefono Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -66,7 +69,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pt_telefono">Telefono: </label>
-                    <input type="tel" class="form-control" name="pt_telefono" id="pt_telefono" placeholder="Telefono">
+                    <input type="text" class="form-control" name="pt_telefono" id="pt_telefono" placeholder="Telefono">
                   </div>
                 </div>
 

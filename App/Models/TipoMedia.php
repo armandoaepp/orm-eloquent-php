@@ -1,20 +1,23 @@
 <?php
-  namespace App\Models;
+namespace App\Models;
 
-  use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
-  class TipoMedia extends Model {
+class TipoMedia extends Model
+{
+  protected $table = "tipo_media";
 
-    protected $table = "tipo_media";
+  protected $fillable = [
+     'tm_descripcion',
+     'tm_estado',
+  ];
 
-    protected $primaryKey = "id";
+  protected $primaryKey = "id";
 
-    protected $guarded = ["id"];
+  protected $guarded = ["id"];
 
-    // public $timestamps = false;
+  public $timestamps = true;
 
-    // protected $hidden = ["created_at", "updated_at"];
+  protected $hidden = ["created_at", "updated_at"];
 
-
-  }
-  
+}

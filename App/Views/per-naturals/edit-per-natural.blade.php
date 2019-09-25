@@ -53,21 +53,24 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="persona_id">Persona Id: </label>
-                    <input type="text" class="form-control" name="persona_id" id="persona_id" placeholder="Persona Id" value="{{ $per_natural->persona_id }}" >
+                    <select class="custom-select select2-box" name="persona_id" id="persona_id" placeholder="Persona Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pn_dni">Dni: </label>
-                    <input type="text" class="form-control" name="pn_dni" id="pn_dni" placeholder="Dni" value="{{ $per_natural->pn_dni }}" >
+                    <input type="number" class="form-control" name="pn_dni" id="pn_dni" placeholder="Dni" value="{{ $per_natural->pn_dni }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pn_ruc">Ruc: </label>
-                    <input type="text" class="form-control" name="pn_ruc" id="pn_ruc" placeholder="Ruc" value="{{ $per_natural->pn_ruc }}" >
+                    <input type="number" class="form-control" name="pn_ruc" id="pn_ruc" placeholder="Ruc" value="{{ $per_natural->pn_ruc }}" >
                   </div>
                 </div>
 

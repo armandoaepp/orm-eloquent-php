@@ -53,14 +53,20 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="persona_id">Persona Id: </label>
-                    <input type="text" class="form-control" name="persona_id" id="persona_id" placeholder="Persona Id" value="{{ $per_documento->persona_id }}" >
+                    <select class="custom-select select2-box" name="persona_id" id="persona_id" placeholder="Persona Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="tipo_per_documento_id">Tipo Per Documento Id: </label>
-                    <input type="text" class="form-control" name="tipo_per_documento_id" id="tipo_per_documento_id" placeholder="Tipo Per Documento Id" value="{{ $per_documento->tipo_per_documento_id }}" >
+                    <select class="custom-select select2-box" name="tipo_per_documento_id" id="tipo_per_documento_id" placeholder="Tipo Per Documento Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -74,14 +80,14 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pd_fecha_emision">Fecha Emision: </label>
-                    <input type="date" class="form-control" name="pd_fecha_emision" id="pd_fecha_emision" placeholder="Fecha Emision" value="{{ $per_documento->pd_fecha_emision }}" >
+                    <input type="text" class="form-control" name="pd_fecha_emision" id="pd_fecha_emision" placeholder="Fecha Emision" value="{{ $per_documento->pd_fecha_emision }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pd_echa_caducidad">Echa Caducidad: </label>
-                    <input type="date" class="form-control" name="pd_echa_caducidad" id="pd_echa_caducidad" placeholder="Echa Caducidad" value="{{ $per_documento->pd_echa_caducidad }}" >
+                    <input type="text" class="form-control" name="pd_echa_caducidad" id="pd_echa_caducidad" placeholder="Echa Caducidad" value="{{ $per_documento->pd_echa_caducidad }}" >
                   </div>
                 </div>
 

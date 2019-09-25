@@ -73,7 +73,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pj_ruc">Ruc: </label>
-                    <input type="text" class="form-control" name="pj_ruc" id="pj_ruc" placeholder="Ruc" value="{{ $per_juridica->pj_ruc }}" >
+                    <input type="number" class="form-control" name="pj_ruc" id="pj_ruc" placeholder="Ruc" value="{{ $per_juridica->pj_ruc }}" >
                   </div>
                 </div>
 

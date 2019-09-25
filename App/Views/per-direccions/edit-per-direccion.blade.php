@@ -53,21 +53,30 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="persona_id">Persona Id: </label>
-                    <input type="text" class="form-control" name="persona_id" id="persona_id" placeholder="Persona Id" value="{{ $per_direccion->persona_id }}" >
+                    <select class="custom-select select2-box" name="persona_id" id="persona_id" placeholder="Persona Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="tipo_direccion_id">Tipo Direccion Id: </label>
-                    <input type="text" class="form-control" name="tipo_direccion_id" id="tipo_direccion_id" placeholder="Tipo Direccion Id" value="{{ $per_direccion->tipo_direccion_id }}" >
+                    <select class="custom-select select2-box" name="tipo_direccion_id" id="tipo_direccion_id" placeholder="Tipo Direccion Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ubigeo_id">Ubigeo Id: </label>
-                    <input type="text" class="form-control" name="ubigeo_id" id="ubigeo_id" placeholder="Ubigeo Id" value="{{ $per_direccion->ubigeo_id }}" >
+                    <select class="custom-select select2-box" name="ubigeo_id" id="ubigeo_id" placeholder="Ubigeo Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 

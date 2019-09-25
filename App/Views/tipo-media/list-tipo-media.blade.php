@@ -54,11 +54,11 @@
         <div class="card-header bg-white">
           <i class="fa fa-align-justify"></i> Lista de tipo-media
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-
+        <div class="card-body">          
+          <!-- <div class="table-responsive"> -->
+          
           <!--begin: Datatable -->
-          <table class="table table-striped- table-bordered table-hover table-checkable table-sm" id="dataTableList">
+          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
             <thead>
               <tr>
                 <th width="60"> Id </th> 
@@ -138,10 +138,10 @@
             @endforeach
             </tbody>
           </table>
-
           <!--end: Datatable -->
 
-          </div>
+          
+          <!-- </div> -->
         </div>
       </div>
     </div>

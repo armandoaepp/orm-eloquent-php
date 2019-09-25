@@ -52,7 +52,10 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="persona_id">Persona Id: </label>
-                    <input type="text" class="form-control" name="persona_id" id="persona_id" placeholder="Persona Id">
+                    <select class="custom-select select2-box" name="persona_id" id="persona_id" placeholder="Persona Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 

@@ -72,7 +72,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pj_ruc">Ruc: </label>
-                    <input type="text" class="form-control" name="pj_ruc" id="pj_ruc" placeholder="Ruc">
+                    <input type="number" class="form-control" name="pj_ruc" id="pj_ruc" placeholder="Ruc">
                   </div>
                 </div>
 

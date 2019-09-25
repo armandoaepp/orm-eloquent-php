@@ -52,14 +52,20 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="persona_id">Persona Id: </label>
-                    <input type="text" class="form-control" name="persona_id" id="persona_id" placeholder="Persona Id">
+                    <select class="custom-select select2-box" name="persona_id" id="persona_id" placeholder="Persona Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="tipo_per_doc_identidad_id">Tipo Per Doc Identidad Id: </label>
-                    <input type="text" class="form-control" name="tipo_per_doc_identidad_id" id="tipo_per_doc_identidad_id" placeholder="Tipo Per Doc Identidad Id">
+                    <select class="custom-select select2-box" name="tipo_per_doc_identidad_id" id="tipo_per_doc_identidad_id" placeholder="Tipo Per Doc Identidad Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -80,14 +86,14 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pdi_fecha_emision">Fecha Emision: </label>
-                    <input type="date" class="form-control" name="pdi_fecha_emision" id="pdi_fecha_emision" placeholder="Fecha Emision">
+                    <input type="text" class="form-control" name="pdi_fecha_emision" id="pdi_fecha_emision" placeholder="Fecha Emision">
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="pdi_fecha_caducidad">Fecha Caducidad: </label>
-                    <input type="date" class="form-control" name="pdi_fecha_caducidad" id="pdi_fecha_caducidad" placeholder="Fecha Caducidad">
+                    <input type="text" class="form-control" name="pdi_fecha_caducidad" id="pdi_fecha_caducidad" placeholder="Fecha Caducidad">
                   </div>
                 </div>
 
