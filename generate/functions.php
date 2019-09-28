@@ -36,7 +36,7 @@ function create($table_name, $class_name, $entities = array())
   $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function create( Request $request )' . PHP_EOL;
+  $str  .= '  public function create(Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -62,7 +62,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
   $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function store( Request $request )' . PHP_EOL;
+  $str  .= '  public function store(Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -95,12 +95,13 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
 
 
 
-  $str  .= '' . PHP_EOL;
-  $str  .= '      $'.$table_name.' = '.$class_name.'::where(["'.$entities[1]->Field.'" => $'.$entities[1]->Field.'])->first();' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      if (empty($'.$table_name.'))' . PHP_EOL;
-  $str  .= '      {' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+  // $str  .= '      $'.$table_name.' = '.$class_name.'::where(["'.$entities[1]->Field.'" => $'.$entities[1]->Field.'])->first();' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+  // $str  .= '      if (empty($'.$table_name.'))' . PHP_EOL;
+  // $str  .= '      {' . PHP_EOL;
+    $str  .= '' . PHP_EOL;
+  $str  .= '      # STORE' . PHP_EOL;
 
   if(!empty($name_imagen))
   {
@@ -128,19 +129,19 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
   $str  .= '        $status = $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
 
-  $str  .= '        # TABLE BITACORA' . PHP_EOL;
+  $str  .= '      # TABLE BITACORA' . PHP_EOL;
   $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "created") ;' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
 
-  $str  .= '        $id = $'.$table_name.'->'.$entities[0]->Field.';' . PHP_EOL;
+  // $str  .= '        $id = $'.$table_name.'->'.$entities[0]->Field.';' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
-  $str  .= '        $message = "Operancion Correcta";' . PHP_EOL;
+  $str  .= '      $message = "Operancion Correcta";' . PHP_EOL;
   $str  .= '        ' . PHP_EOL;
-  $str  .= '      }' . PHP_EOL;
-  $str  .= '      else' . PHP_EOL;
-  $str  .= '      {' . PHP_EOL;
-  $str  .= '        $message = "¡El registro ya existe!";' . PHP_EOL;
-  $str  .= '      }' . PHP_EOL;
+  // $str  .= '      }' . PHP_EOL;
+  // $str  .= '      else' . PHP_EOL;
+  // $str  .= '      {' . PHP_EOL;
+  // $str  .= '        $message = "¡El registro ya existe!";' . PHP_EOL;
+  // $str  .= '      }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      $data = ["message" => $message, "status" => $status, "data" => [$'.$table_name.'],];' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
@@ -193,7 +194,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $table_plural = str_plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function update( Request $request )' . PHP_EOL;
+  $str  .= '  public function update(Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -306,7 +307,7 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $name_estado = (in_array("estado", $fields) ) ? 'estado' : $prefix."estado" ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function delete( Request $request )' . PHP_EOL;
+  $str  .= '  public function delete(Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   // $str  .= '    extract($params) ;' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
@@ -471,7 +472,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
 {
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function updatePublish( Request $request )' . PHP_EOL;
+  $str  .= '  public function updatePublish(Request $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;

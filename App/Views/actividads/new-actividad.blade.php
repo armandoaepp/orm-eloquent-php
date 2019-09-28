@@ -1,7 +1,6 @@
 
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -45,28 +44,37 @@
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('actividad-store') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-controls" action="{{  route('actividad-store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="act_nombre">Nombre: </label>
-                    <input type="text" class="form-control" name="act_nombre" id="act_nombre" placeholder="Nombre">
+                    <input type="text" class="form-control @error('act_nombre') is-invalid @enderror" name="act_nombre" id="act_nombre" value="{{ old('act_nombre') }}" required placeholder="Nombre">
+                    @error('act_nombre')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="act_horas">Horas: </label>
-                    <input type="number" class="form-control" name="act_horas" id="act_horas" placeholder="Horas">
+                    <input type="number" class="form-control @error('act_horas') is-invalid @enderror" name="act_horas" id="act_horas" value="{{ old('act_horas') }}" required placeholder="Horas">
+                    @error('act_horas')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="act_descripcion">Descripcion: </label>
-                    <textarea class="form-control ckeditor" name="act_descripcion" id="act_descripcion" placeholder="Descripcion" cols="30" rows="6"></textarea>
+                    <textarea class="form-control ckeditor @error('act_descripcion') is-invalid @enderror" name="act_descripcion" id="act_descripcion" placeholder="Descripcion" cols="30" rows="6">{{ old('act_descripcion') }}</textarea>
+                    @error('act_descripcion')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
@@ -106,11 +114,9 @@
 </div>
 <!-- end:: Content -->
 
-
 @endsection
 
 
 @section('script')
-
 
 @endsection

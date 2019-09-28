@@ -66,10 +66,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ubigeo_id">Ubigeo Id: </label>
-                    <select class="custom-select select2-box" name="ubigeo_id" id="ubigeo_id" placeholder="Ubigeo Id">
-                      <option value="" selected disabled hidden>Seleccionar </option> 
-                      <option value="text">text</option>
-                    </select>
+                    <input type="text" class="form-control" name="ubigeo_id" id="ubigeo_id" placeholder="Ubigeo Id" value="{{ $paquete->ubigeo_id }}" >
                   </div>
                 </div>
 
@@ -83,70 +80,70 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="descripcion">Descripcion: </label>
-                    <textarea class="form-control ckeditor" name="descripcion" id="descripcion" placeholder="Descripcion" cols="30" rows="6">{{ $paquete->descripcion }}</textarea>
+                    <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion" value="{{ $paquete->descripcion }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="recomendacion">Recomendacion: </label>
-                    <textarea class="form-control ckeditor" name="recomendacion" id="recomendacion" placeholder="Recomendacion" cols="30" rows="6">{{ $paquete->recomendacion }}</textarea>
+                    <input type="text" class="form-control" name="recomendacion" id="recomendacion" placeholder="Recomendacion" value="{{ $paquete->recomendacion }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_dias">Num Dias: </label>
-                    <input type="number" class="form-control" name="num_dias" id="num_dias" placeholder="Num Dias" value="{{ $paquete->num_dias }}" >
+                    <input type="text" class="form-control" name="num_dias" id="num_dias" placeholder="Num Dias" value="{{ $paquete->num_dias }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_noches">Num Noches: </label>
-                    <input type="number" class="form-control" name="num_noches" id="num_noches" placeholder="Num Noches" value="{{ $paquete->num_noches }}" >
+                    <input type="text" class="form-control" name="num_noches" id="num_noches" placeholder="Num Noches" value="{{ $paquete->num_noches }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="precio">Precio: </label>
-                    <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" value="{{ $paquete->precio }}" >
+                    <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio" value="{{ $paquete->precio }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="descuento">Descuento: </label>
-                    <input type="number" class="form-control" name="descuento" id="descuento" placeholder="Descuento" value="{{ $paquete->descuento }}" >
+                    <input type="text" class="form-control" name="descuento" id="descuento" placeholder="Descuento" value="{{ $paquete->descuento }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="precio_descuento">Precio Descuento: </label>
-                    <input type="number" class="form-control" name="precio_descuento" id="precio_descuento" placeholder="Precio Descuento" value="{{ $paquete->precio_descuento }}" >
+                    <input type="text" class="form-control" name="precio_descuento" id="precio_descuento" placeholder="Precio Descuento" value="{{ $paquete->precio_descuento }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="fecha_ini_promo">Fecha Ini Promo: </label>
-                    <input type="date" class="form-control" name="fecha_ini_promo" id="fecha_ini_promo" placeholder="Fecha Ini Promo" value="{{ $paquete->fecha_ini_promo }}" >
+                    <input type="text" class="form-control" name="fecha_ini_promo" id="fecha_ini_promo" placeholder="Fecha Ini Promo" value="{{ $paquete->fecha_ini_promo }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="fecha_fin_promo">Fecha Fin Promo: </label>
-                    <input type="date" class="form-control" name="fecha_fin_promo" id="fecha_fin_promo" placeholder="Fecha Fin Promo" value="{{ $paquete->fecha_fin_promo }}" >
+                    <input type="text" class="form-control" name="fecha_fin_promo" id="fecha_fin_promo" placeholder="Fecha Fin Promo" value="{{ $paquete->fecha_fin_promo }}" >
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_visitas">Num Visitas: </label>
-                    <input type="number" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas" value="{{ $paquete->num_visitas }}" >
+                    <input type="text" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas" value="{{ $paquete->num_visitas }}" >
                   </div>
                 </div>
 

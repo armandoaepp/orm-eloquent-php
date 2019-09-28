@@ -19,7 +19,8 @@ use Doctrine\Common\Inflector\Inflector;
 use App\Helpers\UrlHelper ;
 
 $fields_selected = $_POST['fields'] ;
-$table_name = $_POST["table_name"] ;
+$table_name      = $_POST["table_name"] ;
+$fields_requireds = $_POST['requireds'] ;
 // $table_name ='user' ;
 
 if( empty( $table_name ) )
@@ -63,7 +64,7 @@ for ($i = 0; $i < count($fields_selected); $i++)
 }
 
 require __DIR__.'/generateViews.php';
-echo generateView($table_name, $class_name, $entities, $fields_table, $heads_table, $tipo_inputs   ) ."<br>"   ;
+echo generateView($table_name, $class_name, $entities, $fields_table, $heads_table, $tipo_inputs, $fields_requireds   ) ."<br>"   ;
 
 // echo Str
 

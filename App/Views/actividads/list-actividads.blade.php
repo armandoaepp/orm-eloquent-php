@@ -1,7 +1,6 @@
 
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -54,11 +53,11 @@
         <div class="card-header bg-white">
           <i class="fa fa-align-justify"></i> Lista de actividads
         </div>
-        <div class="card-body">          
+        <div class="card-body">
           <!-- <div class="table-responsive"> -->
-          
+
           <!--begin: Datatable -->
-          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
+          <table id="dataTableLists" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
             <thead>
               <tr>
                 <th width="60"> Id </th> 
@@ -151,7 +150,7 @@
           </table>
           <!--end: Datatable -->
 
-          
+
           <!-- </div> -->
         </div>
       </div>
@@ -301,14 +300,14 @@
 
     $("#formModal").submit(processFormModal);
 
-    
+
   })(jQuery);
 
   // modal DELETE
   function modalDelete(event, id, textRow, title, estado) {
 
     event.preventDefault();
-    
+
     $("#idRowModal").val(id);
     $("#accion").val("delete");
 
@@ -334,7 +333,7 @@
 
 <script>
   // modals publicar
-  (function ($) 
+  (function ($)
   {
     /* Publicar */
     function processFormModalPublicar(event) {
@@ -377,13 +376,13 @@
       });
     }
 
-    $("#formModalPublicar").submit(processFormModalPublicar); 
-    
+    $("#formModalPublicar").submit(processFormModalPublicar);
+
   })(jQuery);
 
   // modal PUBLICAR
   function modalPublicar(event, id, textRow, title, publicar) {
-    
+
     event.preventDefault();
 
     $("#idPublicar").val(id);
@@ -406,7 +405,7 @@
     }
 
     $("#myModalPublicar").modal("show");
-  } 
+  }
 
 </script>
 

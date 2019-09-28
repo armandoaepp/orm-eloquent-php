@@ -5,7 +5,7 @@ include 'views/list.php' ;
 include 'views/newView.php' ;
 include 'views/editView.php' ;
 
-function generateView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
+function generateView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array(), $fields_requireds = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_plural = str_plural($table_amigable) ;
@@ -46,7 +46,7 @@ function generateView($table_name, $class_name, $entities = array(), $fields_tab
 
   $str = '';
   $str .= '';
-  $str .= generateNewView($table_name, $class_name, $entities, $fields_table, $heads_table , $tipo_inputs ) ;
+  $str .= generateNewView($table_name, $class_name, $entities, $fields_table, $heads_table , $tipo_inputs,$fields_requireds ) ;
 
   fwrite($file_open, $str);
   fclose($file_open);

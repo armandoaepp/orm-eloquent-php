@@ -40,7 +40,7 @@ class ActividadController
 
   }
 
-  public function create( Request $request )
+  public function create(Request $request )
   {
     try
     {
@@ -55,7 +55,7 @@ class ActividadController
 
   }
 
-  public function store( Request $request )
+  public function store(Request $request )
   {
     try
     {
@@ -68,11 +68,7 @@ class ActividadController
       $act_publicar = $request->input('act_publicar');
       $act_estado = !empty($request->input('act_estado')) ? $request->input('act_estado') : 1;
 
-      $actividad = Actividad::where(["act_nombre" => $act_nombre])->first();
-
-      if (empty($actividad))
-      {
-
+      # STORE
         $actividad = new Actividad();
         $actividad->act_nombre = $act_nombre;
         $actividad->act_horas = $act_horas;
@@ -82,18 +78,12 @@ class ActividadController
         
         $status = $actividad->save();
         
-        # TABLE BITACORA
+      # TABLE BITACORA
         $this->savedBitacoraTrait( $actividad, "created") ;
         
-        $id = $actividad->id;
         
-        $message = "Operancion Correcta";
+      $message = "Operancion Correcta";
         
-      }
-      else
-      {
-        $message = "¡El registro ya existe!";
-      }
 
       $data = ["message" => $message, "status" => $status, "data" => [$actividad],];
     
@@ -124,7 +114,7 @@ class ActividadController
 
   }
 
-  public function update( Request $request )
+  public function update(Request $request )
   {
     try
     {
@@ -172,7 +162,7 @@ class ActividadController
 
   }
 
-  public function delete( Request $request )
+  public function delete(Request $request )
   {
     try
     {
@@ -244,7 +234,7 @@ class ActividadController
 
   }
 
-  public function updatePublish( Request $request )
+  public function updatePublish(Request $request )
   {
     try
     {

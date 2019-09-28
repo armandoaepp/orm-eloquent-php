@@ -52,87 +52,120 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ubigeo_id">Ubigeo Id: </label>
-                    <select class="custom-select select2-box" name="ubigeo_id" id="ubigeo_id" placeholder="Ubigeo Id">
-                      <option value="" selected disabled hidden>Seleccionar </option> 
-                      <option value="text">text</option>
-                    </select>
+                    <input type="text" class="form-control @error('ubigeo_id') is-invalid @enderror" name="ubigeo_id" id="ubigeo_id" value="{{ old('ubigeo_id') }}" placeholder="Ubigeo Id">
+                    @error('ubigeo_id')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="nombre">Nombre: </label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
+                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ old('nombre') }}" placeholder="Nombre">
+                    @error('nombre')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="descripcion">Descripcion: </label>
-                    <textarea class="form-control ckeditor" name="descripcion" id="descripcion" placeholder="Descripcion" cols="30" rows="6"></textarea>
+                    <input type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" value="{{ old('descripcion') }}" placeholder="Descripcion">
+                    @error('descripcion')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="recomendacion">Recomendacion: </label>
-                    <textarea class="form-control ckeditor" name="recomendacion" id="recomendacion" placeholder="Recomendacion" cols="30" rows="6"></textarea>
+                    <input type="text" class="form-control @error('recomendacion') is-invalid @enderror" name="recomendacion" id="recomendacion" value="{{ old('recomendacion') }}" placeholder="Recomendacion">
+                    @error('recomendacion')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_dias">Num Dias: </label>
-                    <input type="number" class="form-control" name="num_dias" id="num_dias" placeholder="Num Dias">
+                    <input type="text" class="form-control @error('num_dias') is-invalid @enderror" name="num_dias" id="num_dias" value="{{ old('num_dias') }}" placeholder="Num Dias">
+                    @error('num_dias')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_noches">Num Noches: </label>
-                    <input type="number" class="form-control" name="num_noches" id="num_noches" placeholder="Num Noches">
+                    <input type="text" class="form-control @error('num_noches') is-invalid @enderror" name="num_noches" id="num_noches" value="{{ old('num_noches') }}" placeholder="Num Noches">
+                    @error('num_noches')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="precio">Precio: </label>
-                    <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio">
+                    <input type="text" class="form-control @error('precio') is-invalid @enderror" name="precio" id="precio" value="{{ old('precio') }}" placeholder="Precio">
+                    @error('precio')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="descuento">Descuento: </label>
-                    <input type="number" class="form-control" name="descuento" id="descuento" placeholder="Descuento">
+                    <input type="text" class="form-control @error('descuento') is-invalid @enderror" name="descuento" id="descuento" value="{{ old('descuento') }}" placeholder="Descuento">
+                    @error('descuento')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="precio_descuento">Precio Descuento: </label>
-                    <input type="number" class="form-control" name="precio_descuento" id="precio_descuento" placeholder="Precio Descuento">
+                    <input type="text" class="form-control @error('precio_descuento') is-invalid @enderror" name="precio_descuento" id="precio_descuento" value="{{ old('precio_descuento') }}" placeholder="Precio Descuento">
+                    @error('precio_descuento')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="fecha_ini_promo">Fecha Ini Promo: </label>
-                    <input type="date" class="form-control" name="fecha_ini_promo" id="fecha_ini_promo" placeholder="Fecha Ini Promo">
+                    <input type="text" class="form-control @error('fecha_ini_promo') is-invalid @enderror" name="fecha_ini_promo" id="fecha_ini_promo" value="{{ old('fecha_ini_promo') }}" placeholder="Fecha Ini Promo">
+                    @error('fecha_ini_promo')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="fecha_fin_promo">Fecha Fin Promo: </label>
-                    <input type="date" class="form-control" name="fecha_fin_promo" id="fecha_fin_promo" placeholder="Fecha Fin Promo">
+                    <input type="text" class="form-control @error('fecha_fin_promo') is-invalid @enderror" name="fecha_fin_promo" id="fecha_fin_promo" value="{{ old('fecha_fin_promo') }}" placeholder="Fecha Fin Promo">
+                    @error('fecha_fin_promo')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="num_visitas">Num Visitas: </label>
-                    <input type="number" class="form-control" name="num_visitas" id="num_visitas" placeholder="Num Visitas">
+                    <input type="text" class="form-control @error('num_visitas') is-invalid @enderror" name="num_visitas" id="num_visitas" value="{{ old('num_visitas') }}" placeholder="Num Visitas">
+                    @error('num_visitas')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 

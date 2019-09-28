@@ -10,7 +10,6 @@ function generateIndex($table_name, $class_name, $entities = array(), $fields_ta
 $html = '
 <?php
   $sidebar = array(
-    "sidebar_class" => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );

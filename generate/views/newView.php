@@ -1,5 +1,5 @@
 <?php
-function generateNewView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
+function generateNewView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array(), $fields_requireds = array() )
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_amigable_sin_guion = str_replace ('-', ' ', $table_amigable);
@@ -18,7 +18,6 @@ function generateNewView($table_name, $class_name, $entities = array(), $fields_
 $html = '
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -62,7 +61,7 @@ $html = '
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route(\''.$table_amigable.'-store\') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-controls" action="{{  route(\''.$table_amigable.'-store\') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">' . PHP_EOL;
@@ -82,12 +81,17 @@ $html = '
                 if ( !verificarItemForm($fields_table[$i], $prefix) )
                 {
 
+                  $required = in_array($fields_table[$i], $fields_requireds ) ? 'required' : '';
+
                   if($tipo_inputs[$i] == 'textarea')
                   {
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <textarea class="form-control ckeditor" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '" cols="30" rows="6"></textarea>' . PHP_EOL;
+                    $html .= '                    <textarea class="form-control ckeditor @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '" cols="30" rows="6">{{ old(\'' . $fields_table[$i] .'\') }}</textarea>' . PHP_EOL;
+                    $html .= '                    @error(\'' . $fields_table[$i] .'\')' . PHP_EOL;
+                    $html .= '                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>' . PHP_EOL;
+                    $html .= '                    @enderror' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
@@ -110,10 +114,17 @@ $html = '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'">' . PHP_EOL;
+                    // $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" value="{{ old(\'' . $fields_table[$i] .'\') }}" placeholder="' . $field_item  .'">' . PHP_EOL;
+                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" value="{{ old(\'' . $fields_table[$i] .'\') }}" '. $required .' placeholder="' . $field_item  .'">' . PHP_EOL;
+                    $html .= '                    @error(\'' . $fields_table[$i] .'\')' . PHP_EOL;
+                    $html .= '                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>' . PHP_EOL;
+                    $html .= '                    @enderror' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
+
+
+
                   }
 
                 }
@@ -183,15 +194,12 @@ $html = '
 </div>
 <!-- end:: Content -->
 
-
 @endsection
 
 
 @section(\'script\')
 
-
-@endsection
-';
+@endsection';
 
 return $html ;
 }

@@ -1,19 +1,17 @@
 <?php
 
-require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__ . '/../bootstrap/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $tables = Capsule::select('SHOW TABLES');
 
-$entities = [] ;
-if(!empty($_GET["table"]) )
-{
+$entities = [];
+if (!empty($_GET["table"])) {
  $table_name = $_GET["table"];
- $entities = Capsule::select("describe ".$table_name);
-}
-else{
-  $table_name = "" ;
+ $entities = Capsule::select("describe " . $table_name);
+} else {
+ $table_name = "";
 }
 
 ?>
@@ -40,19 +38,17 @@ else{
         <ul>
 
           <?php
-            foreach ($tables as $table)
-            {
-              foreach ($table as $key => $value)
-              {
-                echo '
+foreach ($tables as $table) {
+ foreach ($table as $key => $value) {
+  echo '
                   <li>
-                    <a href="?table='.$value.'" > '.$value.'</a>
+                    <a href="?table=' . $value . '" > ' . $value . '</a>
                   </li>
                   ';
 
-              }
-            }
-          ?>
+ }
+}
+?>
 
         </ul>
       </div>
@@ -67,29 +63,32 @@ else{
             <thead>
               <tr>
               <th>Field
-              <input type="button" name="bttodo" id="bttodo" value="Seleccionar Todo" onclick="ckb('form1','true')"/>
-                  <input type="button" name="btlimpiar" id="btlimpiar" onclick="ckb('form1','false')" value="Limpiar Seleccion" />
+              <input type="button" name="bttodo" id="bttodo" value="Seleccionar Todo" onclick="ckb('form1', true)"/>
+                  <input type="button" name="btlimpiar" id="btlimpiar" onclick="ckb('form1', false)" value="Limpiar Seleccion" />
               </th>
               <th>Head Table</th>
-              <th>Type Input</th>
-              <th>NULL</th>
+              <th>Type Input
+              </th>
+
+              <th><label for="checked-requireds">Not Null</label> <input id="checked-requireds" type="checkbox" name="check_required" /> </th>
               <th></th>
               </tr>
             </thead>
             <tbody>
               <?php
-              foreach ($entities as $index => $entity)
-              {
+                foreach ($entities as $index => $entity) {
+
+                  $required_once = ($index == 0) ? 'required': '';
               ?>
               <tr>
                 <td>
-                  <label for="field_<?php echo $index ;?>">
-                    <input type="checkbox" name="fields[]" value="<?php echo $entity->Field."/".$index; ?>"  id="field_<?php echo $index ;?>" />
-                    <?php echo $entity->Field ;?>
+                  <label for="field_<?php echo $index; ?>">
+                    <input class="form-check-field" type="checkbox" <?php echo $required_once ?> name="fields[]" value="<?php echo $entity->Field . "/" . $index; ?>"  id="field_<?php echo $index; ?>" />
+                    <?php echo $entity->Field; ?>
                   </label>
                 </td>
                 <td>
-                  <input type="text" name="header_table<?=$index?>" id="header_table<?=$index?>" value="<?php echo $entity->Field;?>" size="15" class="form-control form-control-sm" />
+                  <input type="text" name="header_table<?=$index?>" id="header_table<?=$index?>" value="<?php echo $entity->Field; ?>" size="15" class="form-control form-control-sm" />
                 </td>
                 <td>
                   <select class="custom-select custom-select-sm" name="type_input<?=$index?>" id="type_input<?=$index?>">
@@ -117,13 +116,11 @@ else{
                     <option value="week">Week</option>
                   </select>
                 </td>
-                <td>
-                  <label for="input_required_<?php echo $index ;?>">
-                    <!-- <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field."/".$index; ?>" <?php if( $entity->Null == 'NO' ){ echo "checked" ; } ?> id="input_required_<?php echo $index ;?>" /> -->
-                    <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field."/".$index; ?>" <?php if( $entity->Null == 'NO' ){ echo "checked" ; } ?> id="input_required_<?php echo $index ;?>" />
-                    <input type="radio" id="huey" name="drone" value="huey" checked>
-
-                    <?php echo $entity->Null  ?>
+                <td class="text-center">
+                  <label for="input_required_<?php echo $index; ?>">
+                     <!-- <input type="checkbox" name="requireds[]" value="<?php echo $entity->Field . "/" . $index; ?>" <?php if ($entity->Null == 'NO') {echo "checked";}?> id="input_required_<?php echo $index; ?>" /> -->
+                     <input class="form-check-required" type="checkbox" name="requireds[]" value="<?php echo $entity->Field ?>" <?php if ($entity->Null == 'NO') {echo "checked";}?> id="input_required_<?php echo $index; ?>" />
+                     <!-- <?php echo $entity->Null ?> -->
                   </label>
                 </td>
               </tr>
@@ -147,8 +144,61 @@ else{
 
 </main>
 
+<script
+  src="https://code.jquery.com/jquery-3.4.1.slim.js"
+  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+  crossorigin="anonymous"></script>
+
 <script>
-function ckb(frm,estado){
+ function ckb(frm, estado) {
+
+  $(".form-check-field").each(function (index) {
+    console.log(index + ": " + $(this).val());
+    // console.log(estado);
+    if (estado == true) {
+      $(this).prop('checked', true);
+    }
+    if (estado == false) {
+      $(this).prop('checked', false);
+    }
+
+  });
+
+
+
+  // form = document.getElementById(frm);
+  // var cant = form.elements.length;
+  // for (i = 0; i < cant; i++) {
+
+  //   console.log(form.elements[i]);
+  //   console.log(form.elements[i].class);
+  //   if (form.elements[i].type == "checkbox") {
+  //     if (estado == "true") {
+  //       form.elements[i].checked = true;
+  //     }
+  //     if (estado == "false") {
+  //       form.elements[i].checked = false;
+  //     }
+
+  //   }
+  // }
+
+}
+
+//  checked requires checkbox
+  $('#checked-requireds').change(function () {
+
+      $checked = $(this).prop("checked") ;
+
+      $(".form-check-required").each(function (index) {
+
+        $(this).prop('checked', $checked);
+
+      });
+  });
+
+/* function ckb(frm,estado)
+{
     form=document.getElementById(frm);
     var cant=form.elements.length;
     for(i=0;i<cant;i++){
@@ -160,7 +210,7 @@ function ckb(frm,estado){
       }
     }
 
-  }
+  } */
   </script>
 
 </body>

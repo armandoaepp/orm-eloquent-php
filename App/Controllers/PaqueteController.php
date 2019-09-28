@@ -40,7 +40,7 @@ class PaqueteController
 
   }
 
-  public function create( Request $request )
+  public function create(Request $request )
   {
     try
     {
@@ -55,7 +55,7 @@ class PaqueteController
 
   }
 
-  public function store( Request $request )
+  public function store(Request $request )
   {
     try
     {
@@ -144,7 +144,7 @@ class PaqueteController
 
   }
 
-  public function update( Request $request )
+  public function update(Request $request )
   {
     try
     {
@@ -212,7 +212,7 @@ class PaqueteController
 
   }
 
-  public function delete( Request $request )
+  public function delete(Request $request )
   {
     try
     {
@@ -284,7 +284,7 @@ class PaqueteController
 
   }
 
-  public function updatePublish( Request $request )
+  public function updatePublish(Request $request )
   {
     try
     {

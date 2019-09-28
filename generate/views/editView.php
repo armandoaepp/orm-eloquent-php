@@ -16,7 +16,6 @@ $html = '';
 $html .= '
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -84,8 +83,8 @@ $html .= '
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route(\''.$table_amigable.'-update\') }}" method="POST" enctype="multipart/form-data">
-              @csrf
+            <form id="form-controls" action="{{ route(\''.$table_amigable.'-update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
+              @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $'. $table_name .'->'.$fields_table[0].' }}">
               <div class="row">' . PHP_EOL;
 
@@ -109,7 +108,10 @@ $html .= '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <textarea class="form-control ckeditor" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '" cols="30" rows="6">{{ $'. $table_name .'->'.$fields_table[$i].' }}</textarea>' . PHP_EOL;
+                    $html .= '                    <textarea class="form-control ckeditor  @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '" cols="30" rows="6">{{ $'. $table_name .'->'.$fields_table[$i].' }}</textarea>' . PHP_EOL;
+                    $html .= '                    @error(\'' . $fields_table[$i] .'\')' . PHP_EOL;
+                    $html .= '                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>' . PHP_EOL;
+                    $html .= '                    @enderror' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
@@ -131,7 +133,11 @@ $html .= '
                     $html .= '                <div class="col-md-12">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ $'. $table_name .'->'.$fields_table[$i].' }}" >' . PHP_EOL;
+                    // $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ $'. $table_name .'->'.$fields_table[$i].' }}" >' . PHP_EOL;
+                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control  @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ old(\'' . $fields_table[$i] .'\', $'. $table_name .'->'.$fields_table[$i].' ?? \'\') }}" >' . PHP_EOL;
+                    $html .= '                    @error(\'' . $fields_table[$i] .'\')' . PHP_EOL;
+                    $html .= '                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>' . PHP_EOL;
+                    $html .= '                    @enderror' . PHP_EOL;
                     $html .= '                  </div>' . PHP_EOL;
                     $html .= '                </div>' . PHP_EOL;
                     $html .= '' . PHP_EOL;
@@ -217,15 +223,12 @@ $html .= '
 
 <!-- end:: Content -->
 
-
 @endsection
 
 
 @section(\'script\')
 
-
-@endsection
-';
+@endsection';
 
 return $html ;
 }

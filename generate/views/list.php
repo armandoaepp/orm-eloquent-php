@@ -17,7 +17,6 @@ function generateIndex($table_name, $class_name, $entities = array(), $fields_ta
 $html = '
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -70,11 +69,11 @@ $html = '
         <div class="card-header bg-white">
           <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
         </div>
-        <div class="card-body">          
+        <div class="card-body">
           <!-- <div class="table-responsive"> -->
-          
+
           <!--begin: Datatable -->
-          <table id="dataTableList" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
+          <table id="dataTableLists" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
             <thead>
               <tr>' . PHP_EOL;
               for ($i=0; $i < count( $heads_table) ; $i++)
@@ -103,13 +102,13 @@ $html = '
           $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
           $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
-    $html .= '                <th width="80"> Publicado </th>' . PHP_EOL ;  
+    $html .= '                <th width="80"> Publicado </th>' . PHP_EOL ;
     if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
     {
-      $html .= '                <th width="80"> Estado </th>' . PHP_EOL ;    
+      $html .= '                <th width="80"> Estado </th>' . PHP_EOL ;
     }
 
-    $html .= '                <th width="50"> Acciones </th>' . PHP_EOL ;  
+    $html .= '                <th width="50"> Acciones </th>' . PHP_EOL ;
 
     $html .= '              </tr>
             </thead>
@@ -178,11 +177,11 @@ $html = '
               {
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
                 $html .= '                <td class="text-center">'. PHP_EOL;
-                $html .= '                  <?php echo $publicado; ?>'. PHP_EOL; 
+                $html .= '                  <?php echo $publicado; ?>'. PHP_EOL;
                 $html .= '                </td>'. PHP_EOL;
               }
 
-                           
+
               $html .= '                <td class="text-center">'. PHP_EOL;
               $html .= '                  <span class="badge badge-pill <?php echo $status[$row->'.$prefix_estado.']["class"] ?>"> '. PHP_EOL;
               $html .= '                    <?php echo $status[$row->'.$prefix_estado.']["title"] ?> '. PHP_EOL;
@@ -201,7 +200,7 @@ $html = '
               $html .='                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>" >' .PHP_EOL ;
               $html .='                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
-              
+
               if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
               {
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
@@ -226,7 +225,7 @@ $html = '
               }*/
 
 
-            /*$html .= '                
+            /*$html .= '
                 <td nowrap>
                   <a class="btn btn-outline-primary btn-sm lh-1 btn-table <?php echo $class_disabled; ?>" href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" title="Editar">
                     <i class="fas fa-pencil-alt"></i>
@@ -245,7 +244,7 @@ $html = '
           </table>
           <!--end: Datatable -->
 
-          
+
           <!-- </div> -->
         </div>
       </div>
@@ -395,14 +394,14 @@ $html = '
 
     $("#formModal").submit(processFormModal);
 
-    
+
   })(jQuery);
 
   // modal DELETE
   function modalDelete(event, id, textRow, title, estado) {
 
     event.preventDefault();
-    
+
     $("#idRowModal").val(id);
     $("#accion").val("delete");
 
@@ -431,7 +430,7 @@ if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_c
 $html .= '
 <script>
   // modals publicar
-  (function ($) 
+  (function ($)
   {
     /* Publicar */
     function processFormModalPublicar(event) {
@@ -474,13 +473,13 @@ $html .= '
       });
     }
 
-    $("#formModalPublicar").submit(processFormModalPublicar); 
-    
+    $("#formModalPublicar").submit(processFormModalPublicar);
+
   })(jQuery);
 
   // modal PUBLICAR
   function modalPublicar(event, id, textRow, title, publicar) {
-    
+
     event.preventDefault();
 
     $("#idPublicar").val(id);
@@ -503,7 +502,7 @@ $html .= '
     }
 
     $("#myModalPublicar").modal("show");
-  } 
+  }
 
 </script>
 ' . PHP_EOL ;
