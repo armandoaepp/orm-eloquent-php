@@ -1,7 +1,6 @@
 
 <?php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
@@ -59,21 +58,27 @@
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('adicional-update') }}" method="POST" enctype="multipart/form-data">
-              @csrf
+            <form id="form-controls" action="{{ route('adicional-update',['id' => $adicional->id]) }}" method="POST" enctype="multipart/form-data">
+              @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $adicional->id }}">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="adi_descripcion">Descripcion: </label>
-                    <input type="text" class="form-control" name="adi_descripcion" id="adi_descripcion" placeholder="Descripcion" value="{{ $adicional->adi_descripcion }}" >
+                    <input type="text" class="form-control  @error('adi_descripcion') is-invalid @enderror" name="adi_descripcion" id="adi_descripcion" placeholder="Descripcion" value="{{ old('adi_descripcion', $adicional->adi_descripcion ?? '') }}" >
+                    @error('adi_descripcion')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="adi_precio">Precio: </label>
-                    <input type="number" class="form-control" name="adi_precio" id="adi_precio" placeholder="Precio" value="{{ $adicional->adi_precio }}" >
+                    <input type="text" class="form-control  @error('adi_precio') is-invalid @enderror" name="adi_precio" id="adi_precio" placeholder="Precio" value="{{ old('adi_precio', $adicional->adi_precio ?? '') }}" >
+                    @error('adi_precio')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
@@ -113,11 +118,9 @@
 
 <!-- end:: Content -->
 
-
 @endsection
 
 
 @section('script')
-
 
 @endsection

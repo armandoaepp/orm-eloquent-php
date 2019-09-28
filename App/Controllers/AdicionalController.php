@@ -40,7 +40,7 @@ class AdicionalController
 
   }
 
-  public function create( Request $request )
+  public function create(Request $request )
   {
     try
     {
@@ -55,7 +55,7 @@ class AdicionalController
 
   }
 
-  public function store( Request $request )
+  public function store(Request $request )
   {
     try
     {
@@ -67,11 +67,7 @@ class AdicionalController
       $adi_publicar = $request->input('adi_publicar');
       $adi_estado = !empty($request->input('adi_estado')) ? $request->input('adi_estado') : 1;
 
-      $adicional = Adicional::where(["adi_descripcion" => $adi_descripcion])->first();
-
-      if (empty($adicional))
-      {
-
+      # STORE
         $adicional = new Adicional();
         $adicional->adi_descripcion = $adi_descripcion;
         $adicional->adi_precio = $adi_precio;
@@ -80,18 +76,12 @@ class AdicionalController
         
         $status = $adicional->save();
         
-        # TABLE BITACORA
+      # TABLE BITACORA
         $this->savedBitacoraTrait( $adicional, "created") ;
         
-        $id = $adicional->id;
         
-        $message = "Operancion Correcta";
+      $message = "Operancion Correcta";
         
-      }
-      else
-      {
-        $message = "¡El registro ya existe!";
-      }
 
       $data = ["message" => $message, "status" => $status, "data" => [$adicional],];
     
@@ -122,7 +112,7 @@ class AdicionalController
 
   }
 
-  public function update( Request $request )
+  public function update(Request $request )
   {
     try
     {
@@ -168,7 +158,7 @@ class AdicionalController
 
   }
 
-  public function delete( Request $request )
+  public function delete(Request $request )
   {
     try
     {
@@ -240,7 +230,7 @@ class AdicionalController
 
   }
 
-  public function updatePublish( Request $request )
+  public function updatePublish(Request $request )
   {
     try
     {

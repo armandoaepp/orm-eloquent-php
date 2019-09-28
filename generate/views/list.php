@@ -194,17 +194,17 @@ $html = '
               $html .='                        <i class="fas fa-ellipsis-h"></i>' .PHP_EOL ;
               $html .='                    </button>' .PHP_EOL ;
               $html .='                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">' .PHP_EOL ;
-              $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>"href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" >' .PHP_EOL ;
+              $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" >' .PHP_EOL ;
               $html .='                        <i class="far fa-edit"></i> Editar' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
-              $html .='                      <a class="dropdown-item " href="#" onclick="modalDelete(event,{{$row->'.$fields_table[0].'}}, `{{$row->'.$fields_table[1].'}}`,`<?php echo $title_estado ?>`,`{{$row->'.$prefix_estado.'}}`);" title="<?php echo $title_estado; ?>" >' .PHP_EOL ;
+              $html .='                      <a class="dropdown-item item-delete" href="#" data-id="{{ $row->'.$fields_table[0].' }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" data-title="<?php echo $title_estado ?>" data-estado="{{ $row->'.$prefix_estado.' }}" title="<?php echo $title_estado; ?>" >' .PHP_EOL ;
               $html .='                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
 
               if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
               {
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
-                $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" onclick="modalPublicar(event, <?php echo $row->'. $fields_table[0] .' ?>, `<?php echo $row->'. $fields_table[1] .' ?>` ,`<?php echo $title ?>`, `<?php echo $row->'. $name_publicar .';  ?>`);" >' .PHP_EOL ;
+                $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" data-id="{{ $row->'.$fields_table[0].' }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" data-title="<?php echo $title ?>" data-publish="{{ $row->'.$name_publicar.' }}" title="<?php echo $title; ?>" >' .PHP_EOL ;
                 $html .='                        <?php echo $icon_pub ;?> <?php echo $title; ?>' .PHP_EOL ;
                 $html .='                      </a>' .PHP_EOL ;
               }
@@ -259,253 +259,23 @@ $html = '
 
 @section(\'modal\')
 
-<!-- Modal Delete -->
-<form id="formModal">
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitle">
-            <span> Eliminar </span>
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          @csrf
-          <input type="hidden" name="idRowModal" id="idRowModal">
-          <!-- <input type="hidden" name="publicar" id="publicar"> -->
-          <input type="hidden" name="estado" id="estado">
-          <div id="dataTextModal">
-          </div>
+  @include(\'shared.form-modal-delete\', [\'url\' => route(\'actividad-delete\') ])
 
-          <div id="modalHistorial" class="d-none">
-            <div class="col-12 my-3">
-              <label for="si" class="text-bold "> Conservar en historial: </label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="historial" id="si" value="si" checked="checked">
-                <label class="form-check-label" for="si">SI</label>
-              </div>
-
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="historial" id="no" value="no">
-                <label class="form-check-label" for="no">NO</label>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-outline-danger" id="btn-send">Eliminar </button>
-        </div>
-        <div class="modal-body py-0">
-          <div id="alertModal" class="text-danger pb-3 boder-top"></div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</form>
-
-<!-- Modal Publicar -->
-<form id="formModalPublicar">
-  <div class="modal fade" id="myModalPublicar" tabindex="-1" role="dialog" aria-labelledby="myModalPublicarTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitlePublicar">
-            <span> Publicar </span>
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          @csrf
-          <input type="hidden" name="idPublicar" id="idPublicar">
-          <input type="hidden" name="publicar" id="publicar">
-          <div id="dataTextModalPublicar">
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-outline-danger" id="btn-send-publicar"> Desactivar</button>
-        </div>
-        <div class="modal-body py-0">
-          <div id="alertModalPublicar" class="text-danger pb-3 boder-top"></div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</form>
+  @include(\'shared.form-modal-publicar\' , [\'url_publish\' => route(\'actividad-publish\') ])
 
 @endsection
 
 
 @section(\'script\')
 
-@include(\'shared.datatables\')
+  @include(\'shared.datatables\')
 
-<script>
-  // modals
-  (function ($) {
-    function processFormModal(event) {
+  <script src="{{ asset(\'assets/js/app-form.js\') }}"></script>
 
-      event.preventDefault();
-      $("#alertModal").html(\'\');
-
-      let inputs = $("#formModal").serializeFormJSON();
-      inputs.id = $("#idRowModal").val();
-      // let params = JSON.stringify(inputs);
-      let params = inputs;
-
-      let url_api = "{{ route(\''.$table_amigable.'-delete\') }}";
-
-      axios({
-        method: \'post\',
-        url: url_api,
-        data: params,
-      }).then(function (response) {
-
-        var data = response.data;
-
-        if (data.status && data.data) {
-          $("#myModal").modal("hide");
-          $("#formModal")[0].reset();
-          location.reload();
-        }
-        else if (!data.status && data.errors) {
-          $("#alertModal").html("Error: " + data.message);
-          console.log(data.errors);
-        }
-        else if (!data.status) {
-          $("#alertModal").html("Error: " + data.message);
-          console.log(data);
-        }
-
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-
-    $("#formModal").submit(processFormModal);
-
-
-  })(jQuery);
-
-  // modal DELETE
-  function modalDelete(event, id, textRow, title, estado) {
-
-    event.preventDefault();
-
-    $("#idRowModal").val(id);
-    $("#accion").val("delete");
-
-    $("#modalHistorial").addClass("d-none");
-    $("#modalTitle span").text("Eliminar");
-
-    var text = `¿Esta seguro de <strong> ${title} </strong> '. $table_sin_guion .': <strong> ${textRow} </strong> ?`;
-    $("#dataTextModal").html(text);
-    $("#btn-send").text(title);
-
-    $("#estado").val(estado);
-    $("#btn-send").addClass("btn-outline-danger");
-
-    if (estado === "0") {
-      $("#modalHistorial").addClass("d-none");
-      $("#modalHistorial").removeClass("d-block");
-    } else if (estado === "1") {
-      $("#modalHistorial").addClass("d-block");
-    }
-    $("#myModal").modal("show");
-  }
-</script>' . PHP_EOL ;
+' . PHP_EOL ;
 if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
 {
-
-$html .= '
-<script>
-  // modals publicar
-  (function ($)
-  {
-    /* Publicar */
-    function processFormModalPublicar(event) {
-
-      event.preventDefault();
-      $("#alertModalPublicar").html("");
-
-      let inputs = $("#formModalPublicar").serializeFormJSON();
-      inputs.id = $("#idPublicar").val();
-      // let params = JSON.stringify(inputs);
-      let params = inputs;
-
-      let url_api_pub = "{{ route(\''.$table_amigable.'-publish\') }}";
-
-      axios({
-        method: "post",
-        url: url_api_pub,
-        data: params,
-      }).then(function (response) {
-
-        var data = response.data;
-        console.log(data);
-
-        if (data.status && data.data) {
-          $("#myModalPublicar").modal("hide");
-          $("#formModalPublicar")[0].reset();
-          location.reload();
-        }
-        else if (!data.status && data.errors) {
-          $("#alertModalPublicar").html("Error: " + data.message);
-          console.log(data.errors);
-        }
-        else if (!data.status) {
-          $("#alertModalPublicar").html("Error: " + data.message);
-          console.log(data);
-        }
-
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-
-    $("#formModalPublicar").submit(processFormModalPublicar);
-
-  })(jQuery);
-
-  // modal PUBLICAR
-  function modalPublicar(event, id, textRow, title, publicar) {
-
-    event.preventDefault();
-
-    $("#idPublicar").val(id);
-    $("#publicar").val(publicar);
-
-    var text = `¿Esta seguro de <strong> ${title} </strong>: <strong> ${textRow} </strong> ?`;
-    $("#dataTextModalPublicar").html(text);
-    $("#btn-send-publicar").text(title);
-
-    $("#btn-send-publicar").removeClass("btn-outline-success");
-    $("#btn-send-publicar").removeClass("btn-outline-danger");
-
-    if (publicar.toLowerCase() === "n") {
-      $("#btn-send-publicar").addClass("btn-outline-success");
-      $("#modalTitlePublicar span").text("Publicar");
-    }
-    else{
-      $("#btn-send-publicar").addClass("btn-outline-danger");
-      $("#modalTitlePublicar span").text("Desactivar al Público");
-    }
-
-    $("#myModalPublicar").modal("show");
-  }
-
-</script>
-' . PHP_EOL ;
+  $html .= '' . PHP_EOL ;
 }
 
 $html .= '
