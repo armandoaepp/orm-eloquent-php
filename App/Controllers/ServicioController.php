@@ -40,7 +40,7 @@ class ServicioController
 
   }
 
-  public function create( Request $request )
+  public function create(Request $request )
   {
     try
     {
@@ -55,7 +55,7 @@ class ServicioController
 
   }
 
-  public function store( Request $request )
+  public function store(Request $request )
   {
     try
     {
@@ -68,11 +68,7 @@ class ServicioController
       $ser_publicar = $request->input('ser_publicar');
       $ser_estado = !empty($request->input('ser_estado')) ? $request->input('ser_estado') : 1;
 
-      $servicio = Servicio::where(["ser_descripcion" => $ser_descripcion])->first();
-
-      if (empty($servicio))
-      {
-
+      # STORE
         $servicio = new Servicio();
         $servicio->ser_descripcion = $ser_descripcion;
         $servicio->ser_icono = $ser_icono;
@@ -82,18 +78,12 @@ class ServicioController
         
         $status = $servicio->save();
         
-        # TABLE BITACORA
+      # TABLE BITACORA
         $this->savedBitacoraTrait( $servicio, "created") ;
         
-        $id = $servicio->id;
         
-        $message = "Operancion Correcta";
+      $message = "Operancion Correcta";
         
-      }
-      else
-      {
-        $message = "¡El registro ya existe!";
-      }
 
       $data = ["message" => $message, "status" => $status, "data" => [$servicio],];
     
@@ -124,7 +114,7 @@ class ServicioController
 
   }
 
-  public function update( Request $request )
+  public function update(Request $request )
   {
     try
     {
@@ -172,56 +162,80 @@ class ServicioController
 
   }
 
-  public function delete( Request $request )
+  public function delete(Request $request )
   {
     try
     {
+      $validator = \Validator::make($request->all(), [
+        'id'     => 'numeric',
+        'estado' => 'numeric',
+      ]);
+
       $status  = false;
       $message = "";
 
-      $id = $request->input('id');
-      $estado = $request->input('estado');
-      $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
-
-      if ($estado == 1) {
-        $estado = 0;
-      } else {
-        $estado = 1;
-      }
-
-      $servicio = Servicio::find( $id ) ;
-
-      if (!empty($servicio))
+      if ($request->ajax())
       {
-        #conservar en base de datos
-        if ( $historial == "si" )
+        if ($validator->fails())
         {
-          $servicio->ser_estado = $estado;
-          $servicio->save();
-            
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $servicio, "update estado: ".$estado) ;
-        
-          $status = true;
-          $message = "Registro Eliminado";
-            
-        }elseif( $historial == "no"  ) {
-          $servicio->forceDelete();
-        
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $servicio, "delete registro") ;
-        
-          $status = true;
-          $message = "Registro eliminado de la base de datos";
+          return response()->json([
+              "message" => "Error al realizar operación",
+              "status"  => false,
+              "errors"  => $validator->errors()->all(),
+              "data"    => [],
+            ]);
         }
-        
-        $data = $servicio;
-        
+
+        $id        = $request->input('id');
+        $estado    = $request->input('estado');
+        $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
+
+        if ($estado == 1) {
+          $estado = 0;
+          $message = "Registro Desactivo Correctamente";
+        } else {
+          $estado = 1;
+          $message = "Registro Activado Correctamente";
+        }
+
+        $servicio = Servicio::find( $id ) ;
+
+        if (!empty($servicio))
+        {
+          #conservar en base de datos
+          if ( $historial == "si" )
+          {
+            $servicio->ser_estado = $estado;
+            $servicio->save();
+              
+            # TABLE BITACORA
+            $this->savedBitacoraTrait( $servicio, "update estado") ;
+          
+            $status = true;
+            //$message = $message;
+              
+          }elseif( $historial == "no"  ) {
+            $servicio->delete();
+          
+            # TABLE BITACORA
+            $this->savedBitacoraTrait( $servicio, "destroy") ;
+          
+            $status = true;
+            $message = "Registro eliminado de la base de datos";
+          }
+          
+          $data = $servicio;
+          
+        }
+        else
+        {
+          $message = "¡El registro no exite o el identificador es incorrecto!";
+          $data = $request->all();
+        }
       }
       else
       {
-        $message = "¡El registro no exite o el identificador es incorrecto!";
-        $data = $request->all();
+        abort(404);
       }
     
       return \Response::json([
@@ -244,7 +258,7 @@ class ServicioController
 
   }
 
-  public function updatePublish( Request $request )
+  public function updatePublish(Request $request )
   {
     try
     {
@@ -272,7 +286,7 @@ class ServicioController
           $servicio->save();
 
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $servicio, "update publicar: ".$publicar) ;
+          $this->savedBitacoraTrait( $servicio, "update publicar") ;
 
           $status = true;
           $message = $message;

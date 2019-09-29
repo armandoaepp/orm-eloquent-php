@@ -15,16 +15,18 @@ function generateNewView($table_name, $class_name, $entities = array(), $fields_
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
 
 
-$html = '
-<?php
+$html = '@php
   $sidebar = array(
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
-
-?>
+@endphp
 
 @extends(\'layouts.app-admin\')
+
+@section(\'title\')
+  '.$title .'
+@endsection
 
 @section(\'content\')
 
@@ -198,6 +200,8 @@ $html = '
 
 
 @section(\'script\')
+
+  @include(\'shared.jquery-validation\')
 
 @endsection';
 

@@ -1,13 +1,15 @@
-
-<?php
+@php
   $sidebar = array(
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
-
-?>
+@endphp
 
 @extends('layouts.app-admin')
+
+@section('titulo')
+  Adicionals
+@endsection
 
 @section('content')
 

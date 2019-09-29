@@ -13,15 +13,11 @@ function generateEditView($table_name, $class_name, $entities = array(), $fields
   $prefix =  generatePrefixTable( $table_name ) ;
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
 $html = '';
-$html .= '
-<?php
+$html .= '@php
   $sidebar = array(
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
-
-?>
-
 ' ;
 
 if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
@@ -30,7 +26,6 @@ if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_t
   $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
 $html .= '
-<?php
   $publicar = trim($'. $table_name .'->'.$name_publicar.');
 
   $si = "";
@@ -41,12 +36,16 @@ $html .= '
   } elseif ($publicar == "N") {
       $no = "checked=\'checked\'";
   }
-?>'. PHP_EOL ;
+@endphp'. PHP_EOL ;
 
 }
 
 $html .= '
 @extends(\'layouts.app-admin\')
+
+@section(\'titulo\')
+  '.$title .'
+@endsection
 
 @section(\'content\')
 
@@ -227,6 +226,8 @@ $html .= '
 
 
 @section(\'script\')
+
+  @include(\'shared.jquery-validation\')
 
 @endsection';
 

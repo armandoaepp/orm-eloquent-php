@@ -1,14 +1,15 @@
-
-<?php
+@php
   $sidebar = array(
-    "sidebar_class"  => "",
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
-
-?>
+@endphp
 
 @extends('layouts.app-admin')
+
+@section('titulo')
+  Servicios
+@endsection
 
 @section('content')
 
@@ -45,28 +46,37 @@
         <div class="card-body">
           <div class="col-12">
 
-            <form action="{{  route('servicio-store') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-controls" action="{{  route('servicio-store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_descripcion">Descripcion: </label>
-                    <input type="text" class="form-control" name="ser_descripcion" id="ser_descripcion" placeholder="Descripcion">
+                    <input type="text" class="form-control @error('ser_descripcion') is-invalid @enderror" name="ser_descripcion" id="ser_descripcion" value="{{ old('ser_descripcion') }}" required placeholder="Descripcion">
+                    @error('ser_descripcion')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_icono">Icono: </label>
-                    <input type="text" class="form-control" name="ser_icono" id="ser_icono" placeholder="Icono">
+                    <select class="custom-select select2-box" name="ser_icono" id="ser_icono" placeholder="Icono">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_incluye">Incluye: </label>
-                    <input type="text" class="form-control" name="ser_incluye" id="ser_incluye" placeholder="Incluye">
+                    <input type="text" class="form-control @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" value="{{ old('ser_incluye') }}"  placeholder="Incluye">
+                    @error('ser_incluye')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
@@ -106,11 +116,11 @@
 </div>
 <!-- end:: Content -->
 
-
 @endsection
 
 
 @section('script')
 
+  @include('shared.jquery-validation')
 
 @endsection

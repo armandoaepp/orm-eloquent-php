@@ -14,16 +14,18 @@ function generateIndex($table_name, $class_name, $entities = array(), $fields_ta
   // field columns($entities);
   $fields_col = array_column($entities, 'Field');
 
-$html = '
-<?php
+$html = '@php
   $sidebar = array(
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
-
-?>
+@endphp
 
 @extends(\'layouts.app-admin\')
+
+@section(\'title\')
+  '.$title .'
+@endsection
 
 @section(\'content\')
 
