@@ -17,6 +17,10 @@ function createFoldersApp()
     mkdir(CONTROLLERS, 0777);
   }
 
+  if (!file_exists(REQUEST)) {
+    mkdir(REQUEST, 0777);
+  }
+
   if (!file_exists(API)) {
     mkdir(API, 0777);
   }

@@ -74,17 +74,17 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_icono">Icono: </label>
-                    <select class="custom-select select2-box" name="ser_icono" id="ser_icono" placeholder="Icono">
-                      <option value="" selected disabled hidden>Seleccionar </option> 
-                      <option value="text">text</option>
-                    </select>
+                    <input type="text" class="form-control  @error('ser_icono') is-invalid @enderror" name="ser_icono" id="ser_icono" placeholder="Icono" value="{{ old('ser_icono', $servicio->ser_icono ?? '') }}" >
+                    @error('ser_icono')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_incluye">Incluye: </label>
-                    <input type="text" class="form-control  @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" placeholder="Incluye" value="{{ old('ser_incluye', $servicio->ser_incluye ?? '') }}" >
+                    <input type="checkbox" class="form-control  @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" placeholder="Incluye" value="{{ old('ser_incluye', $servicio->ser_incluye ?? '') }}" >
                     @error('ser_incluye')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror

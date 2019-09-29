@@ -8,7 +8,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Servicios
+  Per Webs
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Servicios
+      Per Webs
       </span>
     </li>
   </ol>
@@ -33,11 +33,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route('admin-servicios') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('admin-per-webs') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route('servicio-create') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route('per-web-create') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -53,7 +53,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de servicios
+          <i class="fa fa-align-justify"></i> Lista de per-webs
         </div>
         <div class="card-body">
           <!-- <div class="table-responsive"> -->
@@ -63,11 +63,9 @@
             <thead>
               <tr>
                 <th width="60"> Id </th> 
-                <th> Descripcion </th> 
-                <th> Icono </th> 
-                <th> Incluye </th> 
+                <th> Persona Id </th> 
+                <th> Tipo Web Id </th> 
                 <th width="80"> Publicado </th>
-                <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -83,8 +81,8 @@
               $icon_pub = "" ;
               $publicado = "";
 
-              if(!empty($row->ser_publicar)){
-                if($row->ser_publicar == "S"){
+              if(!empty($row->pw_publicar)){
+                if($row->pw_publicar == "S"){
                   $classBtn =  "btn-outline-danger";
                   $title = "Desactivar/Ocultar" ;
                   $icon_pub = '<i class="fas fa-times"></i>';
@@ -103,7 +101,7 @@
               $class_estado = "";
               $class_disabled = "";
 
-              if ($row->ser_estado == 0) {
+              if ($row->pw_estado == 0) {
                 $title_estado = "Recuperar";
                 $class_estado = "row-disabled";
                 $class_disabled = "disabled";
@@ -116,15 +114,11 @@
 
               <tr class="<?php echo $class_estado; ?>">
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->ser_descripcion }} </td> 
-                <td> {{ $row->ser_icono }} </td> 
-                <td> {{ $row->ser_incluye }} </td> 
+                <td> {{ $row->persona_id }} </td> 
+                <td> {{ $row->tipo_web_id }} </td> 
                 <td class="text-center">
-                  <?php echo $publicado; ?>
-                </td>
-                <td class="text-center">
-                  <span class="badge badge-pill <?php echo $status[$row->ser_estado]["class"] ?>"> 
-                    <?php echo $status[$row->ser_estado]["title"] ?> 
+                  <span class="badge badge-pill <?php echo $status[$row->pw_estado]["class"] ?>"> 
+                    <?php echo $status[$row->pw_estado]["title"] ?> 
                   </span>
                 </td>
                 <td class="text-center">
@@ -133,14 +127,11 @@
                         <i class="fas fa-ellipsis-h"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="{{ route('servicio-edit',['id' => $row->id]) }}" >
+                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="{{ route('per-web-edit',['id' => $row->id]) }}" >
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item item-delete" href="#" data-id="{{ $row->id }}" data-descripcion="{{ $row->ser_descripcion }}" data-title="<?php echo $title_estado ?>" data-estado="{{ $row->ser_estado }}" title="<?php echo $title_estado; ?>" >
+                      <a class="dropdown-item item-delete" href="#" data-id="{{ $row->id }}" data-descripcion="{{ $row->persona_id }}" data-title="<?php echo $title_estado ?>" data-estado="{{ $row->pw_estado }}" title="<?php echo $title_estado; ?>" >
                         <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
-                      </a>
-                      <a class="dropdown-item item-publish <?php echo $class_disabled; ?>" href="#" data-id="{{ $row->id }}" data-descripcion="{{ $row->ser_descripcion }}" data-title="<?php echo $title ?>" data-publish="{{ $row->ser_publicar }}" title="<?php echo $title; ?>" >
-                        <?php echo $icon_pub ;?> <?php echo $title; ?>
                       </a>
                     </div>
                   </div>
@@ -168,9 +159,9 @@
 <!-- Start:: Section modal  -->
 @section('modal')
 
-  @include('shared.form-modal-delete', ['url' => route('servicio-delete') ])
+  @include('shared.form-modal-delete', ['url' => route('per-web-delete') ])
 
-  @include('shared.form-modal-publicar' , ['url_publish' => route('servicio-publish') ])
+  @include('shared.form-modal-publicar' , ['url_publish' => route('per-web-publish') ])
 
 @endsection
 

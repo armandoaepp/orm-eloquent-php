@@ -7,9 +7,10 @@ require __DIR__.'/createFolders.php';
 require __DIR__.'/model.php';
 require __DIR__.'/controller.php';
 
-require __DIR__.'/functions.php';
+require __DIR__.'/functionsControllers.php';
 require __DIR__.'/helper.php';
 require __DIR__.'/fieldsTable.php';
+require __DIR__.'/validationRequest.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -48,6 +49,9 @@ echo generateModel($table_name, $class_name, $entities , $fields_col) ."<br>" ;
 
 // Generation Controller
 echo generateController($table_name, $class_name, $entities ) ."<br>" ;
+
+// Generation Controller
+echo generateValidationRequest($table_name, $class_name, $entities, $fields_col ) ."<br>" ;
 
 // Generation VIEWS
 

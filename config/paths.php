@@ -43,7 +43,12 @@ define('CONTROLLERS_DIR', 'Controllers');
 
 define('CONTROLLERS', APP . DS . CONTROLLERS_DIR . DS);
 
+/**
+* Directory and path to the Request directory.
+*/
+define('REQUEST_DIR', 'Request');
 
+define('REQUEST', APP . DS . REQUEST_DIR . DS);
 /**
 * Directory and path to the Api directory.
 */
@@ -58,6 +63,7 @@ define('API', APP . DS . API_DIR . DS);
 define('VIEWS_DIR', 'views');
 
 define('VIEWS', APP . DS . VIEWS_DIR . DS);
+
 
 
 /**

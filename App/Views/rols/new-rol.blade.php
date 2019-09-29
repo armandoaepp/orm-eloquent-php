@@ -8,7 +8,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Servicios
+  Rols
 @endsection
 
 @section('content')
@@ -22,14 +22,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-servicios') }}" class="">
-        <i class="fa fa-align-justify"></i> Servicios
+      <a href="{{ route('admin-rols') }}" class="">
+        <i class="fa fa-align-justify"></i> Rols
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Servicio
+      Nuevo Rol
       </span>
     </li>
   </ol>
@@ -41,20 +41,20 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Servicio
+          <i class="fa fa-align-justify"></i> Nuevo Rol
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form id="form-controls" action="{{  route('servicio-store') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-controls" action="{{  route('rol-store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="ser_descripcion">Descripcion: </label>
-                    <input type="text" class="form-control @error('ser_descripcion') is-invalid @enderror" name="ser_descripcion" id="ser_descripcion" value="{{ old('ser_descripcion') }}" required placeholder="Descripcion">
-                    @error('ser_descripcion')
+                    <label for="per_id_padre">Per Id Padre: </label>
+                    <input type="text" class="form-control @error('per_id_padre') is-invalid @enderror" name="per_id_padre" id="per_id_padre" value="{{ old('per_id_padre') }}" required placeholder="Per Id Padre">
+                    @error('per_id_padre')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
@@ -62,9 +62,9 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="ser_icono">Icono: </label>
-                    <input type="text" class="form-control @error('ser_icono') is-invalid @enderror" name="ser_icono" id="ser_icono" value="{{ old('ser_icono') }}"  placeholder="Icono">
-                    @error('ser_icono')
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ old('nombre') }}" required placeholder="Nombre">
+                    @error('nombre')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
@@ -72,25 +72,11 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="ser_incluye">Incluye: </label>
-                    <input type="checkbox" class="form-control @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" value="{{ old('ser_incluye') }}"  placeholder="Incluye">
-                    @error('ser_incluye')
+                    <label for="descripcion">Descripcion: </label>
+                    <input type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" value="{{ old('descripcion') }}" required placeholder="Descripcion">
+                    @error('descripcion')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="email" class="d-block">Publicar </label>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="ser_publicar" id="si" value="S" checked="checked">
-                      <label class="form-check-label" for="si">SI</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="ser_publicar" id="no" value="N">
-                      <label class="form-check-label" for="no">NO</label>
-                    </div>
                   </div>
                 </div>
 
@@ -99,7 +85,7 @@
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-servicios') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin-rols') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>

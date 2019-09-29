@@ -43,7 +43,7 @@ $html .= '
 $html .= '
 @extends(\'layouts.app-admin\')
 
-@section(\'titulo\')
+@section(\'title\')
   '.$title .'
 @endsection
 
