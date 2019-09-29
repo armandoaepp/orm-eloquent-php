@@ -135,7 +135,7 @@
                       <a class="dropdown-item item-delete" href="#" data-id="{{ $row->id }}" data-descripcion="{{ $row->adi_descripcion }}" data-title="<?php echo $title_estado ?>" data-estado="{{ $row->adi_estado }}" title="<?php echo $title_estado; ?>" >
                         <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
                       </a>
-                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" data-id="{{ $row->id }}" data-descripcion="{{ $row->adi_descripcion }}" data-title="<?php echo $title ?>" data-publish="{{ $row->adi_publicar }}" title="<?php echo $title; ?>" >
+                      <a class="dropdown-item item-publish <?php echo $class_disabled; ?>" href="#" data-id="{{ $row->id }}" data-descripcion="{{ $row->adi_descripcion }}" data-title="<?php echo $title ?>" data-publish="{{ $row->adi_publicar }}" title="<?php echo $title; ?>" >
                         <?php echo $icon_pub ;?> <?php echo $title; ?>
                       </a>
                     </div>
@@ -161,22 +161,20 @@
 <!-- end:: Content -->
 @endsection
 
+<!-- Start:: Section modal  -->
 @section('modal')
 
-  @include('shared.form-modal-delete', ['url' => route('actividad-delete') ])
+  @include('shared.form-modal-delete', ['url' => route('adicional-delete') ])
 
-  @include('shared.form-modal-publicar' , ['url_publish' => route('actividad-publish') ])
+  @include('shared.form-modal-publicar' , ['url_publish' => route('adicional-publish') ])
 
 @endsection
 
-
+<!-- Start:: Section script  -->
 @section('script')
 
   @include('shared.datatables')
 
   <script src="{{ asset('assets/js/app-form.js') }}"></script>
-
-
-
 
 @endsection

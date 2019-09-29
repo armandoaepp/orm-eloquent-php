@@ -312,61 +312,91 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   // $str  .= '    extract($params) ;' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
+  $str  .= '      $validator = \Validator::make($request->all(), [' . PHP_EOL;
+  $str  .= '        \'id\'     => \'numeric\',' . PHP_EOL;
+  $str  .= '        \'estado\' => \'numeric\',' . PHP_EOL;
+  $str  .= '      ]);' . PHP_EOL;
+
+  $str  .= '' . PHP_EOL;
   $str  .= '      $status  = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      $id = $request->input(\'id\');' . PHP_EOL;
-  $str  .= '      $estado = $request->input(\'estado\');' . PHP_EOL;
-  $str  .= '      $historial = !empty($request->input(\'historial\')) ? $request->input(\'historial\') : "si";' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      if ($estado == 1) {' . PHP_EOL;
-  $str  .= '        $estado = 0;' . PHP_EOL;
-  $str  .= '      } else {' . PHP_EOL;
-  $str  .= '        $estado = 1;' . PHP_EOL;
-  $str  .= '      }' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
 
-  $str  .= '      $'.$table_name.' = '.$class_name.'::find( $'.$entities[0]->Field.' ) ;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      if (!empty($'.$table_name.'))' . PHP_EOL;
+  $str  .= '      if ($request->ajax())' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
-  // $str  .= '        $'.$table_name.' = new '.$class_name.'();' . PHP_EOL;
 
-  $str  .= '        #conservar en base de datos' . PHP_EOL;
-  $str  .= '        if ( $historial == "si" )' . PHP_EOL;
+  $str  .= '        if ($validator->fails())' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
-  $str  .= '          $'.$table_name.'->'.$name_estado.' = $estado;' . PHP_EOL;
-  $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
-  $str  .= '            ' . PHP_EOL;
-
-  $str  .= '          # TABLE BITACORA' . PHP_EOL;
-  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update estado: ".$estado) ;' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
-
-  $str  .= '          $status = true;' . PHP_EOL;
-  $str  .= '          $message = "Registro Eliminado";' . PHP_EOL;
-  $str  .= '            ' . PHP_EOL;
-  $str  .= '        }elseif( $historial == "no"  ) {' . PHP_EOL;
-  $str  .= '          $'.$table_name.'->forceDelete();' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
-  $str  .= '          # TABLE BITACORA' . PHP_EOL;
-  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "delete registro") ;' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
-
-  $str  .= '          $status = true;' . PHP_EOL;
-  $str  .= '          $message = "Registro eliminado de la base de datos";' . PHP_EOL;
+  $str  .= '          return response()->json([' . PHP_EOL;
+  $str  .= '              "message" => "Error al realizar operación",' . PHP_EOL;
+  $str  .= '              "status"  => false,' . PHP_EOL;
+  $str  .= '              "errors"  => $validator->errors()->all(),' . PHP_EOL;
+  $str  .= '              "data"    => [],' . PHP_EOL;
+  $str  .= '            ]);' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
-  $str  .= '        $data = $'.$table_name.';' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
+  $str  .= '        $id        = $request->input(\'id\');' . PHP_EOL;
+  $str  .= '        $estado    = $request->input(\'estado\');' . PHP_EOL;
+  $str  .= '        $historial = !empty($request->input(\'historial\')) ? $request->input(\'historial\') : "si";' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '        if ($estado == 1) {' . PHP_EOL;
+  $str  .= '          $estado = 0;' . PHP_EOL;
+  $str  .= '          $message = "Registro Desactivo Correctamente";' . PHP_EOL;
+  $str  .= '        } else {' . PHP_EOL;
+  $str  .= '          $estado = 1;' . PHP_EOL;
+  $str  .= '          $message = "Registro Activado Correctamente";' . PHP_EOL;
+  $str  .= '        }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
+  $str  .= '        $'.$table_name.' = '.$class_name.'::find( $'.$entities[0]->Field.' ) ;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '        if (!empty($'.$table_name.'))' . PHP_EOL;
+  $str  .= '        {' . PHP_EOL;
+  // $str  .= '          $'.$table_name.' = new '.$class_name.'();' . PHP_EOL;
+
+  $str  .= '          #conservar en base de datos' . PHP_EOL;
+  $str  .= '          if ( $historial == "si" )' . PHP_EOL;
+  $str  .= '          {' . PHP_EOL;
+  $str  .= '            $'.$table_name.'->'.$name_estado.' = $estado;' . PHP_EOL;
+  $str  .= '            $'.$table_name.'->save();' . PHP_EOL;
+  $str  .= '              ' . PHP_EOL;
+
+  $str  .= '            # TABLE BITACORA' . PHP_EOL;
+  $str  .= '            $this->savedBitacoraTrait( $'.$table_name.', "update estado") ;' . PHP_EOL;
+  $str  .= '          ' . PHP_EOL;
+
+  $str  .= '            $status = true;' . PHP_EOL;
+  $str  .= '            //$message = $message;' . PHP_EOL;
+  $str  .= '              ' . PHP_EOL;
+  $str  .= '          }elseif( $historial == "no"  ) {' . PHP_EOL;
+  $str  .= '            $'.$table_name.'->delete();' . PHP_EOL;
+  $str  .= '          ' . PHP_EOL;
+  $str  .= '            # TABLE BITACORA' . PHP_EOL;
+  $str  .= '            $this->savedBitacoraTrait( $'.$table_name.', "destroy") ;' . PHP_EOL;
+  $str  .= '          ' . PHP_EOL;
+
+  $str  .= '            $status = true;' . PHP_EOL;
+  $str  .= '            $message = "Registro eliminado de la base de datos";' . PHP_EOL;
+  $str  .= '          }' . PHP_EOL;
+  $str  .= '          ' . PHP_EOL;
+  $str  .= '          $data = $'.$table_name.';' . PHP_EOL;
+  $str  .= '          ' . PHP_EOL;
+  $str  .= '        }' . PHP_EOL;
+  $str  .= '        else' . PHP_EOL;
+  $str  .= '        {' . PHP_EOL;
+  $str  .= '          $message = "¡El registro no exite o el identificador es incorrecto!";' . PHP_EOL;
+  $str  .= '          $data = $request->all();' . PHP_EOL;
+  $str  .= '        }' . PHP_EOL;
+
   $str  .= '      }' . PHP_EOL;
   $str  .= '      else' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
-  $str  .= '        $message = "¡El registro no exite o el identificador es incorrecto!";' . PHP_EOL;
-  $str  .= '        $data = $request->all();' . PHP_EOL;
+  $str  .= '        abort(404);' . PHP_EOL;
   $str  .= '      }' . PHP_EOL;
+
   // $str  .= '' . PHP_EOL;
-  // $str  .= '      $data = ["message" => $message, "status" => $status, "errors"  => [], "data" => $data],];' . PHP_EOL;
+  // $str  .= '        $data = ["message" => $message, "status" => $status, "errors"  => [], "data" => $data],];' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '      return \Response::json([' . PHP_EOL;
   $str  .= '                "message" => $message,' . PHP_EOL;
@@ -374,7 +404,7 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '                "errors"  => [],' . PHP_EOL;
   $str  .= '                "data"    => [$data],' . PHP_EOL;
   $str  .= '              ]);' . PHP_EOL;
-  // $str  .= '      return $data;' . PHP_EOL;
+  // $str  .= '        return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (\Throwable $e) ' . PHP_EOL;
@@ -503,7 +533,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '' . PHP_EOL;
 
   $str  .= '          # TABLE BITACORA' . PHP_EOL;
-  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar: ".$publicar) ;' . PHP_EOL;
+  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar") ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '          $status = true;' . PHP_EOL;
   $str  .= '          $message = $message;' . PHP_EOL;

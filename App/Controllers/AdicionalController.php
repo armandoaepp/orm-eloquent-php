@@ -162,52 +162,76 @@ class AdicionalController
   {
     try
     {
+      $validator = \Validator::make($request->all(), [
+        'id'     => 'numeric',
+        'estado' => 'numeric',
+      ]);
+
       $status  = false;
       $message = "";
 
-      $id = $request->input('id');
-      $estado = $request->input('estado');
-      $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
-
-      if ($estado == 1) {
-        $estado = 0;
-      } else {
-        $estado = 1;
-      }
-
-      $adicional = Adicional::find( $id ) ;
-
-      if (!empty($adicional))
+      if ($request->ajax())
       {
-        #conservar en base de datos
-        if ( $historial == "si" )
+        if ($validator->fails())
         {
-          $adicional->adi_estado = $estado;
-          $adicional->save();
-            
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $adicional, "update estado: ".$estado) ;
-        
-          $status = true;
-          $message = "Registro Eliminado";
-            
-        }elseif( $historial == "no"  ) {
-          $adicional->forceDelete();
-        
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $adicional, "delete registro") ;
-        
-          $status = true;
-          $message = "Registro eliminado de la base de datos";
+          return response()->json([
+              "message" => "Error al realizar operación",
+              "status"  => false,
+              "errors"  => $validator->errors()->all(),
+              "data"    => [],
+            ]);
         }
-        
-        $data = $adicional;
-        
+
+        $id        = $request->input('id');
+        $estado    = $request->input('estado');
+        $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
+
+        if ($estado == 1) {
+          $estado = 0;
+          $message = "Registro Desactivo Correctamente";
+        } else {
+          $estado = 1;
+          $message = "Registro Activado Correctamente";
+        }
+
+        $adicional = Adicional::find( $id ) ;
+
+        if (!empty($adicional))
+        {
+          #conservar en base de datos
+          if ( $historial == "si" )
+          {
+            $adicional->adi_estado = $estado;
+            $adicional->save();
+              
+            # TABLE BITACORA
+            $this->savedBitacoraTrait( $adicional, "update estado") ;
+          
+            $status = true;
+            //$message = $message;
+              
+          }elseif( $historial == "no"  ) {
+            $adicional->delete();
+          
+            # TABLE BITACORA
+            $this->savedBitacoraTrait( $adicional, "destroy") ;
+          
+            $status = true;
+            $message = "Registro eliminado de la base de datos";
+          }
+          
+          $data = $adicional;
+          
+        }
+        else
+        {
+          $message = "¡El registro no exite o el identificador es incorrecto!";
+          $data = $request->all();
+        }
       }
       else
       {
-        $message = "¡El registro no exite o el identificador es incorrecto!";
-        $data = $request->all();
+        abort(404);
       }
     
       return \Response::json([
@@ -258,7 +282,7 @@ class AdicionalController
           $adicional->save();
 
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $adicional, "update publicar: ".$publicar) ;
+          $this->savedBitacoraTrait( $adicional, "update publicar") ;
 
           $status = true;
           $message = $message;

@@ -75,7 +75,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="adi_precio">Precio: </label>
-                    <input type="text" class="form-control  @error('adi_precio') is-invalid @enderror" name="adi_precio" id="adi_precio" placeholder="Precio" value="{{ old('adi_precio', $adicional->adi_precio ?? '') }}" >
+                    <input type="number" class="form-control  @error('adi_precio') is-invalid @enderror" name="adi_precio" id="adi_precio" placeholder="Precio" value="{{ old('adi_precio', $adicional->adi_precio ?? '') }}" >
                     @error('adi_precio')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror

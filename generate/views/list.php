@@ -204,7 +204,7 @@ $html = '
               if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
               {
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
-                $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="#" data-id="{{ $row->'.$fields_table[0].' }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" data-title="<?php echo $title ?>" data-publish="{{ $row->'.$name_publicar.' }}" title="<?php echo $title; ?>" >' .PHP_EOL ;
+                $html .='                      <a class="dropdown-item item-publish <?php echo $class_disabled; ?>" href="#" data-id="{{ $row->'.$fields_table[0].' }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" data-title="<?php echo $title ?>" data-publish="{{ $row->'.$name_publicar.' }}" title="<?php echo $title; ?>" >' .PHP_EOL ;
                 $html .='                        <?php echo $icon_pub ;?> <?php echo $title; ?>' .PHP_EOL ;
                 $html .='                      </a>' .PHP_EOL ;
               }
@@ -257,30 +257,28 @@ $html = '
 <!-- end:: Content -->
 @endsection
 
+<!-- Start:: Section modal  -->
 @section(\'modal\')
 
-  @include(\'shared.form-modal-delete\', [\'url\' => route(\'actividad-delete\') ])
+  @include(\'shared.form-modal-delete\', [\'url\' => route(\''.$table_amigable.'-delete\') ])
 
-  @include(\'shared.form-modal-publicar\' , [\'url_publish\' => route(\'actividad-publish\') ])
+  @include(\'shared.form-modal-publicar\' , [\'url_publish\' => route(\''.$table_amigable.'-publish\') ])
 
 @endsection
 
-
+<!-- Start:: Section script  -->
 @section(\'script\')
 
   @include(\'shared.datatables\')
 
   <script src="{{ asset(\'assets/js/app-form.js\') }}"></script>
-
 ' . PHP_EOL ;
 if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
 {
-  $html .= '' . PHP_EOL ;
+  // $html .= '' . PHP_EOL ;
 }
 
-$html .= '
-@endsection
-';
+$html .= '@endsection';
 
 return $html ;
 }
