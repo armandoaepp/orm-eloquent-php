@@ -66,6 +66,7 @@
                 <th> Descripcion </th> 
                 <th> Icono </th> 
                 <th> Incluye </th> 
+                <th> No Incluye </th> 
                 <th width="80"> Publicado </th>
                 <th width="80"> Estado </th>
                 <th width="50"> Acciones </th>
@@ -119,6 +120,7 @@
                 <td> {{ $row->ser_descripcion }} </td> 
                 <td> {{ $row->ser_icono }} </td> 
                 <td> {{ $row->ser_incluye }} </td> 
+                <td> {{ $row->ser_no_incluye }} </td> 
                 <td class="text-center">
                   <?php echo $publicado; ?>
                 </td>
@@ -177,8 +179,6 @@
 <!-- Start:: Section script  -->
 @section('script')
 
-  @include('shared.datatables')
-
-  <script src="{{ asset('assets/js/app-form.js') }}"></script>
+  @include('shared.datatables') 
 
 @endsection

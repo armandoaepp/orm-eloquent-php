@@ -73,29 +73,7 @@
 
             @foreach ($data as $row)
 
-            <?php
-
-              /* publicar */
-              $classBtn = "" ;
-              $title    = "" ;
-              $icon_pub = "" ;
-              $publicado = "";
-
-              if(!empty($row->pai_publicar)){
-                if($row->pai_publicar == "S"){
-                  $classBtn =  "btn-outline-danger";
-                  $title = "Desactivar/Ocultar" ;
-                  $icon_pub = '<i class="fas fa-times"></i>';
-                  $publicado = '<span class="badge badge-pill badge-success"> SI </span>';
-                }
-                else {
-                  $classBtn =  "btn-outline-success";
-                  $title = "Publicar" ;
-                  $icon_pub = '<i class="fas fa-check"></i>';
-                  $publicado = '<span class="badge badge-pill badge-danger"> NO </span>';
-                }
-              }
-
+            @php
               /* estado */
               $title_estado = "";
               $class_estado = "";
@@ -108,9 +86,7 @@
               } else {
                 $title_estado = "Eliminar";
               }
-
-
-            ?>
+            @endphp
 
               <tr class="<?php echo $class_estado; ?>">
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
@@ -170,6 +146,6 @@
 
   @include('shared.datatables')
 
-  <script src="{{ asset('assets/js/app-form.js') }}"></script>
+  <script src="{{ asset('assets/js/app-form-modals.js') }}"></script>
 
 @endsection

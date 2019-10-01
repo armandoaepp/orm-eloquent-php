@@ -10,15 +10,15 @@
   $no = "";
 
   if ($publicar == "S") {
-      $si = "checked='checked'";
+    $si = "checked='checked'";
   } elseif ($publicar == "N") {
-      $no = "checked='checked'";
+    $no = "checked='checked'";
   }
 @endphp
 
 @extends('layouts.app-admin')
 
-@section('titulo')
+@section('title')
   Servicios
 @endsection
 
@@ -84,8 +84,18 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_incluye">Incluye: </label>
-                    <input type="checkbox" class="form-control  @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" placeholder="Incluye" value="{{ old('ser_incluye', $servicio->ser_incluye ?? '') }}" >
+                    <input type="text" class="form-control  @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" placeholder="Incluye" value="{{ old('ser_incluye', $servicio->ser_incluye ?? '') }}" >
                     @error('ser_incluye')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="ser_no_incluye">No Incluye: </label>
+                    <input type="text" class="form-control  @error('ser_no_incluye') is-invalid @enderror" name="ser_no_incluye" id="ser_no_incluye" placeholder="No Incluye" value="{{ old('ser_no_incluye', $servicio->ser_no_incluye ?? '') }}" >
+                    @error('ser_no_incluye')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>

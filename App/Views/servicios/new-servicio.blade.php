@@ -63,7 +63,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_icono">Icono: </label>
-                    <input type="text" class="form-control @error('ser_icono') is-invalid @enderror" name="ser_icono" id="ser_icono" value="{{ old('ser_icono') }}"  placeholder="Icono">
+                    <input type="text" class="form-control @error('ser_icono') is-invalid @enderror" name="ser_icono" id="ser_icono" value="{{ old('ser_icono') }}" required placeholder="Icono">
                     @error('ser_icono')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
@@ -73,8 +73,18 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="ser_incluye">Incluye: </label>
-                    <input type="checkbox" class="form-control @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" value="{{ old('ser_incluye') }}"  placeholder="Incluye">
+                    <input type="text" class="form-control @error('ser_incluye') is-invalid @enderror" name="ser_incluye" id="ser_incluye" value="{{ old('ser_incluye') }}"  placeholder="Incluye">
                     @error('ser_incluye')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="ser_no_incluye">No Incluye: </label>
+                    <input type="text" class="form-control @error('ser_no_incluye') is-invalid @enderror" name="ser_no_incluye" id="ser_no_incluye" value="{{ old('ser_no_incluye') }}"  placeholder="No Incluye">
+                    @error('ser_no_incluye')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>

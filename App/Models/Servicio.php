@@ -11,6 +11,7 @@ class Servicio extends Model
      'ser_descripcion',
      'ser_icono',
      'ser_incluye',
+     'ser_no_incluye',
      'ser_publicar',
      'ser_estado',
   ];

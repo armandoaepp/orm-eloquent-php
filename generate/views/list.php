@@ -118,8 +118,11 @@ $html = '@php
 
             @foreach ($data as $row)
 
-            <?php
+            @php' ;
+    if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+    {
 
+    $html .= '
               /* publicar */
               $classBtn = "" ;
               $title    = "" ;
@@ -139,8 +142,12 @@ $html = '@php
                   $icon_pub = \'<i class="fas fa-check"></i>\';
                   $publicado = \'<span class="badge badge-pill badge-danger"> NO </span>\';
                 }
-              }
+              }';
+    }
 
+    if(in_array("estado", $fields_table) || in_array($prefix."estado", $fields_table))
+    {
+      $html .= '
               /* estado */
               $title_estado = "";
               $class_estado = "";
@@ -152,10 +159,10 @@ $html = '@php
                 $class_disabled = "disabled";
               } else {
                 $title_estado = "Eliminar";
-              }
-
-
-            ?>
+              }' ;
+    }
+      $html .= '
+            @endphp
 
               <tr class="<?php echo $class_estado; ?>">'. PHP_EOL;
 
@@ -273,7 +280,7 @@ $html = '@php
 
   @include(\'shared.datatables\')
 
-  <script src="{{ asset(\'assets/js/app-form.js\') }}"></script>
+  <script src="{{ asset(\'assets/js/app-form-modals.js\') }}"></script>
 ' . PHP_EOL ;
 if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
 {

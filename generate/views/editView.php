@@ -32,9 +32,9 @@ $html .= '
   $no = "";
 
   if ($publicar == "S") {
-      $si = "checked=\'checked\'";
+    $si = "checked=\'checked\'";
   } elseif ($publicar == "N") {
-      $no = "checked=\'checked\'";
+    $no = "checked=\'checked\'";
   }
 @endphp'. PHP_EOL ;
 

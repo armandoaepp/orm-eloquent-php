@@ -65,6 +65,7 @@ class ServicioController
       $ser_descripcion = $request->input('ser_descripcion');
       $ser_icono = $request->input('ser_icono');
       $ser_incluye = $request->input('ser_incluye');
+      $ser_no_incluye = $request->input('ser_no_incluye');
       $ser_publicar = $request->input('ser_publicar');
       $ser_estado = !empty($request->input('ser_estado')) ? $request->input('ser_estado') : 1;
 
@@ -73,6 +74,7 @@ class ServicioController
         $servicio->ser_descripcion = $ser_descripcion;
         $servicio->ser_icono = $ser_icono;
         $servicio->ser_incluye = $ser_incluye;
+        $servicio->ser_no_incluye = $ser_no_incluye;
         $servicio->ser_publicar = $ser_publicar;
         $servicio->ser_estado = $ser_estado;
         
@@ -126,6 +128,7 @@ class ServicioController
       $ser_descripcion = $request->input('ser_descripcion');
       $ser_icono = $request->input('ser_icono');
       $ser_incluye = $request->input('ser_incluye');
+      $ser_no_incluye = $request->input('ser_no_incluye');
       $ser_publicar = $request->input('ser_publicar');
 
       if (!empty($id))
@@ -135,6 +138,7 @@ class ServicioController
         $servicio->ser_descripcion = $ser_descripcion;
         $servicio->ser_icono = $ser_icono;
         $servicio->ser_incluye = $ser_incluye;
+        $servicio->ser_no_incluye = $ser_no_incluye;
         $servicio->ser_publicar = $ser_publicar;
         
         $status = $servicio->save();

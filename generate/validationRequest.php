@@ -5,7 +5,7 @@ function generateValidationRequest($table_name, $class_name, $entities = array()
   $folder = REQUEST;
 
   $file_name = $folder.$class_name.'Request'  ;
-  echo  $file_name." demos <br>" ;
+  // echo  $file_name." demos <br>" ;
 
   $prefix =  generatePrefixTable( $table_name ) ;
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
