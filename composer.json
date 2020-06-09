@@ -1,4 +1,5 @@
-{"name": "eloquent-php",
+{
+  "name": "eloquent-php",
   "description": "Ejemplo de utilizar php sin laravel",
   "type": "project",
   "authors":[

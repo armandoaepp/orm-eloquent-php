@@ -10,7 +10,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
  'driver'    => 'mysql',
  'host'      => 'localhost',
- 'database'  => 'db_tours_kiwi',
+ 'database'  => 'db_tours',
  'username'  => 'root',
  'password'  => '',
  'charset'   => 'utf8',
