@@ -1,4 +1,6 @@
 <?php
+// $plural = Str::plural('child', 2);
+use Illuminate\Support\Str;
 
 function generateController($table_name, $class_name, $entities = array() )
 {
@@ -6,7 +8,9 @@ function generateController($table_name, $class_name, $entities = array() )
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
 
   $table_amigable_sin_guion = str_replace ('-', ' ', $table_name);
-  $table_plural = str_plural($table_amigable_sin_guion) ;
+  // $table_plural = Str::plural($table_amigable_sin_guion) ;
+  $table_plural = Str::plural($table_amigable_sin_guion) ;
+
   $url_friendly_plural = str_replace (' ', '-', $table_plural);
 
   // field columns($entities);
@@ -42,9 +46,9 @@ function generateController($table_name, $class_name, $entities = array() )
   $str .= 'class '.$class_controller.''. PHP_EOL ;
   $str .= '{'. PHP_EOL ;
   $str .= '  use BitacoraTrait, UploadFiles;'. PHP_EOL ;
-  $str .= ''. PHP_EOL ;  
+  $str .= ''. PHP_EOL ;
   $str .= '  protected $prefixView = "admin";'. PHP_EOL ;
-  $str .= ''. PHP_EOL ;  
+  $str .= ''. PHP_EOL ;
   $str .= '  public function __construct()'. PHP_EOL ;
   $str .= '  {'. PHP_EOL  ;
   $str .= '    $this->middleware(\'auth\');'. PHP_EOL ;

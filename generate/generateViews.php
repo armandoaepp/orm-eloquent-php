@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 
 include 'views/list.php' ;
 include 'views/newView.php' ;
@@ -8,7 +9,7 @@ include 'views/editView.php' ;
 function generateView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array(), $fields_requireds = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   $fields_col = array_column($entities, 'Field');
 

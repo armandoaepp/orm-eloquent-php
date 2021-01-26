@@ -11,11 +11,12 @@
    }
   ],
   "autoload": {
-      "psr-4": {"App\\": "app/"}
+    "psr-4": {"App\\": "app/"}
   },
   "require": {
-    "illuminate/database": "*",
-    "illuminate/events": "^5.8",
-    "altorouter/altorouter": "*"
+    "illuminate/database": "^8.25",
+    "illuminate/events": "^8.25",
+    "doctrine/inflector": "^2.0",
+    "illuminate/support": "^8.25"
   }
 }

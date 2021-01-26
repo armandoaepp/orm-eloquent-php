@@ -22,10 +22,10 @@ use Doctrine\Common\Inflector\Inflector;
       // $data = $categorias->getAll() ;
 
       // var_dump($data);
-      echo str_plural('producto')."<br>";
+      echo Str::plural('producto')."<br>";
 
-      echo str_plural('cancion')."<br>";
-      echo str_plural('torres')."<br>";
+      echo Str::plural('cancion')."<br>";
+      echo Str::plural('torres')."<br>";
 
       $converted = Str::camel('producto_detalle');
       echo $converted."<br>";

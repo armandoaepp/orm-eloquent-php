@@ -1,10 +1,12 @@
 <?php
+use Illuminate\Support\Str;
+
 function generateNewView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array(), $fields_requireds = array() )
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_amigable_sin_guion = str_replace ('-', ' ', $table_amigable);
 
-  $table_plural = str_plural($table_amigable_sin_guion) ;
+  $table_plural = Str::plural($table_amigable_sin_guion) ;
 
   $url_friendly_plural = str_replace (' ', '-', $table_plural);
 

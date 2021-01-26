@@ -4,7 +4,7 @@ function generateEditView($table_name, $class_name, $entities = array(), $fields
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_amigable_no_guion = str_replace ('-', ' ', $table_amigable);
 
-  $table_plural = str_plural($table_amigable_no_guion) ;
+  $table_plural = Str::plural($table_amigable_no_guion) ;
 
   // $title = ucwords(str_replace ('-', ' ', $title_lower));
   $title = ucwords($table_plural);

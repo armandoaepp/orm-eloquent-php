@@ -1,10 +1,11 @@
 <?php
+use Illuminate\Support\Str;
 
 # Method find for controllers
 function getAll($table_name, $class_name, $entities = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
   // echo $table_amigable. "<br>" ;
 
   $str  = '' . PHP_EOL;
@@ -33,7 +34,7 @@ function getAll($table_name, $class_name, $entities = array())
 function create($table_name, $class_name, $entities = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function create(Request $request )' . PHP_EOL;
@@ -59,7 +60,7 @@ function create($table_name, $class_name, $entities = array())
 function store($table_name, $class_name, $entities = array(), $prefix = "", $url_friendly_plural = "")
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function store(Request $request )' . PHP_EOL;
@@ -163,7 +164,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
 function edit($table_name, $class_name, $entities = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function edit( $'.$entities[0]->Field.' )' . PHP_EOL;
@@ -191,7 +192,7 @@ function edit($table_name, $class_name, $entities = array())
 function update($table_name, $class_name, $entities = array(), $prefix = "", $url_friendly_plural = "")
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
   $str  .= '  public function update(Request $request )' . PHP_EOL;
@@ -300,7 +301,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
 function delete($table_name, $class_name, $entities = array(), $prefix = "")
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   $fields = array_column($entities, 'Field');
 

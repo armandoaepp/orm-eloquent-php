@@ -12,7 +12,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
  'driver' =>'mysql',
  'host' => 'localhost',
- 'database' => 'db_admin_prod',
+ 'database' => 'db_jnc_tours',
  'username' => 'root',
  'password' => '',
  'charset' => 'utf8',

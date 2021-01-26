@@ -1,6 +1,19 @@
 <?php
 
+
+
 require __DIR__.'/../bootstrap/autoload.php';
+
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+use Illuminate\Support\Str;
+
+// use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\Inflector;
+
+use App\Helpers\UrlHelper ;
+
 
 require __DIR__.'/createFolders.php';
 
@@ -12,12 +25,6 @@ require __DIR__.'/helper.php';
 require __DIR__.'/fieldsTable.php';
 require __DIR__.'/validationRequest.php';
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-
-use Illuminate\Support\Str;
-use Doctrine\Common\Inflector\Inflector;
-
-use App\Helpers\UrlHelper ;
 
 $fields_selected = $_POST['fields'] ;
 $table_name      = $_POST["table_name"] ;

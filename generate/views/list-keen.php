@@ -1,8 +1,10 @@
 <?php
+use Illuminate\Support\Str;
+
 function generateIndex($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
-  $table_plural = str_plural($table_amigable) ;
+  $table_plural = Str::plural($table_amigable) ;
 
   // $title = str_replace ('-', ' ', $table_plural);
   $title = ucwords(str_replace ('-', ' ', $table_plural));
