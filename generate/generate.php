@@ -10,7 +10,13 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;
 
 // use Doctrine\Common\Inflector\Inflector;
+// use Doctrine\Inflector\Inflector;
+// use Doctrine\Inflector\InflectorFactory;
 use Doctrine\Inflector\Inflector;
+use Doctrine\Inflector\NoopWordInflector;
+
+$inflector = new Inflector(new NoopWordInflector(), new NoopWordInflector());
+
 
 use App\Helpers\UrlHelper ;
 
@@ -46,7 +52,8 @@ $entities = Capsule::select("describe ".$table_name);
 // names all fields
 $fields_col = array_column($entities, 'Field');
 
-$class_name = Inflector::classify($table_name);
+$class_name = $inflector->classify($table_name);
+// $class_name = Inflector::classify($table_name);
 
 # crear folder de APP
 echo createFoldersApp()."<br>" ;

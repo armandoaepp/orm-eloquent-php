@@ -10,7 +10,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
  'driver'    => 'mysql',
  'host'      => 'localhost',
- 'database'  => 'db_jnc_tours',
+ 'database'  => 'db_metrosac',
  'username'  => 'root',
  'password'  => '',
  'charset'   => 'utf8',
