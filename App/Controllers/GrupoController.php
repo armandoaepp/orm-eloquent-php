@@ -3,16 +3,16 @@ namespace App\Controllers;
 
 /**
   * [Class Controller]
-  * Autor: Armando E. Pisfil Puemape
+  * Autor: Armando Pisfil
   * twitter: @armandoaepp
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\PerWeb; 
+use App\Models\Grupo; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class PerWebController
+class GrupoController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class PerWebController
     try
     {
 
-      $data = PerWeb::get();
+      $data = Grupo::get();
 
-      return view($this->prefixView.'.per-webs.list-per-webs')->with(compact('data'));
+      return view($this->prefixView.'.grupos.list-grupos')->with(compact('data'));
     
     }
     catch (Exception $e)
@@ -45,7 +45,7 @@ class PerWebController
     try
     {
 
-      return view($this->prefixView.'.per-webs.new-per-web');
+      return view($this->prefixView.'.grupos.new-grupo');
     
     }
     catch (Exception $e)
@@ -62,30 +62,26 @@ class PerWebController
       $status  = false;
       $message = "";
 
-      $persona_id = $request->input('persona_id');
-      $tipo_web_id = $request->input('tipo_web_id');
-      $pw_url = $request->input('pw_url');
-      $pw_estado = !empty($request->input('pw_estado')) ? $request->input('pw_estado') : 1;
+      $descripcion = $request->input('descripcion');
+      $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $per_web = new PerWeb();
-        $per_web->persona_id = $persona_id;
-        $per_web->tipo_web_id = $tipo_web_id;
-        $per_web->pw_url = $pw_url;
-        $per_web->pw_estado = $pw_estado;
+        $grupo = new Grupo();
+        $grupo->descripcion = $descripcion;
+        $grupo->estado = $estado;
         
-        $status = $per_web->save();
+        $status = $grupo->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $per_web, "created") ;
+        $this->savedBitacoraTrait( $grupo, "created") ;
         
         
       $message = "Operancion Correcta";
         
 
-      $data = ["message" => $message, "status" => $status, "data" => [$per_web],];
+      $data = ["message" => $message, "status" => $status, "data" => [$grupo],];
     
-      return redirect()->route('admin-per-webs');
+      return redirect()->route('admin-grupos');
     
     }
     catch (Exception $e)
@@ -100,9 +96,9 @@ class PerWebController
     try
     {
 
-      $per_web = PerWeb::find( $id );
+      $grupo = Grupo::find( $id );
 
-      return view($this->prefixView.'.per-webs.edit-per-web')->with(compact('per_web'));
+      return view($this->prefixView.'.grupos.edit-grupo')->with(compact('grupo'));
     
     }
     catch (Exception $e)
@@ -121,22 +117,18 @@ class PerWebController
       $message = "";
 
       $id = $request->input('id');
-      $persona_id = $request->input('persona_id');
-      $tipo_web_id = $request->input('tipo_web_id');
-      $pw_url = $request->input('pw_url');
+      $descripcion = $request->input('descripcion');
 
       if (!empty($id))
       {
-        $per_web = PerWeb::find($id);
-        $per_web->id = $id;
-        $per_web->persona_id = $persona_id;
-        $per_web->tipo_web_id = $tipo_web_id;
-        $per_web->pw_url = $pw_url;
+        $grupo = Grupo::find($id);
+        $grupo->id = $id;
+        $grupo->descripcion = $descripcion;
         
-        $status = $per_web->save();
+        $status = $grupo->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $per_web, "update") ;
+        $this->savedBitacoraTrait( $grupo, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -148,7 +140,7 @@ class PerWebController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-per-webs');;
+      return redirect()->route('admin-grupos');;
     
     }
     catch (Exception $e)
@@ -194,33 +186,33 @@ class PerWebController
           $message = "Registro Activado Correctamente";
         }
 
-        $per_web = PerWeb::find( $id ) ;
+        $grupo = Grupo::find( $id ) ;
 
-        if (!empty($per_web))
+        if (!empty($grupo))
         {
           #conservar en base de datos
           if ( $historial == "si" )
           {
-            $per_web->pw_estado = $estado;
-            $per_web->save();
+            $grupo->estado = $estado;
+            $grupo->save();
               
             # TABLE BITACORA
-            $this->savedBitacoraTrait( $per_web, "update estado") ;
+            $this->savedBitacoraTrait( $grupo, "update estado") ;
           
             $status = true;
             //$message = $message;
               
           }elseif( $historial == "no"  ) {
-            $per_web->delete();
+            $grupo->delete();
           
             # TABLE BITACORA
-            $this->savedBitacoraTrait( $per_web, "destroy") ;
+            $this->savedBitacoraTrait( $grupo, "destroy") ;
           
             $status = true;
             $message = "Registro eliminado de la base de datos";
           }
           
-          $data = $per_web;
+          $data = $grupo;
           
         }
         else
@@ -259,7 +251,7 @@ class PerWebController
     try
     {
 
-      $data = PerWeb::find($id);
+      $data = Grupo::find($id);
 
       return $data;
     

@@ -8,7 +8,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Regions
+  Grupos
 @endsection
 
 @section('content')
@@ -22,14 +22,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin-regions') }}" class="">
-        <i class="fa fa-align-justify"></i> Regions
+      <a href="{{ route('admin.grupos') }}" class="">
+        <i class="fa fa-align-justify"></i> Grupos
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Region
+      Editar Grupo
       </span>
     </li>
   </ol>
@@ -41,20 +41,20 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Region
+          <i class="fa fa-align-justify"></i> Editar Grupo
         </div>
         <div class="card-body">
           <div class="col-12">
 
-            <form id="form-controls" action="{{  route('region-store') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <input type="hidden" class="form-control" name="id" id="id" value="">
+            <form id="form-controls" action="{{ route('admin.grupos.update',['id' => $grupo->id]) }}" method="POST" enctype="multipart/form-data">
+              @csrf @method("put")
+              <input type="hidden" class="form-control" name="id" id="id" value="{{ $grupo->id }}">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="reg_nombre">Nombre: </label>
-                    <input type="text" class="form-control @error('reg_nombre') is-invalid @enderror" name="reg_nombre" id="reg_nombre" value="{{ old('reg_nombre') }}" required placeholder="Nombre">
-                    @error('reg_nombre')
+                    <label for="descripcion">Descripcion: </label>
+                    <input type="text" class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" placeholder="Descripcion" value="{{ old('descripcion', $grupo->descripcion ?? '') }}" >
+                    @error('descripcion')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
@@ -65,13 +65,12 @@
 
               <div class="w-100 text-center">
 
-                <a href="{{ route('admin-regions') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route('admin.grupos') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>
 
             </form>
-
           </div>
 
         </div>
@@ -80,6 +79,7 @@
 
   </div>
 </div>
+
 <!-- end:: Content -->
 
 @endsection

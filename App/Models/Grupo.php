@@ -3,16 +3,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Itinerario extends Model
+class Grupo extends Model
 {
-  protected $table = "itinerario";
+  protected $table = "grupo";
 
   protected $fillable = [
-     'paquete_id',
-     'iti_dia',
-     'iti_titulo',
-     'iti_descripcion',
-     'iti_estado',
+     'descripcion',
+     'estado',
   ];
 
   protected $primaryKey = "id";

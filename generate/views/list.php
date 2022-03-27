@@ -35,7 +35,7 @@ $html = '@php
 <nav class="full-content" aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
-      <a href="{{ route(\'admin\') }}">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'\') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
@@ -52,11 +52,11 @@ $html = '@php
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="{{ route(\'admin-'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="{{ route(\''.$table_amigable.'-create\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -206,7 +206,7 @@ $html = '@php
               $html .='                        <i class="fas fa-ellipsis-h"></i>' .PHP_EOL ;
               $html .='                    </button>' .PHP_EOL ;
               $html .='                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">' .PHP_EOL ;
-              $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="{{ route(\''.$table_amigable.'-edit\',[\'id\' => $row->'.$fields_table[0].']) }}" >' .PHP_EOL ;
+              $html .='                      <a class="dropdown-item <?php echo $class_disabled; ?>" href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.edit\',[\'id\' => $row->'.$fields_table[0].']) }}" >' .PHP_EOL ;
               $html .='                        <i class="far fa-edit"></i> Editar' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
               $html .='                      <a class="dropdown-item item-delete" href="#" data-id="{{ $row->'.$fields_table[0].' }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" data-title="<?php echo $title_estado ?>" data-estado="{{ $row->'.$prefix_estado.' }}" title="<?php echo $title_estado; ?>" >' .PHP_EOL ;
@@ -272,9 +272,9 @@ $html = '@php
 <!-- Start:: Section modal  -->
 @section(\'modal\')
 
-  @include(\'shared.form-modal-delete\', [\'url\' => route(\''.$table_amigable.'-delete\') ])
+  @include(\'shared.form-modal-delete\', [\'url\' => route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.delete\') ])
 
-  @include(\'shared.form-modal-publicar\' , [\'url_publish\' => route(\''.$table_amigable.'-publish\') ])
+  @include(\'shared.form-modal-publicar\' , [\'url_publish\' => route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.publish\') ])
 
 @endsection
 

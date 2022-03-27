@@ -3,7 +3,7 @@ namespace App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaisRequest extends FormRequest
+class GrupoRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class PaisRequest extends FormRequest
   {
     return true;
   }
-  protected $table = "pais";
+  protected $table = "grupo";
 
   /**
    * Get the validation rules that apply to the request.
@@ -24,8 +24,7 @@ class PaisRequest extends FormRequest
   public function rules()
   {
     return [
-     'code'  => [],
-     'nombre'  => [],
+     'descripcion'  => [],
     ];
   }
   /**
@@ -36,8 +35,7 @@ class PaisRequest extends FormRequest
   public function attributes()
   {
     return [
-     'code'  => 'code',
-     'nombre'  => 'nombre',
+     'descripcion'  => 'descripcion',
     ];
   }
 

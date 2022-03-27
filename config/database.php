@@ -10,7 +10,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
  'driver'    => 'mysql',
  'host'      => 'localhost',
- 'database'  => 'db_metrosac',
+ 'database'  => 'db_sys_rrhh',
  'username'  => 'root',
  'password'  => '',
  'charset'   => 'utf8',

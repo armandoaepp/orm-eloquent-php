@@ -14,12 +14,14 @@ function generateEditView($table_name, $class_name, $entities = array(), $fields
 
   $prefix =  generatePrefixTable( $table_name ) ;
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
+
 $html = '';
 $html .= '@php
   $sidebar = array(
     "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
+@endphp
 ' ;
 
 if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
@@ -54,13 +56,13 @@ $html .= '
 <nav class="full-content" aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-shape breadcrumb-theme shadow-sm radius-0">
     <li class="breadcrumb-item">
-      <a href="{{ route(\'admin\') }}">
+      <a href="{{ route(\''.$GLOBALS['prefix_route'].'\') }}">
         <i class="fas fa-home"></i> Home
       </a>
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route(\'admin-'.$url_friendly_plural.'\') }}" class="">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="">
         <i class="fa fa-align-justify"></i> '.$title.'
       </a>
     </li>
@@ -84,7 +86,7 @@ $html .= '
         <div class="card-body">
           <div class="col-12">
 
-            <form id="form-controls" action="{{ route(\''.$table_amigable.'-update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
+            <form id="form-controls" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_plural.'.update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $'. $table_name .'->'.$fields_table[0].' }}">
               <div class="row">' . PHP_EOL;
@@ -207,7 +209,7 @@ $html .= '
 
               <div class="w-100 text-center">
 
-                <a href="{{ route(\'admin-'.$url_friendly_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
+                <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
 
               </div>
