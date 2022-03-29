@@ -8,7 +8,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Familias
+  Areas
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Familias
+      Areas
       </span>
     </li>
   </ol>
@@ -33,11 +33,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route('admin.familias') }}" class="btn btn-outline-secondary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route('admin.areas') }}" class="btn btn-outline-secondary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route('admin.familias.create') }}" class="btn btn-outline-secondary btn-sm" type="button">
+      <a href="#" id="btn-create" data-href="{{ route('admin.areas.create') }}" class="btn btn-outline-secondary btn-sm" type="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -46,11 +46,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de familias
+          <i class="fa fa-align-justify"></i> Lista de areas
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include('admin. familias.list-table-familias')
+           @include('admin. areas.list-table-areas')
           </div>
         </div>
       </div>
@@ -63,15 +63,15 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Familia">
-    @include('admin.familias.form-create-familia')
+  <x-modals.modal-create title="Nuevo Area">
+    @include('admin.areas.form-create-area')
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Familia" />
+  <x-modals.modal-edit title="Editar Area" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.familias.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Familia" />  
-  <x-forms.form-publish url="{{ route('admin.familias.publish') }}" /> 
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.areas.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Area" />  
+  <x-forms.form-publish url="{{ route('admin.areas.publish') }}" /> 
 @endsection
 
 <!-- Start:: Section script  -->

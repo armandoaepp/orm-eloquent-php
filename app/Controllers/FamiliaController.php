@@ -23,7 +23,7 @@ class FamiliaController
     $this->middleware('auth');
   }
 
-  public function getAll()
+  public function index()
   {
     try
     {
@@ -33,9 +33,9 @@ class FamiliaController
       return view($this->prefixView.'.familias.list-familias')->with(compact('data'));
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -45,12 +45,16 @@ class FamiliaController
     try
     {
 
+      if ($request->ajax()) {
+        return view($this->prefixView.'.familias.form-create-familia');
+      }
+
       return view($this->prefixView.'.familias.new-familia');
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -59,8 +63,11 @@ class FamiliaController
   {
     try
     {
-      $status  = false;
+      $success = false;
       $message = "";
+
+
+
 
       $cod_fam = $request->input('cod_fam');
       $descripcion = $request->input('descripcion');
@@ -100,9 +107,9 @@ class FamiliaController
       return redirect()->route('admin-familias');
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -117,9 +124,9 @@ class FamiliaController
       return view($this->prefixView.'.familias.edit-familia')->with(compact('familia'));
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -129,7 +136,7 @@ class FamiliaController
     try
     {
 
-      $status  = false;
+      $success = false;
       $message = "";
 
       $id = $request->input('id');
@@ -190,9 +197,9 @@ class FamiliaController
       return redirect()->route('admin-familias');;
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -206,7 +213,7 @@ class FamiliaController
         'estado' => 'numeric',
       ]);
 
-      $status  = false;
+      $success = false;
       $message = "";
 
       if ($request->ajax())
@@ -297,7 +304,7 @@ class FamiliaController
   {
     try
     {
-      $status  = false;
+      $success = false;
       $message = "";
 
       $id = $request->input("id");
@@ -349,7 +356,7 @@ class FamiliaController
               ]);
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
         return \Response::json([
                 "message" => "Operación fallida en el servidor",
@@ -372,9 +379,9 @@ class FamiliaController
       return $data;
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -389,9 +396,9 @@ class FamiliaController
       return $data;
     
     }
-    catch (Exception $e)
+    catch (\Exception $e)
     {
-      throw new Exception($e->getMessage());
+      throw new \Exception($e->getMessage());
     }
 
   }

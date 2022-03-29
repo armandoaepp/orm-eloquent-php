@@ -8,7 +8,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Familias
+  Areas
 @endsection
 
 @section('content')
@@ -22,14 +22,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.familias') }}" class="">
-        <i class="fa fa-align-justify"></i> Familias
+      <a href="{{ route('admin.areas') }}" class="">
+        <i class="fa fa-align-justify"></i> Areas
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Familia
+      Editar Area
       </span>
     </li>
   </ol>
@@ -41,11 +41,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Familia
+          <i class="fa fa-align-justify"></i> Editar Area
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin. familias.form-create-familia')
+            @include('admin. areas.form-edit-area')
           </div>
         </div>
       </div>

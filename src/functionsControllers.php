@@ -1,15 +1,15 @@
 <?php
 use Illuminate\Support\Str;
 
-# Method find for controllers
-function getAll($table_name, $class_name, $entities = array())
+# Method index for controllers
+function index($table_name, $class_name, $entities = array())
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_plural = Str::plural($table_amigable) ;
   // echo $table_amigable. "<br>" ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function getAll()' . PHP_EOL;
+  $str  .= '  public function index()' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -20,9 +20,39 @@ function getAll($table_name, $class_name, $entities = array())
   // $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
+# Method listTable for controllers
+function listTable($table_name, $class_name, $entities = array())
+{
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = Str::plural($table_amigable) ;
+  // echo $table_amigable. "<br>" ;
+
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function listTable()' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::orderBy(\'id\', \'desc\')->get();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      return view($this->prefixView.\'.'.$table_plural.'.list-'.$table_plural.'\')->with(compact(\'data\'));' . PHP_EOL;
+  // $str  .= '      return $data;' . PHP_EOL;
+  $str  .= '    ' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -42,12 +72,17 @@ function create($table_name, $class_name, $entities = array())
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
   $str  .= '' . PHP_EOL;
+  $str  .= '      if ($request->ajax()) {' . PHP_EOL;
+  $str  .= '        return view($this->prefixView.\'.'.$table_plural.'.form-create-'.$table_amigable.'\');' . PHP_EOL;
+  $str  .= '      }' . PHP_EOL;
+  // $str  .= '    ' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
   $str  .= '      return view($this->prefixView.\'.'.$table_plural.'.new-'.$table_amigable.'\');' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -68,9 +103,14 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
   // $str  .= '      $id      = null;' . PHP_EOL;
-  $str  .= '      $status  = false;' . PHP_EOL;
+  $str  .= '      $success = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
+
+  $str  .= '' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
 
   $name_imagen = '' ;
   foreach ($entities as $index => $entity)
@@ -150,9 +190,9 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
   // $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -177,9 +217,9 @@ function edit($table_name, $class_name, $entities = array())
   $str  .= '      return view($this->prefixView.\'.'.$table_plural.'.edit-'.$table_amigable.'\')->with(compact(\''.$table_name.'\'));' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -201,7 +241,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $str  .= '    {' . PHP_EOL;
   // $str  .= '      extract($params) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      $status  = false;' . PHP_EOL;
+  $str  .= '      $success = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
 
@@ -286,9 +326,9 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   // $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -319,7 +359,7 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '      ]);' . PHP_EOL;
 
   $str  .= '' . PHP_EOL;
-  $str  .= '      $status  = false;' . PHP_EOL;
+  $str  .= '      $success = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
 
@@ -416,7 +456,7 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '                "errors"  => [$e->getMessage(), ],' . PHP_EOL;
   $str  .= '                "data"    => [],' . PHP_EOL;
   $str  .= '              ]);' . PHP_EOL;
-  // $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  // $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -436,7 +476,7 @@ function updateStatus($table_name, $class_name, $entities = array())
   $str  .= '    {' . PHP_EOL;
   $str  .= '      extract($params) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
-  $str  .= '      $status  = false;' . PHP_EOL;
+  $str  .= '      $success = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      if (empty($'.$entities[0]->Field.'))' . PHP_EOL;
@@ -460,9 +500,9 @@ function updateStatus($table_name, $class_name, $entities = array())
   $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -487,9 +527,9 @@ function getByStatus($table_name, $class_name, $entities = array())
   $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -507,7 +547,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      $status  = false;' . PHP_EOL;
+  $str  .= '      $success = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      $id = $request->input("id");' . PHP_EOL;
@@ -564,7 +604,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .='              ]);' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
   $str  .='        return \Response::json([' . PHP_EOL;
   $str  .='                "message" => "Operación fallida en el servidor",' . PHP_EOL;
@@ -597,9 +637,9 @@ function getPublished($table_name, $class_name, $entities = array(), $field_publ
   $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
@@ -623,9 +663,9 @@ function find($table_name, $class_name, $entities = array())
   $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;

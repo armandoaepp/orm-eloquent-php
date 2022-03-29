@@ -55,7 +55,7 @@ function generateController($table_name, $class_name, $entities = array() )
   $str .= '  }'. PHP_EOL  ;
 
 
-  $str .=  getAll($table_name, $class_name, $entities);
+  $str .=  index($table_name, $class_name, $entities);
   $str .=  create($table_name, $class_name, $entities);
   $str .=  store($table_name, $class_name, $entities, $prefix, $url_friendly_plural);
   $str .=  edit($table_name, $class_name, $entities);
