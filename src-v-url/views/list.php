@@ -52,16 +52,23 @@ $html = '@php
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm" type="button">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-secondary btn-sm" type="button">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-secondary btn-sm btn-bar" role="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
     </div>
- 
+
+    <?php
+      $status = [
+        "0" => ["title" => "Eliminado", "class" => " badge-danger"],
+        "1" => ["title" => "Activo", "class" => " badge-success"],
+      ];
+    ?>
+
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
@@ -71,7 +78,7 @@ $html = '@php
           <!-- <div class="table-responsive"> -->
 
           <!--begin: Datatable -->
-          <table id="dataTableLists" class="table table-sm table-hover table-bordered" style="width: 100%;">
+          <table id="dataTableLists" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
             <thead>
               <tr>' . PHP_EOL;
               for ($i=0; $i < count( $heads_table) ; $i++)
@@ -80,7 +87,7 @@ $html = '@php
                 {
                   $width = '' ;
                   if ($i == 0) {
-                    $width = ' width="50"' ;
+                    $width = ' width="60"' ;
                   }
 
                   // ==== Start remove prefix

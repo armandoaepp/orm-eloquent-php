@@ -26,8 +26,7 @@ function generateView($table_name, $class_name, $entities = array(), $fields_tab
 
   $ext = ".php" ;
 
-  # GENERATE VIEW LIST 
-  # ====================================================================
+  /*  GENERATE VIEW LIST */
   $file_name_list = $folder."list-".$table_plural .".blade" ;
 
   $file_open = fopen($file_name_list . $ext, "w");
@@ -40,12 +39,9 @@ function generateView($table_name, $class_name, $entities = array(), $fields_tab
   fclose($file_open);
 
   echo "View List Generation OK <br> " ;
-  # ====================================================================
 
   /*  GENERATE VIEW NEW */
-  # ====================================================================
-
-  $file_name_new = $folder."form-create-".$table_amigable.".blade" ;
+  $file_name_new = $folder."new-".$table_amigable.".blade" ;
 
   $file_open = fopen($file_name_new . $ext, "w");
 
@@ -57,13 +53,10 @@ function generateView($table_name, $class_name, $entities = array(), $fields_tab
   fclose($file_open);
 
   echo "View New Generation OK <br> " ;
-  # ====================================================================
 
 
   /*  GENERATE VIEW edit */
-  # ====================================================================
-
-  $file_name_edit = $folder."form-edit-".$table_amigable .".blade" ;
+  $file_name_edit = $folder."edit-".$table_amigable .".blade" ;
 
   $file_open = fopen($file_name_edit . $ext, "w");
 
@@ -75,7 +68,6 @@ function generateView($table_name, $class_name, $entities = array(), $fields_tab
   fclose($file_open);
 
   echo "View Edit Generation OK <br> " ;
-  # ====================================================================
 
   return "";
   // return "View List Generation OK";
