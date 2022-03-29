@@ -56,6 +56,7 @@ function generateController($table_name, $class_name, $entities = array() )
 
 
   $str .=  index($table_name, $class_name, $entities);
+  $str .=  listTable($table_name, $class_name, $entities);
   $str .=  create($table_name, $class_name, $entities);
   $str .=  store($table_name, $class_name, $entities, $prefix, $url_friendly_plural);
   $str .=  edit($table_name, $class_name, $entities);

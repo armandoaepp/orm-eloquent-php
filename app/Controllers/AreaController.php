@@ -40,6 +40,26 @@ class AreaController
 
   }
 
+  public function listTable(Request $request)
+  {
+    try
+    {
+
+      $data = Area::orderBy('id', 'desc')->get();
+      if ($request->ajax()) {
+        return view($this->prefixView.'.areas.list-table-area');
+      }
+
+      return view($this->prefixView.'.areas.list-areas')->with(compact('data'));
+    
+    }
+    catch (\Exception $e)
+    {
+      throw new \Exception($e->getMessage());
+    }
+
+  }
+
   public function create(Request $request )
   {
     try
