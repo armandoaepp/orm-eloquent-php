@@ -39,7 +39,7 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
 
                   if($tipo_inputs[$i] == 'textarea')
                   {
-                    $html .= '                <div class="col-md-12">' . PHP_EOL;
+                    $html .= '                <div class="col-md-12 mb-2">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
                     $html .= '                    <textarea class="form-control ckeditor  @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '" cols="30" rows="6">{{ $'. $table_name .'->'.$fields_table[$i].' }}</textarea>' . PHP_EOL;
@@ -52,10 +52,10 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
                   }
                   elseif($tipo_inputs[$i] == 'select')
                   {
-                    $html .= '                <div class="col-md-12">' . PHP_EOL;
+                    $html .= '                <div class="col-md-12 mb-2">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <select class="custom-select select2-box" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '">'.PHP_EOL;
+                    $html .= '                    <select class="form-select select2-box" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  . '">'.PHP_EOL;
                     $html .= '                      <option value="" selected disabled hidden>Seleccionar </option> '.PHP_EOL;
                     $html .= '                      <option value="text">text</option>'.PHP_EOL;
                     $html .= '                    </select>'.PHP_EOL;
@@ -64,7 +64,7 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
                     $html .= '' . PHP_EOL;
                   }
                   else{
-                    $html .= '                <div class="col-md-12">' . PHP_EOL;
+                    $html .= '                <div class="col-md-12 mb-2">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
                     // $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ $'. $table_name .'->'.$fields_table[$i].' }}" >' . PHP_EOL;
@@ -86,7 +86,7 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
               {
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
-                $html .= '                <div class="col-md-12">'.PHP_EOL;
+                $html .= '                <div class="col-md-12 mb-2">'.PHP_EOL;
                 $html .= '                  <div class="form-group">'.PHP_EOL;
                 $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
                 $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
@@ -108,7 +108,7 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
                   $name_file_imagen = (in_array("imagen", $fields_table) ) ? 'imagen' : $prefix."imagen" ;
 
 
-                  $html .= '                <div class="col-md-12 text-center">' . PHP_EOL ;
+                  $html .= '                <div class="col-md-12 mb-2 text-center">' . PHP_EOL ;
                   $html .= '                  <input type="hidden" class="form-control" name="img_bd" id="img_bd" value="{{ $'. $table_name .'->'.$name_file_imagen.' }}">' . PHP_EOL ;
 
                   $html .= '                  @if(!empty($'. $table_name .'->'.$name_file_imagen.'))' . PHP_EOL ;
@@ -117,7 +117,7 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
                   $html .= '                  @endif' . PHP_EOL ;
 
                   $html .= '                </div>' . PHP_EOL ;
-                  $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
+                  $html .= '                <div class="col-12 mb-2">' . PHP_EOL ;
                   $html .= '                  <div class="form-group">' . PHP_EOL ;
                   $html .= '                    <div class="input-group mb-2">' . PHP_EOL ;
                   $html .= '                      <div class="input-group-prepend">' . PHP_EOL ;
@@ -128,7 +128,7 @@ $html .= '            <form id="form-controls" action="{{ route(\''.$GLOBALS['pr
                   $html .= '                  </div>' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL ;
                   $html .= '' . PHP_EOL ;
-                  $html .= '                <div class="col-12 mb-3">' . PHP_EOL ;
+                  $html .= '                <div class="col-12 mb-2">' . PHP_EOL ;
                   $html .= '                  <div class="preview-img" data-img-preview="preview-images-id"></div>' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL;
 

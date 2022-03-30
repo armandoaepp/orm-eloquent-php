@@ -69,7 +69,7 @@ $html = '@php
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include(\'admin. '.$table_plural.'.list-table-'.$table_plural.'\')
+           @include(\'admin.'.$table_plural.'.list-table-'.$table_plural.'\')
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@ $html .= '@endsection
 
   @include(\'shared.datatables\')
 
-  <script src="{{ asset(\'assets/js/app-form-modals.js\') }}"></script>
+  <script src="{{ asset(\'assets/js/app-admin.js\') }}"></script>
 ' . PHP_EOL ;
 if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
 {

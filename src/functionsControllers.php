@@ -45,9 +45,9 @@ function listTable($table_name, $class_name, $entities = array())
   $str  .= '    {' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      $data = '.$class_name.'::orderBy(\'id\', \'desc\')->get();' . PHP_EOL;
-  $str  .= '      if ($request->ajax()) {' . PHP_EOL;
-  $str  .= '        return view($this->prefixView.\'.'.$table_plural.'.list-table-'.$table_amigable.'\');' . PHP_EOL;
-  $str  .= '      }' . PHP_EOL;
+  // $str  .= '      if ($request->ajax()) {' . PHP_EOL;
+  // $str  .= '        return view($this->prefixView.\'.'.$table_plural.'.list-table-'.$table_amigable.'\');' . PHP_EOL;
+  // $str  .= '      }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      return view($this->prefixView.\'.'.$table_plural.'.list-'.$table_plural.'\')->with(compact(\'data\'));' . PHP_EOL;
   // $str  .= '      return $data;' . PHP_EOL;

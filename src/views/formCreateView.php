@@ -41,10 +41,10 @@ $html = '            <form id="form-controls" action="{{  route(\''.$GLOBALS["pr
 
                   if($tipo_inputs[$i] == 'textarea')
                   {
-                    $html .= '                <div class="col-md-12">' . PHP_EOL;
+                    $html .= '                <div class="col-md-12 mb-2">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
-                    $html .= '                    <textarea class="form-control ckeditor @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '" cols="30" rows="6">{{ old(\'' . $fields_table[$i] .'\') }}</textarea>' . PHP_EOL;
+                    $html .= '                    <textarea class="form-control ckeditor @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '" cols="30" rows="4">{{ old(\'' . $fields_table[$i] .'\') }}</textarea>' . PHP_EOL;
                     $html .= '                    @error(\'' . $fields_table[$i] .'\')' . PHP_EOL;
                     $html .= '                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>' . PHP_EOL;
                     $html .= '                    @enderror' . PHP_EOL;
@@ -54,10 +54,10 @@ $html = '            <form id="form-controls" action="{{  route(\''.$GLOBALS["pr
                   }
                   elseif($tipo_inputs[$i] == 'select')
                   {
-                    $html .= '                <div class="col-md-12">' . PHP_EOL;
+                    $html .= '                <div class="col-md-12 mb-2">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item . ': </label>' . PHP_EOL;
-                    $html .= '                    <select class="custom-select select2-box" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '">'.PHP_EOL;
+                    $html .= '                    <select class="form-select select2-box" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item . '">'.PHP_EOL;
                     $html .= '                      <option value="" selected disabled hidden>Seleccionar </option> '.PHP_EOL;
                     $html .= '                      <option value="text">text</option>'.PHP_EOL;
                     $html .= '                    </select>'.PHP_EOL;
@@ -67,7 +67,7 @@ $html = '            <form id="form-controls" action="{{  route(\''.$GLOBALS["pr
                   }
                   else
                   {
-                    $html .= '                <div class="col-md-12">' . PHP_EOL;
+                    $html .= '                <div class="col-md-12 mb-2">' . PHP_EOL;
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
                     // $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" value="{{ old(\'' . $fields_table[$i] .'\') }}" placeholder="' . $field_item  .'">' . PHP_EOL;
@@ -93,7 +93,7 @@ $html = '            <form id="form-controls" action="{{  route(\''.$GLOBALS["pr
               {
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
-                $html .= '                <div class="col-md-12">'.PHP_EOL;
+                $html .= '                <div class="col-md-12 mb-2">'.PHP_EOL;
                 $html .= '                  <div class="form-group">'.PHP_EOL;
                 $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
                 $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
@@ -114,7 +114,7 @@ $html = '            <form id="form-controls" action="{{  route(\''.$GLOBALS["pr
               {
                   $name_file_imagen = (in_array("imagen", $fields_table) ) ? 'imagen' : $prefix."imagen" ;
 
-                  $html .= '                <div class="col-12 mb-3">' . PHP_EOL;
+                  $html .= '                <div class="col-12 mb-2">' . PHP_EOL;
                   $html .= '                  <div class="form-group">' . PHP_EOL;
                   $html .= '                    <label for="'. $name_file_imagen. '">Imagen:</label>' . PHP_EOL;
                   $html .= '                    <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="'. $name_file_imagen. '" id="'. $name_file_imagen. '" required placeholder="Imagen" accept="image/*">' . PHP_EOL;

@@ -44,14 +44,16 @@ $html = '          <!--begin: Datatable -->
                 }
               }
 
-          $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
-          $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
+    $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
+    $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
-    $html .= '                <th width="50" title="Estado">Est.</th>' . PHP_EOL ;
+  
     if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
     {
       $html .= '                <th width="50" title="Publicado">Publ.</th>' . PHP_EOL ;
     }
+    
+    $html .= '                <th width="50" title="Estado">Est.</th>' . PHP_EOL ;
 
     $html .= '                <th width="50"> Acciones </th>' . PHP_EOL ;
 
@@ -117,7 +119,7 @@ $html = '          <!--begin: Datatable -->
               $html .='                        <i class="far fa-edit"></i> Editar' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
               $html .='                      <a class="dropdown-item btn-action" href="#" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.destroy\') }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" onclick="openModalDestroy(this);event.preventDefault();" title="Borrar '.$table_name.': {{ $title }}" data-title="{{ $title }}" >' .PHP_EOL ;
-              $html .='                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>' .PHP_EOL ;
+              $html .='                        <i class="far fa-trash-alt"></i> Borrar Registro' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
               $html .='                    </div>' .PHP_EOL ;
               $html .='                  </div>' .PHP_EOL ;

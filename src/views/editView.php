@@ -85,7 +85,7 @@ $html .= '
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include(\'admin. '.$table_plural.'.form-edit-'.$table_name.'\')
+            @include(\'admin.'.$table_plural.'.form-edit-'.$table_name.'\')
           </div>
         </div>
       </div>

@@ -69,7 +69,7 @@ $html = '@php
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-         @include(\'admin. '.$table_plural.'.list-table-'.$table_plural.'\')
+         @include(\'admin.'.$table_plural.'.list-table-'.$table_plural.'\')
 
           <!--begin: Datatable -->
           <table id="dataTableLists" class="table table-sm table-hover table-bordered" style="width: 100%;">
