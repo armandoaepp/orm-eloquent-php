@@ -3,11 +3,8 @@
             <thead>
               <tr>
                 <th width="50"> Id </th> 
-                <th> Cod Fam </th> 
                 <th> Descripcion </th> 
-                <th> Glosa </th> 
                 <th width="50" title="Estado">Est.</th>
-                <th width="50" title="Publicado">Publ.</th>
                 <th width="50"> Acciones </th>
               </tr>
             </thead>
@@ -21,14 +18,7 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->cod_fam }} </td> 
                 <td> {{ $row->descripcion }} </td> 
-                <td> {{ $row->glosa }} </td> 
-                <td class="text-center">
-                  <div class="form-check form-switch d-inline-block">
-                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->publicar }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == 'S') checked @endif role="switch">
-                  </div>
-                </td>
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -45,11 +35,11 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.familias.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar familia: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.grupos.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar grupo: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.familias.destroy') }}" data-descripcion="{{ $row->cod_fam }}" onclick="openModalDestroy(this);event.preventDefault();" title="Borrar familia: {{ $title }}" data-title="{{ $title }}" >
-                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.grupos.destroy') }}" data-descripcion="{{ $row->descripcion }}" onclick="openModalDestroy(this);event.preventDefault();" title="Borrar grupo: {{ $title }}" data-title="{{ $title }}" >
+                        <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>
                   </div>

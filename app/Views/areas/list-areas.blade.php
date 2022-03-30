@@ -50,7 +50,7 @@
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include('admin. areas.list-table-areas')
+           @include('admin.areas.list-table-areas')
           </div>
         </div>
       </div>
@@ -71,7 +71,6 @@
 
   <x-forms.form-post form-id="form-delete" url="{{ route('admin.areas.delete') }}" class="d-none" />
   <x-forms.form-destroy table="Area" />  
-  <x-forms.form-publish url="{{ route('admin.areas.publish') }}" /> 
 @endsection
 
 <!-- Start:: Section script  -->
@@ -79,6 +78,6 @@
 
   @include('shared.datatables')
 
-  <script src="{{ asset('assets/js/app-form-modals.js') }}"></script>
+  <script src="{{ asset('assets/js/app-admin.js') }}"></script>
 
 @endsection

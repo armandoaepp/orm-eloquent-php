@@ -2,17 +2,17 @@
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $area->id }}">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="area_id_sup">Area Id Sup: </label>
-                    <select class="custom-select select2-box" name="area_id_sup" id="area_id_sup" placeholder="Area Id Sup">
+                    <select class="form-select select2-box" name="area_id_sup" id="area_id_sup" placeholder="Area Id Sup">
                       <option value="" selected disabled hidden>Seleccionar </option> 
                       <option value="text">text</option>
                     </select>
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="descripcion">Descripcion: </label>
                     <input type="text" class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" placeholder="Descripcion" value="{{ old('descripcion', $area->descripcion ?? '') }}" >
@@ -22,17 +22,17 @@
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="grupo_id">Grupo Id: </label>
-                    <select class="custom-select select2-box" name="grupo_id" id="grupo_id" placeholder="Grupo Id">
+                    <select class="form-select select2-box" name="grupo_id" id="grupo_id" placeholder="Grupo Id">
                       <option value="" selected disabled hidden>Seleccionar </option> 
                       <option value="text">text</option>
                     </select>
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="nivel">Nivel: </label>
                     <input type="text" class="form-control  @error('nivel') is-invalid @enderror" name="nivel" id="nivel" placeholder="Nivel" value="{{ old('nivel', $area->nivel ?? '') }}" >

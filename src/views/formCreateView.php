@@ -17,7 +17,7 @@ function generateFormCreateView($table_name, $class_name, $entities = array(), $
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
 
 
-$html = '            <form id="form-controls" action="{{  route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.store\') }}" method="POST" enctype="multipart/form-data">
+$html = '            <form id="form-create" action="{{  route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.store\') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">' . PHP_EOL;

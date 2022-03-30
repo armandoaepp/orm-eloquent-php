@@ -45,7 +45,7 @@
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin. areas.form-create-area')
+            @include('admin.areas.form-create-area')
           </div>
         </div>
       </div>
@@ -59,7 +59,4 @@
 
 
 @section('script')
-
-  @include('shared.jquery-validation')
-
 @endsection

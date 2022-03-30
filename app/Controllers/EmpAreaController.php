@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Area; 
+use App\Models\EmpArea; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class AreaController
+class EmpAreaController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class AreaController
     try
     {
 
-      $data = Area::get();
+      $data = EmpArea::get();
 
-      return view($this->prefixView.'.areas.list-areas')->with(compact('data'));
+      return view($this->prefixView.'.emp-areas.list-emp-areas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class AreaController
     try
     {
 
-      $data = Area::orderBy('id', 'desc')->get();
+      $data = EmpArea::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.areas.list-areas')->with(compact('data'));
+      return view($this->prefixView.'.emp-areas.list-emp-areas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class AreaController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.areas.form-create-area');
+        return view($this->prefixView.'.emp-areas.form-create-emp-area');
       }
 
-      return view($this->prefixView.'.areas.new-area');
+      return view($this->prefixView.'.emp-areas.new-emp-area');
     
     }
     catch (\Exception $e)
@@ -93,25 +93,25 @@ class AreaController
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $area = new Area();
-        $area->area_id_sup = $area_id_sup;
-        $area->descripcion = $descripcion;
-        $area->grupo_id = $grupo_id;
-        $area->nivel = $nivel;
-        $area->estado = $estado;
+        $emp_area = new EmpArea();
+        $emp_area->area_id_sup = $area_id_sup;
+        $emp_area->descripcion = $descripcion;
+        $emp_area->grupo_id = $grupo_id;
+        $emp_area->nivel = $nivel;
+        $emp_area->estado = $estado;
         
-        $status = $area->save();
+        $status = $emp_area->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $area, "created") ;
+        $this->savedBitacoraTrait( $emp_area, "created") ;
         
         
       $message = "Operancion Correcta";
         
 
-      $data = ["message" => $message, "status" => $status, "data" => [$area],];
+      $data = ["message" => $message, "status" => $status, "data" => [$emp_area],];
     
-      return redirect()->route('admin-areas');
+      return redirect()->route('admin-emp-areas');
     
     }
     catch (\Exception $e)
@@ -126,9 +126,9 @@ class AreaController
     try
     {
 
-      $area = Area::find( $id );
+      $emp_area = EmpArea::find( $id );
 
-      return view($this->prefixView.'.areas.edit-area')->with(compact('area'));
+      return view($this->prefixView.'.emp-areas.edit-emp-area')->with(compact('emp_area'));
     
     }
     catch (\Exception $e)
@@ -154,17 +154,17 @@ class AreaController
 
       if (!empty($id))
       {
-        $area = Area::find($id);
-        $area->id = $id;
-        $area->area_id_sup = $area_id_sup;
-        $area->descripcion = $descripcion;
-        $area->grupo_id = $grupo_id;
-        $area->nivel = $nivel;
+        $emp_area = EmpArea::find($id);
+        $emp_area->id = $id;
+        $emp_area->area_id_sup = $area_id_sup;
+        $emp_area->descripcion = $descripcion;
+        $emp_area->grupo_id = $grupo_id;
+        $emp_area->nivel = $nivel;
         
-        $status = $area->save();
+        $status = $emp_area->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $area, "update") ;
+        $this->savedBitacoraTrait( $emp_area, "update") ;
         
         $message = "Operancion Correcta";
         
@@ -176,7 +176,7 @@ class AreaController
 
       $data = ["message" => $message, "status" => $status, "data" =>[],];
     
-      return redirect()->route('admin-areas');;
+      return redirect()->route('admin-emp-areas');;
     
     }
     catch (\Exception $e)
@@ -222,33 +222,33 @@ class AreaController
           $message = "Registro Activado Correctamente";
         }
 
-        $area = Area::find( $id ) ;
+        $emp_area = EmpArea::find( $id ) ;
 
-        if (!empty($area))
+        if (!empty($emp_area))
         {
           #conservar en base de datos
           if ( $historial == "si" )
           {
-            $area->estado = $estado;
-            $area->save();
+            $emp_area->estado = $estado;
+            $emp_area->save();
               
             # TABLE BITACORA
-            $this->savedBitacoraTrait( $area, "update estado") ;
+            $this->savedBitacoraTrait( $emp_area, "update estado") ;
           
             $status = true;
             //$message = $message;
               
           }elseif( $historial == "no"  ) {
-            $area->delete();
+            $emp_area->delete();
           
             # TABLE BITACORA
-            $this->savedBitacoraTrait( $area, "destroy") ;
+            $this->savedBitacoraTrait( $emp_area, "destroy") ;
           
             $status = true;
             $message = "Registro eliminado de la base de datos";
           }
           
-          $data = $area;
+          $data = $emp_area;
           
         }
         else
@@ -287,7 +287,7 @@ class AreaController
     try
     {
 
-      $data = Area::find($id);
+      $data = EmpArea::find($id);
 
       return $data;
     

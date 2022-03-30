@@ -45,7 +45,7 @@
                         <i class="far fa-edit"></i> Editar
                       </a>
                       <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.areas.destroy') }}" data-descripcion="{{ $row->area_id_sup }}" onclick="openModalDestroy(this);event.preventDefault();" title="Borrar area: {{ $title }}" data-title="{{ $title }}" >
-                        <i class="far fa-trash-alt"></i> <?php echo $title_estado; ?>
+                        <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>
                   </div>

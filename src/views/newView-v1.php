@@ -203,8 +203,6 @@ $html = '@php
 
 @section(\'script\')
 
-  @include(\'shared.jquery-validation\')
-
 @endsection';
 
 return $html ;

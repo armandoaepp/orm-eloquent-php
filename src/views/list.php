@@ -52,11 +52,11 @@ $html = '@php
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-secondary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-secondary btn-sm" type="button">
+      <a href="#" id="btn-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -92,8 +92,7 @@ $html = '@php
   <x-forms.form-destroy table="'.ucwords($table_amigable).'" />' ;
 $html .= '  '. PHP_EOL;
 
-$prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
-if(!empty($prefix_publicar))
+if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
 {
   $html .= '  <x-forms.form-publish url="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.publish\') }}" /> '. PHP_EOL;
 }
@@ -108,11 +107,6 @@ $html .= '@endsection
 
   <script src="{{ asset(\'assets/js/app-admin.js\') }}"></script>
 ' . PHP_EOL ;
-if ( in_array('publicar', $fields_col) || in_array($prefix.'publicar', $fields_col) )
-{
-  // $html .= '' . PHP_EOL ;
-}
-
 $html .= '@endsection';
 
 return $html ;
