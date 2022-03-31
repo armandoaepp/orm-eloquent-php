@@ -19,7 +19,6 @@ function generateNewView($table_name, $class_name, $entities = array(), $fields_
 
 $html = '@php
   $sidebar = array(
-    "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
 @endphp

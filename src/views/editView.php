@@ -18,7 +18,6 @@ function generateEditView($table_name, $class_name, $entities = array(), $fields
 $html = '';
 $html .= '@php
   $sidebar = array(
-    "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
 @endphp

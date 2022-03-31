@@ -19,7 +19,6 @@ function generateIndex($table_name, $class_name, $entities = array(), $fields_ta
 
 $html = '@php
   $sidebar = array(
-    "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
 @endphp
@@ -89,7 +88,7 @@ $html = '@php
   <x-modals.modal-edit title="Editar '.ucwords($table_name).'" />
 
   <x-forms.form-post form-id="form-delete" url="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.delete\') }}" class="d-none" />
-  <x-forms.form-destroy table="'.ucwords($table_amigable).'" />' ;
+  <x-forms.form-destroy table="'.ucwords($table_amigable).'" url="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.destroy\') }}" />' ;
 $html .= '  '. PHP_EOL;
 
 if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
