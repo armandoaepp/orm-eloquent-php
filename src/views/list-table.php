@@ -20,7 +20,7 @@ function generateListTable($table_name, $class_name, $entities = array(), $field
 $html = '          <!--begin: Datatable -->
           <table id="dataTableLists" class="table table-sm table-hover table-bordered" style="width: 100%;">
             <thead>
-              <tr>' . PHP_EOL;
+              <tr class="bg-light text-uppercase">' . PHP_EOL;
               for ($i=0; $i < count( $heads_table) ; $i++)
               {
                 if ( !verificarItemNotListTable($fields_table[$i], $prefix) )
