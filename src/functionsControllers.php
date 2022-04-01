@@ -191,7 +191,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
   $str  .= '      };'.PHP_EOL ;
 
     $str  .= '    ' . PHP_EOL;
-  $str  .= '      return redirect()->route(\'admin-'.$table_plural.'\');' . PHP_EOL;
+  $str  .= '      return redirect()->route(\'admin.'.$table_plural.'\');' . PHP_EOL;
   // $str  .= '      return $data;' . PHP_EOL;
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
@@ -231,7 +231,7 @@ function edit($table_name, $class_name, $entities = array())
   $str  .= '      $'.$table_name.' = '.$class_name.'::find( $'.$entities[0]->Field.' );' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      if ($request->ajax()) {' . PHP_EOL;
-  $str  .= '        return view($this->prefixView .\''.$table_plural.'.form-edit-'.$table_amigable.'\')->with(compact(\''.$table_name.'\'));' . PHP_EOL;
+  $str  .= '        return view($this->prefixView .\'.'.$table_plural.'.form-edit-'.$table_amigable.'\')->with(compact(\''.$table_name.'\'));' . PHP_EOL;
   $str  .= '      }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '      return view($this->prefixView.\'.'.$table_plural.'.edit-'.$table_amigable.'\')->with(compact(\''.$table_name.'\'));' . PHP_EOL;
@@ -552,6 +552,103 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   // $str  .= '                "errors"  => [$e->getMessage(), ],' . PHP_EOL;
   // $str  .= '                "data"    => [],' . PHP_EOL;
   // $str  .= '              ]);' . PHP_EOL;
+  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
+# Method delete for controllers
+function destroy($table_name, $class_name, $entities = array(), $prefix = "")
+{
+  $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
+  $table_plural = Str::plural($table_amigable) ;
+
+  $fields = array_column($entities, 'Field');
+
+  $name_estado = (in_array("estado", $fields) ) ? 'estado' : $prefix."estado" ;
+
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function destroy(Request $request )' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  // $str  .= '    extract($params) ;' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      $validator = \Validator::make($request->all(), [' . PHP_EOL;
+  $str  .= '        \'id\'     => \'numeric\',' . PHP_EOL;
+  $str  .= '      ]);' . PHP_EOL;
+
+  $str  .= '      if ($validator->fails())' . PHP_EOL;
+  $str  .= '      {' . PHP_EOL;
+  $str  .= '        if ($request->ajax())' . PHP_EOL;
+  $str  .= '        {' . PHP_EOL;
+  $str  .= '          return response()->json([' . PHP_EOL;
+  $str  .= '            "message" => "Error al realizar operación",' . PHP_EOL;
+  $str  .= '            "code"    => 400,' . PHP_EOL;
+  $str  .= '            "success" => false,' . PHP_EOL;
+  $str  .= '            "errors"  => $validator->errors()->all(),' . PHP_EOL;
+  $str  .= '            "data"    => [],' . PHP_EOL;
+  $str  .= '            ]);' . PHP_EOL;
+  $str  .= '        }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $success = false;' . PHP_EOL;
+  $str  .= '      $message = "";' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
+  $str  .= '      $id = $request->input(\'id\');' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
+  $str  .= '      $'.$table_name.' = '.$class_name.'::find( $'.$entities[0]->Field.' ) ;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      if (!empty($'.$table_name.'))' . PHP_EOL;
+  $str  .= '      {' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '        $'.$table_name.'->delete();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '        # TABLE BITACORA' . PHP_EOL;
+  $str  .= '        $this->savedBitacoraTrait( $'.$table_name.', "destroy") ;' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+  $str  .= '        $success = true;' .PHP_EOL;
+  $str  .= '        $code = 200;'.PHP_EOL;
+  $str  .= '        $message = "Registro Borrado Correctamente";'.PHP_EOL;
+  $str  .= '      } else {'.PHP_EOL;
+  $str  .= '        $message = "¡El registro no exite o el identificador es incorrecto!";'.PHP_EOL;
+  $str  .= '        $success  = false;'.PHP_EOL;
+  $str  .= '        $code = 400;'.PHP_EOL;
+  $str  .= '      }  '.PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+
+  $str  .= '      if ($request->ajax()) {'.PHP_EOL ;
+  $str  .= '        return response()->json(['.PHP_EOL ;
+  $str  .= '          "message" => $message,'.PHP_EOL ;
+  $str  .= '          "code"    => $code,'.PHP_EOL ;
+  $str  .= '          "success" => $success,'.PHP_EOL ;
+  $str  .= '          "errors"  => [],'.PHP_EOL ;
+  $str  .= '          "data"    => [],'.PHP_EOL ;
+  $str  .= '        ]);'.PHP_EOL ;
+  $str  .= '      };'.PHP_EOL ;
+  $str  .= '        ' . PHP_EOL;
+
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (\Throwable $e) ' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+    $str  .= '' . PHP_EOL;
+    $str  .= '      if ($request->ajax()) {'.PHP_EOL;
+    $str  .= '        return response()->json(['.PHP_EOL;
+    $str  .= '          "message" => "Operación fallida en el servidor",'.PHP_EOL;
+    $str  .= '          "code"    => 500,'.PHP_EOL;
+    $str  .= '          "success"  => false,'.PHP_EOL;
+    $str  .= '          "errors"  => [$e->getMessage()],'.PHP_EOL;
+    $str  .= '          "data"    => []'.PHP_EOL;
+    $str  .= '        ]);'.PHP_EOL;
+    $str  .= '      }'.PHP_EOL;
+    $str  .= '' . PHP_EOL;
+
   $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
