@@ -216,6 +216,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
 
   return $str ;
 }
+
 # Method edit for controllers
 function edit($table_name, $class_name, $entities = array())
 {
@@ -658,79 +659,6 @@ function destroy($table_name, $class_name, $entities = array(), $prefix = "")
   return $str ;
 }
 
-# Method updatesuccess for controllers
-function updatesuccess($table_name, $class_name, $entities = array())
-{
-
-  $str  = '' . PHP_EOL;
-  $str  .= '  public function updatesuccess( $params = array() )' . PHP_EOL;
-  $str  .= '  {' . PHP_EOL;
-  $str  .= '    try' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '      extract($params) ;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      $success = false;' . PHP_EOL;
-  $str  .= '      $message = "";' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      if (empty($'.$entities[0]->Field.'))' . PHP_EOL;
-  $str  .= '      {' . PHP_EOL;
-  $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
-  $str  .= '        $'.$table_name.'->estado = $estado;'. PHP_EOL;
-
-  $str  .= '        ' . PHP_EOL;
-  $str  .= '        $success = $'.$table_name.'->save();' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
-  $str  .= '        $message = "Operancion Correcta";' . PHP_EOL;
-  $str  .= '        ' . PHP_EOL;
-  $str  .= '      }' . PHP_EOL;
-  $str  .= '      else' . PHP_EOL;
-  $str  .= '      {' . PHP_EOL;
-  $str  .= '        $message = "¡El identificador es incorrecto!";' . PHP_EOL;
-  $str  .= '      }' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      $data = ["message" => $message, "success" => $success, "data" =>[],];' . PHP_EOL;
-  $str  .= '    ' . PHP_EOL;
-  $str  .= '      return $data;' . PHP_EOL;
-  $str  .= '    ' . PHP_EOL;
-  $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (\Exception $e)' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
-  $str  .= '    }' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '  }' . PHP_EOL;
-  // $str  .= '' . PHP_EOL;
-
-  return $str ;
-}
-
-# Method getBysuccess for controllers
-function getBysuccess($table_name, $class_name, $entities = array())
-{
-
-  $str  = '' . PHP_EOL;
-  $str  .= '  public function getBysuccess( $params = array()  )' . PHP_EOL;
-  $str  .= '  {' . PHP_EOL;
-  $str  .= '    try' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '      extract($params) ;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      $data = '.$class_name.'::where("estado", $estado)->get();' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '      return $data;' . PHP_EOL;
-  $str  .= '    ' . PHP_EOL;
-  $str  .= '    }' . PHP_EOL;
-  $str  .= '    catch (\Exception $e)' . PHP_EOL;
-  $str  .= '    {' . PHP_EOL;
-  $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
-  $str  .= '    }' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '  }' . PHP_EOL;
-  // $str  .= '' . PHP_EOL;
-
-  return $str ;
-}
-
 # Method updatePublish for controllers
 function updatePublish($table_name, $class_name, $entities = array(), $field_publicar = "")
 {
@@ -743,6 +671,26 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '      $success = false;' . PHP_EOL;
   $str  .= '      $message = "";' . PHP_EOL;
   $str  .= '' . PHP_EOL;
+
+  $str  .= '      $validator = \Validator::make($request->all(), [' . PHP_EOL;
+  $str  .= '        \'id\'     => \'required|numeric\',' . PHP_EOL;
+  $str  .= '        \'publicar\'     => \'required|numeric\',' . PHP_EOL;
+  $str  .= '      ]);' . PHP_EOL;
+
+  $str  .= '      if ($validator->fails())' . PHP_EOL;
+  $str  .= '      {' . PHP_EOL;
+  $str  .= '        if ($request->ajax())' . PHP_EOL;
+  $str  .= '        {' . PHP_EOL;
+  $str  .= '          return response()->json([' . PHP_EOL;
+  $str  .= '            "message" => "Error al realizar operación",' . PHP_EOL;
+  $str  .= '            "code"    => 400,' . PHP_EOL;
+  $str  .= '            "success" => false,' . PHP_EOL;
+  $str  .= '            "errors"  => $validator->errors()->all(),' . PHP_EOL;
+  $str  .= '            "data"    => [],' . PHP_EOL;
+  $str  .= '            ]);' . PHP_EOL;
+  $str  .= '        }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
   $str  .= '      $id = $request->input("id");' . PHP_EOL;
   $str  .= '      $publicar = $request->input("publicar");' . PHP_EOL;
   $str  .= '' . PHP_EOL;
@@ -750,29 +698,30 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '      {' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   //$str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
-  $str  .= '        if ($publicar == "N") {'.PHP_EOL ;
-  $str  .= '          $publicar = "S";'.PHP_EOL ;
-  $str  .= '          $message = "Registro Publicado";'.PHP_EOL ;
+  $str  .= '        if ($publicar == "S") {'.PHP_EOL ;
+  $str  .= '          $message = "Registro PUBLICADO Correctamente";'.PHP_EOL ; 
   $str  .= '        } else {'.PHP_EOL ;
-  $str  .= '          $publicar = "N";'.PHP_EOL ;
-  $str  .= '          $message = "Registro Ocultado al público";'.PHP_EOL ;
+  $str  .= '          $message = "Registro OCULTADO al Público Correctamente";'.PHP_EOL ; 
   $str  .= '        }'.PHP_EOL ;
 
   $str  .= '' . PHP_EOL;
   $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
   $str  .= '        if (!empty($'.$table_name.'))' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
+    $str  .= '' . PHP_EOL;
+    $str  .= '          # Values OLD FOR BITACORA' . PHP_EOL;
+    $str  .= '          $attributes_old = '.$table_name.'->getAttributes(); $'.$table_name.'->'. $field_publicar .' = $publicar;' . PHP_EOL;
+    $str  .= '' . PHP_EOL;
   $str  .= '          $'.$table_name.'->'. $field_publicar .' = $publicar;' . PHP_EOL;
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '' . PHP_EOL;
 
   $str  .= '          # TABLE BITACORA' . PHP_EOL;
-  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar") ;' . PHP_EOL;
+  $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar", $attributes_old) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '          $success = true;' . PHP_EOL;
-  $str  .= '          $message = $message;' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  $str  .= '         $data = $'.$table_name.';' . PHP_EOL;
+  $str  .= '         $code = 200;' . PHP_EOL;
+  $str  .= '' . PHP_EOL; 
   $str  .= '        }' . PHP_EOL;
   $str  .= '        else' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
@@ -813,7 +762,80 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   return $str ;
 }
 
+# Method updateStatus for controllers
+function updateStatus($table_name, $class_name, $entities = array())
+{
 
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function updateStatus( $params = array() )' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      extract($params) ;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $status  = false;' . PHP_EOL;
+  $str  .= '      $message = "";' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      if (empty($'.$entities[0]->Field.'))' . PHP_EOL;
+  $str  .= '      {' . PHP_EOL;
+  $str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
+  $str  .= '        $'.$table_name.'->estado = $estado;'. PHP_EOL;
+
+  $str  .= '        ' . PHP_EOL;
+  $str  .= '        $status = $'.$table_name.'->save();' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+  $str  .= '        $message = "Operancion Correcta";' . PHP_EOL;
+  $str  .= '        ' . PHP_EOL;
+  $str  .= '      }' . PHP_EOL;
+  $str  .= '      else' . PHP_EOL;
+  $str  .= '      {' . PHP_EOL;
+  $str  .= '        $message = "¡El identificador es incorrecto!";' . PHP_EOL;
+  $str  .= '      }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $data = ["message" => $message, "status" => $status, "data" =>[],];' . PHP_EOL;
+  $str  .= '    ' . PHP_EOL;
+  $str  .= '      return $data;' . PHP_EOL;
+  $str  .= '    ' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
+# Method getByStatus for controllers
+function getByStatus($table_name, $class_name, $entities = array())
+{
+
+  $str  = '' . PHP_EOL;
+  $str  .= '  public function getByStatus( $params = array()  )' . PHP_EOL;
+  $str  .= '  {' . PHP_EOL;
+  $str  .= '    try' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      extract($params) ;' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      $data = '.$class_name.'::where("estado", $estado)->get();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      return $data;' . PHP_EOL;
+  $str  .= '    ' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '    catch (Exception $e)' . PHP_EOL;
+  $str  .= '    {' . PHP_EOL;
+  $str  .= '      throw new Exception($e->getMessage());' . PHP_EOL;
+  $str  .= '    }' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '  }' . PHP_EOL;
+  // $str  .= '' . PHP_EOL;
+
+  return $str ;
+}
+
+ 
 # Method getPublished for controllers
 function getPublished($table_name, $class_name, $entities = array(), $field_publicar = "")
 {

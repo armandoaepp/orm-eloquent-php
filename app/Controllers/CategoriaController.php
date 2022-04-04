@@ -46,11 +46,8 @@ class CategoriaController
     {
 
       $data = Categoria::orderBy('id', 'desc')->get();
-      if ($request->ajax()) {
-        return view($this->prefixView.'.categorias.list-table-categoria');
-      }
 
-      return view($this->prefixView.'.categorias.list-categorias')->with(compact('data'));
+      return view($this->prefixView.'.categorias.list-table-categorias')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -79,15 +76,12 @@ class CategoriaController
 
   }
 
-  public function store(Request $request )
+  public function store(CategoriaStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
-
-
-
 
       $familia_id = $request->input('familia_id');
       $cod_cat = $request->input('cod_cat');
@@ -115,33 +109,54 @@ class CategoriaController
         $categoria->publicar = $publicar;
         $categoria->estado = $estado;
         
-        $status = $categoria->save();
+        $success = $categoria->save();
         
       # TABLE BITACORA
         $this->savedBitacoraTrait( $categoria, "created") ;
         
+      $message = "Datos Registrados Correctamente";
         
-      $message = "Operancion Correcta";
-        
-
-      $data = ["message" => $message, "status" => $status, "data" => [$categoria],];
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => $message,
+          "code"    => 200,
+          "success"  => $success,
+          "errors"  => [],
+          "data"    => [],
+        ]);
+      };
     
-      return redirect()->route('admin-categorias');
+      return redirect()->route('admin.categorias');
     
     }
     catch (\Exception $e)
     {
+
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => "Operación fallida en el servidor",
+          "code"    => 500,
+          "success"  => false,
+          "errors"  => [$e->getMessage()],
+          "data"    => []
+        ]);
+      }
+
       throw new \Exception($e->getMessage());
     }
 
   }
 
-  public function edit( $id )
+  public function edit( $id, Request $request)
   {
     try
     {
 
       $categoria = Categoria::find( $id );
+
+      if ($request->ajax()) {
+        return view($this->prefixView .'.categorias.form-edit-categoria')->with(compact('categoria'));
+      }
 
       return view($this->prefixView.'.categorias.edit-categoria')->with(compact('categoria'));
     
@@ -187,6 +202,9 @@ class CategoriaController
         ##################################################################################
 
         $categoria = Categoria::find($id);
+
+        # For Bitacora Atributos Old;
+        $attributes_old = $categoria->getAttributes();
         $categoria->id = $id;
         $categoria->familia_id = $familia_id;
         $categoria->cod_cat = $cod_cat;
@@ -196,130 +214,122 @@ class CategoriaController
         $categoria->imagen = $imagen;
         $categoria->publicar = $publicar;
         
-        $status = $categoria->save();
+        $success = $categoria->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "update") ;
+        $this->savedBitacoraTrait( $categoria, "update", $attributes_old) ;
         
         # remove imagen
-        if($imagen != $img_bd && $status )
+        if($imagen != $img_bd && $success )
         {
           if (file_exists($img_bd))
             unlink($img_bd) ;
         }
         
-        $message = "Operancion Correcta";
+        $message = "Datos Actualizados Correctamente";
+        $code = 200;
         
       }
       else
       {
-        $message = "¡El registro ya existe!";
+        $message = "¡El registro NO existe!";
+        $code = 406;
       }
 
-      $data = ["message" => $message, "status" => $status, "data" =>[],];
-    
-      return redirect()->route('admin-categorias');;
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => $message,
+          "code"    => $code,
+          "success"  => $success,
+          "errors"  => [],
+          "data"    => [],
+        ]);
+      };
+
+      return redirect()->route('admin.categorias');
     
     }
     catch (\Exception $e)
     {
+
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => "Operación fallida en el servidor",
+          "code"    => 500,
+          "success"  => false,
+          "errors"  => [$e->getMessage()],
+          "data"    => []
+        ]);
+      }
+
       throw new \Exception($e->getMessage());
     }
 
   }
 
-  public function delete(Request $request )
+  public function delete(EstadoIdRequest $request )
   {
     try
     {
-      $validator = \Validator::make($request->all(), [
-        'id'     => 'numeric',
-        'estado' => 'numeric',
-      ]);
 
       $success = false;
       $message = "";
 
-      if ($request->ajax())
-      {
-        if ($validator->fails())
-        {
-          return response()->json([
-              "message" => "Error al realizar operación",
-              "status"  => false,
-              "errors"  => $validator->errors()->all(),
-              "data"    => [],
-            ]);
-        }
+      $id        = $request->input('id');
+      $estado    = $request->input('estado');
 
-        $id        = $request->input('id');
-        $estado    = $request->input('estado');
-        $historial = !empty($request->input('historial')) ? $request->input('historial') : "si";
-
-        if ($estado == 1) {
-          $estado = 0;
-          $message = "Registro Desactivo Correctamente";
-        } else {
-          $estado = 1;
-          $message = "Registro Activado Correctamente";
-        }
-
-        $categoria = Categoria::find( $id ) ;
-
-        if (!empty($categoria))
-        {
-          #conservar en base de datos
-          if ( $historial == "si" )
-          {
-            $categoria->estado = $estado;
-            $categoria->save();
-              
-            # TABLE BITACORA
-            $this->savedBitacoraTrait( $categoria, "update estado") ;
-          
-            $status = true;
-            //$message = $message;
-              
-          }elseif( $historial == "no"  ) {
-            $categoria->delete();
-          
-            # TABLE BITACORA
-            $this->savedBitacoraTrait( $categoria, "destroy") ;
-          
-            $status = true;
-            $message = "Registro eliminado de la base de datos";
-          }
-          
-          $data = $categoria;
-          
-        }
-        else
-        {
-          $message = "¡El registro no exite o el identificador es incorrecto!";
-          $data = $request->all();
-        }
+      if ($estado == 1) {
+        $message = "Registro Activado Correctamente";
+      } else {
+        $message = "Registro Desactivo Correctamente";
       }
-      else
+
+      $categoria = Categoria::find( $id ) ;
+
+      if (!empty($categoria))
       {
-        abort(404);
-      }
-    
-      return \Response::json([
-                "message" => $message,
-                "status"  => $status,
-                "errors"  => [],
-                "data"    => [$data],
-              ]);
-    
+
+        # For Bitacora Atributos Old;
+        $attributes_old = $categoria->getAttributes();
+        $categoria->estado = $estado;
+        $categoria->save();
+
+        # TABLE BITACORA
+        $this->savedBitacoraTrait( $categoria, "update estado", $attributes_old) ;
+        
+        $success = true;
+        $code = 200;
+      } else {
+        $message = "¡El registro no exite o el identificador es incorrecto!";
+        $success  = false;
+        $code = 400;
+      }  
+        
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => $message,
+          "code"    => $code,
+          "success" => $success,
+          "errors"  => [],
+          "data"    => [],
+        ]);
+      };
+        
     }
     catch (\Throwable $e) 
     {
-      return \Response::json([
-                "message" => "Operación fallida en el servidor",
-                "status"  => false,
-                "errors"  => [$e->getMessage(), ],
-                "data"    => [],
-              ]);
+
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => "Operación fallida en el servidor",
+          "code"    => 500,
+          "success"  => false,
+          "errors"  => [$e->getMessage()],
+          "data"    => []
+        ]);
+      }
+
+      throw new \Exception($e->getMessage());
     }
 
   }
@@ -354,7 +364,7 @@ class CategoriaController
           # TABLE BITACORA
           $this->savedBitacoraTrait( $categoria, "update publicar") ;
 
-          $status = true;
+          $success = true;
           $message = $message;
 
          $data = $categoria;
@@ -374,7 +384,7 @@ class CategoriaController
 
         return \Response::json([
                 "message" => $message,
-                "status"  => $status,
+                "success"  => $success,
                 "errors"  => [],
                 "data"    => [$data],
               ]);
@@ -384,7 +394,7 @@ class CategoriaController
     {
         return \Response::json([
                 "message" => "Operación fallida en el servidor",
-                "status"  => false,
+                "success"  => false,
                 "errors"  => [$e->getMessage()],
                 "data"    => [],
               ]);

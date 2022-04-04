@@ -62,6 +62,7 @@ function generateController($table_name, $class_name, $entities = array() )
   $str .=  edit($table_name, $class_name, $entities);
   $str .=  update($table_name, $class_name, $entities,$prefix, $url_friendly_plural);
   $str .=  delete($table_name, $class_name, $entities, $prefix);
+  $str .=  destroy($table_name, $class_name, $entities, $prefix);
 
 
   /*if ( in_array('estado', $fields_col) || in_array($prefix.'estado', $fields_col))
