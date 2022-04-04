@@ -47,12 +47,12 @@ $html = '          <!--begin: Datatable -->
     $prefix_estado = (in_array("estado", $fields_table) ) ? 'estado' : $prefix."estado" ;
     $prefix_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
 
-  
+
     if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
     {
       $html .= '                <th width="50" title="Publicado">Publ.</th>' . PHP_EOL ;
     }
-    
+
     $html .= '                <th width="50" title="Estado">Est.</th>' . PHP_EOL ;
 
     $html .= '                <th width="50"> Acciones </th>' . PHP_EOL ;
@@ -118,7 +118,7 @@ $html = '          <!--begin: Datatable -->
               $html .='                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.edit\',[\'id\' => $row->'.$fields_table[0].']) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar '.$table_name.': {{ $title }}" type="button">' .PHP_EOL ;
               $html .='                        <i class="far fa-edit"></i> Editar' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
-              $html .='                      <a class="dropdown-item btn-action" href="#" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.destroy\') }}" data-descripcion="{{ $row->'.$fields_table[1].' }}" onclick="openModalDestroy(this);event.preventDefault();" title="Borrar '.$table_name.': {{ $title }}" data-title="{{ $title }}" >' .PHP_EOL ;
+              $html .='                      <a class="dropdown-item btn-action" href="#" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.destroy\') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->'.$fields_table[0].'}}"   title="Borrar '.$table_name.': {{ $title }}" data-title="{{ $title }}" type="button" >' .PHP_EOL ;
               $html .='                        <i class="far fa-trash-alt"></i> Borrar Registro' .PHP_EOL ;
               $html .='                      </a>' .PHP_EOL ;
               $html .='                    </div>' .PHP_EOL ;

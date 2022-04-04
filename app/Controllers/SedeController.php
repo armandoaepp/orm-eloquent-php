@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Corporacion; 
+use App\Models\Sede; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class CorporacionController
+class SedeController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class CorporacionController
     try
     {
 
-      $data = Corporacion::get();
+      $data = Sede::get();
 
-      return view($this->prefixView.'.corporacions.list-corporacions')->with(compact('data'));
+      return view($this->prefixView.'.sedes.list-sedes')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class CorporacionController
     try
     {
 
-      $data = Corporacion::orderBy('id', 'desc')->get();
+      $data = Sede::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.corporacions.list-table-corporacions')->with(compact('data'));
+      return view($this->prefixView.'.sedes.list-table-sedes')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class CorporacionController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.corporacions.form-create-corporacion');
+        return view($this->prefixView.'.sedes.form-create-sede');
       }
 
-      return view($this->prefixView.'.corporacions.new-corporacion');
+      return view($this->prefixView.'.sedes.new-sede');
     
     }
     catch (\Exception $e)
@@ -76,33 +76,33 @@ class CorporacionController
 
   }
 
-  public function store(CorporacionStoreRequest $request )
+  public function store(SedeStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
-      $ruc = $request->input('ruc');
-      $razon_social = $request->input('razon_social');
-      $nombre_com = $request->input('nombre_com');
+      $corporacion_id = $request->input('corporacion_id');
+      $nombre = $request->input('nombre');
       $ubigeo_id = $request->input('ubigeo_id');
       $direccion = $request->input('direccion');
+      $principal = $request->input('principal');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $corporacion = new Corporacion();
-        $corporacion->ruc = $ruc;
-        $corporacion->razon_social = $razon_social;
-        $corporacion->nombre_com = $nombre_com;
-        $corporacion->ubigeo_id = $ubigeo_id;
-        $corporacion->direccion = $direccion;
-        $corporacion->estado = $estado;
+        $sede = new Sede();
+        $sede->corporacion_id = $corporacion_id;
+        $sede->nombre = $nombre;
+        $sede->ubigeo_id = $ubigeo_id;
+        $sede->direccion = $direccion;
+        $sede->principal = $principal;
+        $sede->estado = $estado;
         
-        $success = $corporacion->save();
+        $success = $sede->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $corporacion, "created") ;
+        $this->savedBitacoraTrait( $sede, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -116,7 +116,7 @@ class CorporacionController
         ]);
       };
     
-      return redirect()->route('admin.corporacions');
+      return redirect()->route('admin.sedes');
     
     }
     catch (\Exception $e)
@@ -137,18 +137,18 @@ class CorporacionController
 
   }
 
-  public function edit( $id, Request $request)
+  public function edit( $sede_id, Request $request)
   {
     try
     {
 
-      $corporacion = Corporacion::find( $id );
+      $sede = Sede::find( $sede_id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.corporacions.form-edit-corporacion')->with(compact('corporacion'));
+        return view($this->prefixView .'.sedes.form-edit-sede')->with(compact('sede'));
       }
 
-      return view($this->prefixView.'.corporacions.edit-corporacion')->with(compact('corporacion'));
+      return view($this->prefixView.'.sedes.edit-sede')->with(compact('sede'));
     
     }
     catch (\Exception $e)
@@ -166,30 +166,30 @@ class CorporacionController
       $success = false;
       $message = "";
 
-      $id = $request->input('id');
-      $ruc = $request->input('ruc');
-      $razon_social = $request->input('razon_social');
-      $nombre_com = $request->input('nombre_com');
+      $sede_id = $request->input('sede_id');
+      $corporacion_id = $request->input('corporacion_id');
+      $nombre = $request->input('nombre');
       $ubigeo_id = $request->input('ubigeo_id');
       $direccion = $request->input('direccion');
+      $principal = $request->input('principal');
 
-      if (!empty($id))
+      if (!empty($sede_id))
       {
-        $corporacion = Corporacion::find($id);
+        $sede = Sede::find($sede_id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $corporacion->getAttributes();
-        $corporacion->id = $id;
-        $corporacion->ruc = $ruc;
-        $corporacion->razon_social = $razon_social;
-        $corporacion->nombre_com = $nombre_com;
-        $corporacion->ubigeo_id = $ubigeo_id;
-        $corporacion->direccion = $direccion;
+        $attributes_old = $sede->getAttributes();
+        $sede->sede_id = $sede_id;
+        $sede->corporacion_id = $corporacion_id;
+        $sede->nombre = $nombre;
+        $sede->ubigeo_id = $ubigeo_id;
+        $sede->direccion = $direccion;
+        $sede->principal = $principal;
         
-        $success = $corporacion->save();
+        $success = $sede->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $corporacion, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $sede, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -211,7 +211,7 @@ class CorporacionController
         ]);
       };
 
-      return redirect()->route('admin.corporacions');
+      return redirect()->route('admin.sedes');
     
     }
     catch (\Exception $e)
@@ -249,18 +249,18 @@ class CorporacionController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $corporacion = Corporacion::find( $id ) ;
+      $sede = Sede::find( $sede_id ) ;
 
-      if (!empty($corporacion))
+      if (!empty($sede))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $corporacion->getAttributes();
-        $corporacion->estado = $estado;
-        $corporacion->save();
+        $attributes_old = $sede->getAttributes();
+        $sede->estado = $estado;
+        $sede->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $corporacion, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $sede, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -326,15 +326,15 @@ class CorporacionController
 
       $id = $request->input('id');
 
-      $corporacion = Corporacion::find( $id ) ;
+      $sede = Sede::find( $sede_id ) ;
 
-      if (!empty($corporacion))
+      if (!empty($sede))
       {
 
-        $corporacion->delete();
+        $sede->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $corporacion, "destroy") ;
+        $this->savedBitacoraTrait( $sede, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -353,7 +353,7 @@ class CorporacionController
           "errors"  => [],
           "data"    => [],
         ]);
-      };
+      }
         
     }
     catch (\Throwable $e) 
@@ -374,12 +374,12 @@ class CorporacionController
 
   }
 
-  public function find( $id )
+  public function find( $sede_id )
   {
     try
     {
 
-      $data = Corporacion::find($id);
+      $data = Sede::find($sede_id);
 
       return $data;
     

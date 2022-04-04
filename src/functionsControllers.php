@@ -594,6 +594,7 @@ function destroy($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '            "data"    => [],' . PHP_EOL;
   $str  .= '            ]);' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
+  $str  .= '      }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
 
   $str  .= '' . PHP_EOL;
@@ -632,7 +633,7 @@ function destroy($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '          "errors"  => [],'.PHP_EOL ;
   $str  .= '          "data"    => [],'.PHP_EOL ;
   $str  .= '        ]);'.PHP_EOL ;
-  $str  .= '      };'.PHP_EOL ;
+  $str  .= '      }'.PHP_EOL ;
   $str  .= '        ' . PHP_EOL;
 
   $str  .= '    }' . PHP_EOL;
@@ -699,9 +700,9 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '' . PHP_EOL;
   //$str  .= '        $'.$table_name.' = '.$class_name.'::find($'.$entities[0]->Field.');' . PHP_EOL;
   $str  .= '        if ($publicar == "S") {'.PHP_EOL ;
-  $str  .= '          $message = "Registro PUBLICADO Correctamente";'.PHP_EOL ; 
+  $str  .= '          $message = "Registro PUBLICADO Correctamente";'.PHP_EOL ;
   $str  .= '        } else {'.PHP_EOL ;
-  $str  .= '          $message = "Registro OCULTADO al Público Correctamente";'.PHP_EOL ; 
+  $str  .= '          $message = "Registro OCULTADO al Público Correctamente";'.PHP_EOL ;
   $str  .= '        }'.PHP_EOL ;
 
   $str  .= '' . PHP_EOL;
@@ -721,7 +722,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '' . PHP_EOL;
   $str  .= '          $success = true;' . PHP_EOL;
   $str  .= '         $code = 200;' . PHP_EOL;
-  $str  .= '' . PHP_EOL; 
+  $str  .= '' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
   $str  .= '        else' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
@@ -835,7 +836,7 @@ function getByStatus($table_name, $class_name, $entities = array())
   return $str ;
 }
 
- 
+
 # Method getPublished for controllers
 function getPublished($table_name, $class_name, $entities = array(), $field_publicar = "")
 {
