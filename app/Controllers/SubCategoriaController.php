@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Categoria; 
+use App\Models\SubCategoria; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class CategoriaController
+class SubCategoriaController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class CategoriaController
     try
     {
 
-      $data = Categoria::get();
+      $data = SubCategoria::get();
 
-      return view($this->prefixView.'.categorias.list-categorias')->with(compact('data'));
+      return view($this->prefixView.'.sub-categorias.list-sub-categorias')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class CategoriaController
     try
     {
 
-      $data = Categoria::orderBy('id', 'desc')->get();
+      $data = SubCategoria::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.categorias.list-table-categorias')->with(compact('data'));
+      return view($this->prefixView.'.sub-categorias.list-table-sub-categorias')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class CategoriaController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.categorias.form-create-categoria');
+        return view($this->prefixView.'.sub-categorias.form-create-sub-categoria');
       }
 
-      return view($this->prefixView.'.categorias.new-categoria');
+      return view($this->prefixView.'.sub-categorias.new-sub-categoria');
     
     }
     catch (\Exception $e)
@@ -76,7 +76,7 @@ class CategoriaController
 
   }
 
-  public function store(CategoriaStoreRequest $request )
+  public function store(SubCategoriaStoreRequest $request )
   {
     try
     {
@@ -94,25 +94,25 @@ class CategoriaController
 
       # STORE
         ##################################################################################
-        $path_relative = "images/categorias/" ;
+        $path_relative = "images/sub_categorias/" ;
         $name_file     = "imagen";
         $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
         $imagen    = $image_url ;
         ##################################################################################
 
-        $categoria = new Categoria();
-        $categoria->categoria_id = $categoria_id;
-        $categoria->cod_subcat = $cod_subcat;
-        $categoria->descripcion = $descripcion;
-        $categoria->url = $url;
-        $categoria->glosa = $glosa;
-        $categoria->publicar = $publicar;
-        $categoria->estado = $estado;
+        $sub_categoria = new SubCategoria();
+        $sub_categoria->categoria_id = $categoria_id;
+        $sub_categoria->cod_subcat = $cod_subcat;
+        $sub_categoria->descripcion = $descripcion;
+        $sub_categoria->url = $url;
+        $sub_categoria->glosa = $glosa;
+        $sub_categoria->publicar = $publicar;
+        $sub_categoria->estado = $estado;
         
-        $success = $categoria->save();
+        $success = $sub_categoria->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "created") ;
+        $this->savedBitacoraTrait( $sub_categoria, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -126,7 +126,7 @@ class CategoriaController
         ]);
       };
     
-      return redirect()->route('admin.categorias');
+      return redirect()->route('admin.sub-categorias');
     
     }
     catch (\Exception $e)
@@ -152,13 +152,13 @@ class CategoriaController
     try
     {
 
-      $categoria = Categoria::find( $id );
+      $sub_categoria = SubCategoria::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.categorias.form-edit-categoria')->with(compact('categoria'));
+        return view($this->prefixView .'.sub-categorias.form-edit-sub-categoria')->with(compact('sub_categoria'));
       }
 
-      return view($this->prefixView.'.categorias.edit-categoria')->with(compact('categoria'));
+      return view($this->prefixView.'.sub-categorias.edit-sub-categoria')->with(compact('sub_categoria'));
     
     }
     catch (\Exception $e)
@@ -189,7 +189,7 @@ class CategoriaController
       if (!empty($id))
       {
         ##################################################################################
-        $path_relative = "images/categorias/" ;
+        $path_relative = "images/sub_categorias/" ;
         $name_file     = "imagen";
         $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
         
@@ -201,23 +201,23 @@ class CategoriaController
         $imagen    = $image_url ;
         ##################################################################################
 
-        $categoria = Categoria::find($id);
+        $sub_categoria = SubCategoria::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $categoria->getAttributes();
-        $categoria->id = $id;
-        $categoria->categoria_id = $categoria_id;
-        $categoria->cod_subcat = $cod_subcat;
-        $categoria->descripcion = $descripcion;
-        $categoria->url = $url;
-        $categoria->glosa = $glosa;
-        $categoria->imagen = $imagen;
-        $categoria->publicar = $publicar;
+        $attributes_old = $sub_categoria->getAttributes();
+        $sub_categoria->id = $id;
+        $sub_categoria->categoria_id = $categoria_id;
+        $sub_categoria->cod_subcat = $cod_subcat;
+        $sub_categoria->descripcion = $descripcion;
+        $sub_categoria->url = $url;
+        $sub_categoria->glosa = $glosa;
+        $sub_categoria->imagen = $imagen;
+        $sub_categoria->publicar = $publicar;
         
-        $success = $categoria->save();
+        $success = $sub_categoria->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $sub_categoria, "update", $attributes_old) ;
         
         # remove imagen
         if($imagen != $img_bd && $success )
@@ -246,7 +246,7 @@ class CategoriaController
         ]);
       };
 
-      return redirect()->route('admin.categorias');
+      return redirect()->route('admin.sub-categorias');
     
     }
     catch (\Exception $e)
@@ -284,18 +284,18 @@ class CategoriaController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $categoria = Categoria::find( $id ) ;
+      $sub_categoria = SubCategoria::find( $id ) ;
 
-      if (!empty($categoria))
+      if (!empty($sub_categoria))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $categoria->getAttributes();
-        $categoria->estado = $estado;
-        $categoria->save();
+        $attributes_old = $sub_categoria->getAttributes();
+        $sub_categoria->estado = $estado;
+        $sub_categoria->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $sub_categoria, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -361,15 +361,15 @@ class CategoriaController
 
       $id = $request->input('id');
 
-      $categoria = Categoria::find( $id ) ;
+      $sub_categoria = SubCategoria::find( $id ) ;
 
-      if (!empty($categoria))
+      if (!empty($sub_categoria))
       {
 
-        $categoria->delete();
+        $sub_categoria->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $categoria, "destroy") ;
+        $this->savedBitacoraTrait( $sub_categoria, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -445,18 +445,18 @@ class CategoriaController
           $message = "Registro OCULTADO al Público Correctamente";
         }
 
-        $categoria = Categoria::find($id);
-        if (!empty($categoria))
+        $sub_categoria = SubCategoria::find($id);
+        if (!empty($sub_categoria))
         {
 
           # Values OLD FOR BITACORA
-          $attributes_old = categoria->getAttributes(); $categoria->publicar = $publicar;
+          $attributes_old = sub_categoria->getAttributes(); $sub_categoria->publicar = $publicar;
 
-          $categoria->publicar = $publicar;
-          $categoria->save();
+          $sub_categoria->publicar = $publicar;
+          $sub_categoria->save();
 
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $categoria, "update publicar", $attributes_old) ;
+          $this->savedBitacoraTrait( $sub_categoria, "update publicar", $attributes_old) ;
 
           $success = true;
           $code = 200;
@@ -501,7 +501,7 @@ class CategoriaController
     {
       extract($params) ;
 
-      $data = Categoria::where("publicar", $publicar)->get();
+      $data = SubCategoria::where("publicar", $publicar)->get();
 
       return $data;
     
@@ -518,7 +518,7 @@ class CategoriaController
     try
     {
 
-      $data = Categoria::find($id);
+      $data = SubCategoria::find($id);
 
       return $data;
     

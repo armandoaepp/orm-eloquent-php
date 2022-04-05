@@ -4,8 +4,8 @@
               <div class="row">
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="familia_id">Familia Id: </label>
-                    <select class="form-select select2-box" name="familia_id" id="familia_id" placeholder="Familia Id">
+                    <label for="categoria_id">Categoria Id: </label>
+                    <select class="form-select select2-box" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
                       <option value="" selected disabled hidden>Seleccionar </option> 
                       <option value="text">text</option>
                     </select>
@@ -14,11 +14,11 @@
 
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="cod_cat">Cod Cat: </label>
-                    <select class="form-select select2-box" name="cod_cat" id="cod_cat" placeholder="Cod Cat">
-                      <option value="" selected disabled hidden>Seleccionar </option> 
-                      <option value="text">text</option>
-                    </select>
+                    <label for="cod_subcat">Cod Subcat: </label>
+                    <input type="text" class="form-control  @error('cod_subcat') is-invalid @enderror" name="cod_subcat" id="cod_subcat" placeholder="Cod Subcat" value="{{ old('cod_subcat', $categoria->cod_subcat ?? '') }}" >
+                    @error('cod_subcat')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 

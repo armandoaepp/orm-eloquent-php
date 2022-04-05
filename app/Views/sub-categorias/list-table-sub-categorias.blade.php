@@ -47,10 +47,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.categorias.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar categoria: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.sub-categorias.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar sub_categoria: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.categorias.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar categoria: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.sub-categorias.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar sub_categoria: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

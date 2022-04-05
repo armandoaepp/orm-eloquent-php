@@ -90,11 +90,11 @@ $html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix
                 $html .= '                  <div class="form-group">'.PHP_EOL;
                 $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
                 $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
-                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="si" value="S" <?php echo $si; ?> >'.PHP_EOL;
+                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="si" value="S"  @if($'. $table_name .'->publicar == \'S\' ) checked="checked" @endif >'.PHP_EOL;
                 $html .= '                      <label class="form-check-label" for="si">SI</label>'.PHP_EOL;
                 $html .= '                    </div>'.PHP_EOL;
                 $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
-                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="no" value="N" <?php echo $no; ?> >'.PHP_EOL;
+                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="no" value="N" @if($'. $table_name .'->publicar == \'N\' ) checked="checked" @endif  >'.PHP_EOL;
                 $html .= '                      <label class="form-check-label" for="no">NO</label>'.PHP_EOL;
                 $html .= '                    </div>'.PHP_EOL;
                 $html .= '                  </div>'.PHP_EOL;

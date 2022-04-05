@@ -721,7 +721,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '          $this->savedBitacoraTrait( $'.$table_name.', "update publicar", $attributes_old) ;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '          $success = true;' . PHP_EOL;
-  $str  .= '         $code = 200;' . PHP_EOL;
+  $str  .= '          $code = 200;' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
   $str  .= '        else' . PHP_EOL;

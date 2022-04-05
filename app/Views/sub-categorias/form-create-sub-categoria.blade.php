@@ -1,4 +1,4 @@
-            <form id="form-create" action="{{  route('admin.categorias.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-create" action="{{  route('admin.sub categorias.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">
@@ -70,7 +70,7 @@
               </div>
 
               <div class="w-100 text-center">
-                {{--  <a href="{{ route('admin.categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
+                {{--  <a href="{{ route('admin.sub categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
                 <button type="button" class="btn btn-outline-danger text-uppercase" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Cerrar </button>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
               </div>

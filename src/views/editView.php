@@ -23,7 +23,7 @@ $html .= '@php
 @endphp
 ' ;
 
-if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
+/* if(in_array("publicar", $fields_table) || in_array($prefix."publicar", $fields_table))
 {
 
   $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
@@ -41,7 +41,7 @@ $html .= '
   }
 @endphp'. PHP_EOL ;
 
-}
+} */
 
 $html .= '
 @extends(\'layouts.app-admin\')

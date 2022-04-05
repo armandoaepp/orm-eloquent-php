@@ -3,7 +3,7 @@ namespace App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriaRequest extends FormRequest
+class SubCategoriaRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class CategoriaRequest extends FormRequest
   {
     return true;
   }
-  protected $table = "categoria";
+  protected $table = "sub_categoria";
 
   /**
    * Get the validation rules that apply to the request.
