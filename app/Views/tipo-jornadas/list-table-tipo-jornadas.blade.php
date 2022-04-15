@@ -3,6 +3,7 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
+                <th> Cod Tj </th> 
                 <th> Descripcion </th> 
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
@@ -18,6 +19,7 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
+                <td> {{ $row->cod_tj }} </td> 
                 <td> {{ $row->descripcion }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
@@ -35,10 +37,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.grupos.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar grupo: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.tipo-jornadas.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar tipo_jornada: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.grupos.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar grupo: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.tipo-jornadas.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar tipo_jornada: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

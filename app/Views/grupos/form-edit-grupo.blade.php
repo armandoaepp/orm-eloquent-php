@@ -1,4 +1,4 @@
-            <form id="form-controls" action="{{ route('admin.grupos.update',['id' => $grupo->id]) }}" method="POST" enctype="multipart/form-data">
+            <form id="form-edit" action="{{ route('admin.grupos.update',['id' => $grupo->id]) }}" method="POST" enctype="multipart/form-data">
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $grupo->id }}">
               <div class="row">

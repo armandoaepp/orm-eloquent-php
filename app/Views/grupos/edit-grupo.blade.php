@@ -1,6 +1,5 @@
 @php
   $sidebar = array(
-    "sidebar_toggle" => "only",
     "sidebar_active" => [0, 0],
   );
 @endphp

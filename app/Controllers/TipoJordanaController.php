@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Grupo; 
+use App\Models\TipoJordana; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class GrupoController
+class TipoJordanaController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class GrupoController
     try
     {
 
-      $data = Grupo::get();
+      $data = TipoJordana::get();
 
-      return view($this->prefixView.'.grupos.list-grupos')->with(compact('data'));
+      return view($this->prefixView.'.tipo-jordanas.list-tipo-jordanas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class GrupoController
     try
     {
 
-      $data = Grupo::orderBy('id', 'desc')->get();
+      $data = TipoJordana::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.grupos.list-table-grupos')->with(compact('data'));
+      return view($this->prefixView.'.tipo-jordanas.list-table-tipo-jordanas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class GrupoController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.grupos.form-create-grupo');
+        return view($this->prefixView.'.tipo-jordanas.form-create-tipo-jordana');
       }
 
-      return view($this->prefixView.'.grupos.new-grupo');
+      return view($this->prefixView.'.tipo-jordanas.new-tipo-jordana');
     
     }
     catch (\Exception $e)
@@ -76,25 +76,27 @@ class GrupoController
 
   }
 
-  public function store(GrupoStoreRequest $request )
+  public function store(TipoJordanaStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
+      $cod_tj = $request->input('cod_tj');
       $descripcion = $request->input('descripcion');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $grupo = new Grupo();
-        $grupo->descripcion = $descripcion;
-        $grupo->estado = $estado;
+        $tipo_jordana = new TipoJordana();
+        $tipo_jordana->cod_tj = $cod_tj;
+        $tipo_jordana->descripcion = $descripcion;
+        $tipo_jordana->estado = $estado;
         
-        $success = $grupo->save();
+        $success = $tipo_jordana->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "created") ;
+        $this->savedBitacoraTrait( $tipo_jordana, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -108,7 +110,7 @@ class GrupoController
         ]);
       };
     
-      return redirect()->route('admin.grupos');
+      return redirect()->route('admin.tipo-jordanas');
     
     }
     catch (\Exception $e)
@@ -134,13 +136,13 @@ class GrupoController
     try
     {
 
-      $grupo = Grupo::find( $id );
+      $tipo_jordana = TipoJordana::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.grupos.form-edit-grupo')->with(compact('grupo'));
+        return view($this->prefixView .'.tipo-jordanas.form-edit-tipo-jordana')->with(compact('tipo_jordana'));
       }
 
-      return view($this->prefixView.'.grupos.edit-grupo')->with(compact('grupo'));
+      return view($this->prefixView.'.tipo-jordanas.edit-tipo-jordana')->with(compact('tipo_jordana'));
     
     }
     catch (\Exception $e)
@@ -159,21 +161,23 @@ class GrupoController
       $message = "";
 
       $id = $request->input('id');
+      $cod_tj = $request->input('cod_tj');
       $descripcion = $request->input('descripcion');
 
       if (!empty($id))
       {
-        $grupo = Grupo::find($id);
+        $tipo_jordana = TipoJordana::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $grupo->getAttributes();
-        $grupo->id = $id;
-        $grupo->descripcion = $descripcion;
+        $attributes_old = $tipo_jordana->getAttributes();
+        $tipo_jordana->id = $id;
+        $tipo_jordana->cod_tj = $cod_tj;
+        $tipo_jordana->descripcion = $descripcion;
         
-        $success = $grupo->save();
+        $success = $tipo_jordana->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $tipo_jordana, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -195,7 +199,7 @@ class GrupoController
         ]);
       };
 
-      return redirect()->route('admin.grupos');
+      return redirect()->route('admin.tipo-jordanas');
     
     }
     catch (\Exception $e)
@@ -233,18 +237,18 @@ class GrupoController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $grupo = Grupo::find( $id ) ;
+      $tipo_jordana = TipoJordana::find( $id ) ;
 
-      if (!empty($grupo))
+      if (!empty($tipo_jordana))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $grupo->getAttributes();
-        $grupo->estado = $estado;
-        $grupo->save();
+        $attributes_old = $tipo_jordana->getAttributes();
+        $tipo_jordana->estado = $estado;
+        $tipo_jordana->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $tipo_jordana, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -310,15 +314,15 @@ class GrupoController
 
       $id = $request->input('id');
 
-      $grupo = Grupo::find( $id ) ;
+      $tipo_jordana = TipoJordana::find( $id ) ;
 
-      if (!empty($grupo))
+      if (!empty($tipo_jordana))
       {
 
-        $grupo->delete();
+        $tipo_jordana->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "destroy") ;
+        $this->savedBitacoraTrait( $tipo_jordana, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -363,7 +367,7 @@ class GrupoController
     try
     {
 
-      $data = Grupo::find($id);
+      $data = TipoJordana::find($id);
 
       return $data;
     

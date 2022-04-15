@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Grupo; 
+use App\Models\EstadoCivil; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class GrupoController
+class EstadoCivilController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class GrupoController
     try
     {
 
-      $data = Grupo::get();
+      $data = EstadoCivil::get();
 
-      return view($this->prefixView.'.grupos.list-grupos')->with(compact('data'));
+      return view($this->prefixView.'.estado-civils.list-estado-civils')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class GrupoController
     try
     {
 
-      $data = Grupo::orderBy('id', 'desc')->get();
+      $data = EstadoCivil::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.grupos.list-table-grupos')->with(compact('data'));
+      return view($this->prefixView.'.estado-civils.list-table-estado-civils')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class GrupoController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.grupos.form-create-grupo');
+        return view($this->prefixView.'.estado-civils.form-create-estado-civil');
       }
 
-      return view($this->prefixView.'.grupos.new-grupo');
+      return view($this->prefixView.'.estado-civils.new-estado-civil');
     
     }
     catch (\Exception $e)
@@ -76,25 +76,27 @@ class GrupoController
 
   }
 
-  public function store(GrupoStoreRequest $request )
+  public function store(EstadoCivilStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
+      $cod_ec = $request->input('cod_ec');
       $descripcion = $request->input('descripcion');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $grupo = new Grupo();
-        $grupo->descripcion = $descripcion;
-        $grupo->estado = $estado;
+        $estado_civil = new EstadoCivil();
+        $estado_civil->cod_ec = $cod_ec;
+        $estado_civil->descripcion = $descripcion;
+        $estado_civil->estado = $estado;
         
-        $success = $grupo->save();
+        $success = $estado_civil->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "created") ;
+        $this->savedBitacoraTrait( $estado_civil, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -108,7 +110,7 @@ class GrupoController
         ]);
       };
     
-      return redirect()->route('admin.grupos');
+      return redirect()->route('admin.estado-civils');
     
     }
     catch (\Exception $e)
@@ -134,13 +136,13 @@ class GrupoController
     try
     {
 
-      $grupo = Grupo::find( $id );
+      $estado_civil = EstadoCivil::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.grupos.form-edit-grupo')->with(compact('grupo'));
+        return view($this->prefixView .'.estado-civils.form-edit-estado-civil')->with(compact('estado_civil'));
       }
 
-      return view($this->prefixView.'.grupos.edit-grupo')->with(compact('grupo'));
+      return view($this->prefixView.'.estado-civils.edit-estado-civil')->with(compact('estado_civil'));
     
     }
     catch (\Exception $e)
@@ -159,21 +161,23 @@ class GrupoController
       $message = "";
 
       $id = $request->input('id');
+      $cod_ec = $request->input('cod_ec');
       $descripcion = $request->input('descripcion');
 
       if (!empty($id))
       {
-        $grupo = Grupo::find($id);
+        $estado_civil = EstadoCivil::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $grupo->getAttributes();
-        $grupo->id = $id;
-        $grupo->descripcion = $descripcion;
+        $attributes_old = $estado_civil->getAttributes();
+        $estado_civil->id = $id;
+        $estado_civil->cod_ec = $cod_ec;
+        $estado_civil->descripcion = $descripcion;
         
-        $success = $grupo->save();
+        $success = $estado_civil->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $estado_civil, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -195,7 +199,7 @@ class GrupoController
         ]);
       };
 
-      return redirect()->route('admin.grupos');
+      return redirect()->route('admin.estado-civils');
     
     }
     catch (\Exception $e)
@@ -233,18 +237,18 @@ class GrupoController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $grupo = Grupo::find( $id ) ;
+      $estado_civil = EstadoCivil::find( $id ) ;
 
-      if (!empty($grupo))
+      if (!empty($estado_civil))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $grupo->getAttributes();
-        $grupo->estado = $estado;
-        $grupo->save();
+        $attributes_old = $estado_civil->getAttributes();
+        $estado_civil->estado = $estado;
+        $estado_civil->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $estado_civil, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -310,15 +314,15 @@ class GrupoController
 
       $id = $request->input('id');
 
-      $grupo = Grupo::find( $id ) ;
+      $estado_civil = EstadoCivil::find( $id ) ;
 
-      if (!empty($grupo))
+      if (!empty($estado_civil))
       {
 
-        $grupo->delete();
+        $estado_civil->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "destroy") ;
+        $this->savedBitacoraTrait( $estado_civil, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -363,7 +367,7 @@ class GrupoController
     try
     {
 
-      $data = Grupo::find($id);
+      $data = EstadoCivil::find($id);
 
       return $data;
     

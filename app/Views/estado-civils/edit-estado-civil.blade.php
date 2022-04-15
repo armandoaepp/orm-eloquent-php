@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Grupos
+  Estado Civils
 @endsection
 
 @section('content')
@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.grupos') }}" class="">
-        <i class="fa fa-align-justify"></i> Grupos
+      <a href="{{ route('admin.estado civils') }}" class="">
+        <i class="fa fa-align-justify"></i> Estado Civils
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Grupo
+      Editar Estado Civil
       </span>
     </li>
   </ol>
@@ -40,11 +40,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Grupo
+          <i class="fa fa-align-justify"></i> Editar Estado Civil
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin.grupos.form-create-grupo')
+            @include('admin.estado civils.form-edit-estado_civil')
           </div>
         </div>
       </div>
@@ -58,4 +58,5 @@
 
 
 @section('script')
+
 @endsection

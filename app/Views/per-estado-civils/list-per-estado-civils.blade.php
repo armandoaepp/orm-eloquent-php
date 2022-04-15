@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Grupos
+  Per Estado Civils
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Grupos
+      Per Estado Civils
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route('admin.grupos') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route('admin.per-estado-civils') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route('admin.grupos.create') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" id="btn-create" data-href="{{ route('admin.per-estado-civils.create') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -45,11 +45,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de grupos
+          <i class="fa fa-align-justify"></i> Lista de per-estado-civils
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include('admin.grupos.list-table-grupos')
+           @include('admin.per-estado-civils.list-table-per-estado-civils')
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Grupo">
-    @include('admin.grupos.form-create-grupo')
+  <x-modals.modal-create title="Nuevo Per_estado_civil">
+    @include('admin.per-estado-civils.form-create-per_estado_civil')
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Grupo" />
+  <x-modals.modal-edit title="Editar Per_estado_civil" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.grupos.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Grupo" url="{{ route('admin.grupos.destroy') }}" />  
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.per-estado-civils.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Per-estado-civil" url="{{ route('admin.per-estado-civils.destroy') }}" />  
 @endsection
 
 <!-- Start:: Section script  -->

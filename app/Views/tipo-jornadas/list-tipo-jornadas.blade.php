@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Grupos
+  Tipo Jornadas
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Grupos
+      Tipo Jornadas
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route('admin.grupos') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route('admin.tipo-jornadas') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route('admin.grupos.create') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" id="btn-create" data-href="{{ route('admin.tipo-jornadas.create') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -45,11 +45,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de grupos
+          <i class="fa fa-align-justify"></i> Lista de tipo-jornadas
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include('admin.grupos.list-table-grupos')
+           @include('admin.tipo-jornadas.list-table-tipo-jornadas')
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Grupo">
-    @include('admin.grupos.form-create-grupo')
+  <x-modals.modal-create title="Nuevo Tipo_jornada">
+    @include('admin.tipo-jornadas.form-create-tipo_jornada')
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Grupo" />
+  <x-modals.modal-edit title="Editar Tipo_jornada" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.grupos.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Grupo" url="{{ route('admin.grupos.destroy') }}" />  
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.tipo-jornadas.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Tipo-jornada" url="{{ route('admin.tipo-jornadas.destroy') }}" />  
 @endsection
 
 <!-- Start:: Section script  -->

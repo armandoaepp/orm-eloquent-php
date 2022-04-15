@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Grupo; 
+use App\Models\PerEstadoCivil; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class GrupoController
+class PerEstadoCivilController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class GrupoController
     try
     {
 
-      $data = Grupo::get();
+      $data = PerEstadoCivil::get();
 
-      return view($this->prefixView.'.grupos.list-grupos')->with(compact('data'));
+      return view($this->prefixView.'.per-estado-civils.list-per-estado-civils')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class GrupoController
     try
     {
 
-      $data = Grupo::orderBy('id', 'desc')->get();
+      $data = PerEstadoCivil::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.grupos.list-table-grupos')->with(compact('data'));
+      return view($this->prefixView.'.per-estado-civils.list-table-per-estado-civils')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class GrupoController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.grupos.form-create-grupo');
+        return view($this->prefixView.'.per-estado-civils.form-create-per-estado-civil');
       }
 
-      return view($this->prefixView.'.grupos.new-grupo');
+      return view($this->prefixView.'.per-estado-civils.new-per-estado-civil');
     
     }
     catch (\Exception $e)
@@ -76,25 +76,27 @@ class GrupoController
 
   }
 
-  public function store(GrupoStoreRequest $request )
+  public function store(PerEstadoCivilStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
+      $cod_ec = $request->input('cod_ec');
       $descripcion = $request->input('descripcion');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $grupo = new Grupo();
-        $grupo->descripcion = $descripcion;
-        $grupo->estado = $estado;
+        $per_estado_civil = new PerEstadoCivil();
+        $per_estado_civil->cod_ec = $cod_ec;
+        $per_estado_civil->descripcion = $descripcion;
+        $per_estado_civil->estado = $estado;
         
-        $success = $grupo->save();
+        $success = $per_estado_civil->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "created") ;
+        $this->savedBitacoraTrait( $per_estado_civil, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -108,7 +110,7 @@ class GrupoController
         ]);
       };
     
-      return redirect()->route('admin.grupos');
+      return redirect()->route('admin.per-estado-civils');
     
     }
     catch (\Exception $e)
@@ -134,13 +136,13 @@ class GrupoController
     try
     {
 
-      $grupo = Grupo::find( $id );
+      $per_estado_civil = PerEstadoCivil::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.grupos.form-edit-grupo')->with(compact('grupo'));
+        return view($this->prefixView .'.per-estado-civils.form-edit-per-estado-civil')->with(compact('per_estado_civil'));
       }
 
-      return view($this->prefixView.'.grupos.edit-grupo')->with(compact('grupo'));
+      return view($this->prefixView.'.per-estado-civils.edit-per-estado-civil')->with(compact('per_estado_civil'));
     
     }
     catch (\Exception $e)
@@ -159,21 +161,23 @@ class GrupoController
       $message = "";
 
       $id = $request->input('id');
+      $cod_ec = $request->input('cod_ec');
       $descripcion = $request->input('descripcion');
 
       if (!empty($id))
       {
-        $grupo = Grupo::find($id);
+        $per_estado_civil = PerEstadoCivil::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $grupo->getAttributes();
-        $grupo->id = $id;
-        $grupo->descripcion = $descripcion;
+        $attributes_old = $per_estado_civil->getAttributes();
+        $per_estado_civil->id = $id;
+        $per_estado_civil->cod_ec = $cod_ec;
+        $per_estado_civil->descripcion = $descripcion;
         
-        $success = $grupo->save();
+        $success = $per_estado_civil->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $per_estado_civil, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -195,7 +199,7 @@ class GrupoController
         ]);
       };
 
-      return redirect()->route('admin.grupos');
+      return redirect()->route('admin.per-estado-civils');
     
     }
     catch (\Exception $e)
@@ -233,18 +237,18 @@ class GrupoController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $grupo = Grupo::find( $id ) ;
+      $per_estado_civil = PerEstadoCivil::find( $id ) ;
 
-      if (!empty($grupo))
+      if (!empty($per_estado_civil))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $grupo->getAttributes();
-        $grupo->estado = $estado;
-        $grupo->save();
+        $attributes_old = $per_estado_civil->getAttributes();
+        $per_estado_civil->estado = $estado;
+        $per_estado_civil->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $per_estado_civil, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -310,15 +314,15 @@ class GrupoController
 
       $id = $request->input('id');
 
-      $grupo = Grupo::find( $id ) ;
+      $per_estado_civil = PerEstadoCivil::find( $id ) ;
 
-      if (!empty($grupo))
+      if (!empty($per_estado_civil))
       {
 
-        $grupo->delete();
+        $per_estado_civil->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $grupo, "destroy") ;
+        $this->savedBitacoraTrait( $per_estado_civil, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -363,7 +367,7 @@ class GrupoController
     try
     {
 
-      $data = Grupo::find($id);
+      $data = PerEstadoCivil::find($id);
 
       return $data;
     
