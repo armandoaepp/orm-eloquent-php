@@ -8,7 +8,7 @@ function generateEditView($table_name, $class_name, $entities = array(), $fields
 
   $table_plural = Str::plural($table_amigable_sin_guion) ;
 
-  $url_friendly_plural = str_replace (' ', '-', $table_plural);
+  $table_friendly_plural = str_replace (' ', '-', $table_plural);
   // $title = ucwords(str_replace ('-', ' ', $title_lower));
   $title = ucwords($table_plural);
 
@@ -61,7 +61,7 @@ $html .= '
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="">
+      <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_friendly_plural.'\') }}" class="">
         <i class="fa fa-align-justify"></i> '.$title.'
       </a>
     </li>
@@ -84,7 +84,7 @@ $html .= '
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include(\'admin.'.$table_plural.'.form-edit-'.$table_name.'\')
+            @include(\'admin.'.$table_friendly_plural.'.form-edit-'.$table_name.'\')
           </div>
         </div>
       </div>

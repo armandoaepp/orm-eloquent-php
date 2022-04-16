@@ -21,7 +21,7 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.sub categorias') }}" class="">
+      <a href="{{ route('admin.sub-categorias') }}" class="">
         <i class="fa fa-align-justify"></i> Sub Categorias
       </a>
     </li>
@@ -44,7 +44,7 @@
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin.sub categorias.form-create-sub_categoria')
+            @include('admin.sub-categorias.form-create-sub_categoria')
           </div>
         </div>
       </div>

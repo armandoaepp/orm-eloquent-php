@@ -51,7 +51,7 @@ if (!empty($_POST['prefix_name'])) {
   unset($t_name[0]);
   $table_name = implode('_', $t_name);
 }
-
+print($table_name); 
 //--------------------------------------------------------
 
 

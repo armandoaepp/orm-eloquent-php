@@ -1,14 +1,14 @@
-            <form id="form-edit" action="{{ route('admin.sub categorias.update',['id' => $sub_categoria->id]) }}" method="POST" enctype="multipart/form-data">
+            <form id="form-edit" action="{{ route('admin.sub-categorias.update',['id' => $sub_categoria->id]) }}" method="POST" enctype="multipart/form-data">
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $sub_categoria->id }}">
               <div class="row">
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="categoria_id">Categoria Id: </label>
-                    <select class="form-select select2-box" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
-                      <option value="" selected disabled hidden>Seleccionar </option> 
-                      <option value="text">text</option>
-                    </select>
+                    <input type="text" class="form-control  @error('categoria_id') is-invalid @enderror" name="categoria_id" id="categoria_id" placeholder="Categoria Id" value="{{ old('categoria_id', $sub_categoria->categoria_id ?? '') }}" >
+                    @error('categoria_id')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
                   </div>
                 </div>
 
@@ -35,7 +35,7 @@
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="glosa">Glosa: </label>
-                    <textarea class="form-control ckeditor  @error('glosa') is-invalid @enderror" name="glosa" id="glosa" placeholder="Glosa" cols="30" rows="6">{{ $sub_categoria->glosa }}</textarea>
+                    <input type="text" class="form-control  @error('glosa') is-invalid @enderror" name="glosa" id="glosa" placeholder="Glosa" value="{{ old('glosa', $sub_categoria->glosa ?? '') }}" >
                     @error('glosa')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
@@ -46,11 +46,11 @@
                   <div class="form-group">
                     <label for="email" class="d-block">Publicar </label>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S" <?php echo $si; ?> >
+                      <input class="form-check-input" type="radio" name="publicar" id="si" value="S"  @if($sub_categoria->publicar == "S"   ) checked="checked" @endif >
                       <label class="form-check-label" for="si">SI</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N" <?php echo $no; ?> >
+                      <input class="form-check-input" type="radio" name="publicar" id="no" value="N" @if($sub_categoria->publicar == "N"  ) checked="checked" @endif  >
                       <label class="form-check-label" for="no">NO</label>
                     </div>
                   </div>
@@ -81,7 +81,7 @@
               </div>
 
               <div class="w-100 text-center">
-                {{-- <a href="{{ route('admin.sub categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
+                {{-- <a href="{{ route('admin.sub-categorias') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
                 <button type="button" class="btn btn-outline-danger text-uppercase" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Cerrar </button>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
               </div>

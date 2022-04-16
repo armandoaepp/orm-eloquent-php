@@ -8,7 +8,7 @@ function generateFormEditView($table_name, $class_name, $entities = array(), $fi
 
   $table_plural = Str::plural($table_amigable_sin_guion) ;
 
-  $url_friendly_plural = str_replace (' ', '-', $table_plural);
+  $table_friendly_plural = str_replace (' ', '-', $table_plural);
   // $title = ucwords(str_replace ('-', ' ', $title_lower));
   $title = ucwords($table_plural);
 
@@ -17,7 +17,7 @@ function generateFormEditView($table_name, $class_name, $entities = array(), $fi
 
 $html = '';
 
-$html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_plural.'.update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
+$html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_friendly_plural.'.update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $'. $table_name .'->'.$fields_table[0].' }}">
               <div class="row">' . PHP_EOL;
@@ -90,11 +90,11 @@ $html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix
                 $html .= '                  <div class="form-group">'.PHP_EOL;
                 $html .= '                    <label for="email" class="d-block">Publicar </label>'.PHP_EOL;
                 $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
-                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="si" value="S"  @if($'. $table_name .'->publicar == \'S\' ) checked="checked" @endif >'.PHP_EOL;
+                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="si" value="S"  @if($'. $table_name .'->publicar == "S"   ) checked="checked" @endif >'.PHP_EOL;
                 $html .= '                      <label class="form-check-label" for="si">SI</label>'.PHP_EOL;
                 $html .= '                    </div>'.PHP_EOL;
                 $html .= '                    <div class="form-check form-check-inline">'.PHP_EOL;
-                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="no" value="N" @if($'. $table_name .'->publicar == \'N\' ) checked="checked" @endif  >'.PHP_EOL;
+                $html .= '                      <input class="form-check-input" type="radio" name="'. $name_publicar .'" id="no" value="N" @if($'. $table_name .'->publicar == "N"  ) checked="checked" @endif  >'.PHP_EOL;
                 $html .= '                      <label class="form-check-label" for="no">NO</label>'.PHP_EOL;
                 $html .= '                    </div>'.PHP_EOL;
                 $html .= '                  </div>'.PHP_EOL;
@@ -139,7 +139,7 @@ $html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix
               </div>
 
               <div class="w-100 text-center">
-                {{-- <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
+                {{-- <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_friendly_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
                 <button type="button" class="btn btn-outline-danger text-uppercase" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Cerrar </button>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
               </div>

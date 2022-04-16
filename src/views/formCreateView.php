@@ -8,7 +8,7 @@ function generateFormCreateView($table_name, $class_name, $entities = array(), $
 
   $table_plural = Str::plural($table_amigable_sin_guion) ;
 
-  $url_friendly_plural = str_replace (' ', '-', $table_plural);
+  $table_friendly_plural = str_replace (' ', '-', $table_plural);
 
   // $title = ucwords(str_replace ('-', ' ', $title_lower));
   $title = ucwords($table_plural);
@@ -17,7 +17,7 @@ function generateFormCreateView($table_name, $class_name, $entities = array(), $
   $prefix = !empty($prefix) ? $prefix."_" : "" ;
 
 
-$html = '            <form id="form-create" action="{{  route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.store\') }}" method="POST" enctype="multipart/form-data">
+$html = '            <form id="form-create" action="{{  route(\''.$GLOBALS["prefix_route"].'.'.$table_friendly_plural.'.store\') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <input type="hidden" class="form-control" name="id" id="id" value="">
               <div class="row">' . PHP_EOL;
@@ -132,7 +132,7 @@ $html = '            <form id="form-create" action="{{  route(\''.$GLOBALS["pref
               </div>
 
               <div class="w-100 text-center">
-                {{--  <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
+                {{--  <a href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_friendly_plural.'\') }}" class="btn btn-outline-danger"> <i class="fas fa-ban"></i> Cancelar</a> --}}
                 <button type="button" class="btn btn-outline-danger text-uppercase" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Cerrar </button>
                 <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-save"></i> Guardar</button>
               </div>
