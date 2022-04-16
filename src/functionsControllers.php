@@ -363,17 +363,17 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-    $str  .= '' . PHP_EOL;
-    $str  .= '      if ($request->ajax()) {'.PHP_EOL;
-    $str  .= '        return response()->json(['.PHP_EOL;
-    $str  .= '          "message" => "Operación fallida en el servidor",'.PHP_EOL;
-    $str  .= '          "code"    => 500,'.PHP_EOL;
-    $str  .= '          "success"  => false,'.PHP_EOL;
-    $str  .= '          "errors"  => [$e->getMessage()],'.PHP_EOL;
-    $str  .= '          "data"    => []'.PHP_EOL;
-    $str  .= '        ]);'.PHP_EOL;
-    $str  .= '      }'.PHP_EOL;
-    $str  .= '' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+  $str  .= '      if ($request->ajax()) {'.PHP_EOL;
+  $str  .= '        return response()->json(['.PHP_EOL;
+  $str  .= '          "message" => "Operación fallida en el servidor",'.PHP_EOL;
+  $str  .= '          "code"    => 500,'.PHP_EOL;
+  $str  .= '          "success" => false,'.PHP_EOL;
+  $str  .= '          "errors"  => [$e->getMessage()],'.PHP_EOL;
+  $str  .= '          "data"    => []'.PHP_EOL;
+  $str  .= '        ]);'.PHP_EOL;
+  $str  .= '      }'.PHP_EOL;
+  $str  .= '' . PHP_EOL;
   $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
@@ -479,60 +479,7 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '        ]);'.PHP_EOL ;
   $str  .= '      };'.PHP_EOL ;
   $str  .= '        ' . PHP_EOL;
-
-  // $str  .= '          $'.$table_name.' = new '.$class_name.'();' . PHP_EOL;
-
-  // $str  .= '          #conservar en base de datos' . PHP_EOL;
-  // $str  .= '          if ( $historial == "si" )' . PHP_EOL;
-  // $str  .= '          {' . PHP_EOL;
-  // $str  .= '            $'.$table_name.'->'.$name_estado.' = $estado;' . PHP_EOL;
-  // $str  .= '            $'.$table_name.'->save();' . PHP_EOL;
-  // $str  .= '              ' . PHP_EOL;
-
-  // $str  .= '            # TABLE BITACORA' . PHP_EOL;
-  // $str  .= '            $this->savedBitacoraTrait( $'.$table_name.', "update estado") ;' . PHP_EOL;
-  // $str  .= '          ' . PHP_EOL;
-
-  // $str  .= '            $success = true;' . PHP_EOL;
-  // $str  .= '            //$message = $message;' . PHP_EOL;
-  // $str  .= '              ' . PHP_EOL;
-  // $str  .= '          }elseif( $historial == "no"  ) {' . PHP_EOL;
-  // $str  .= '            $'.$table_name.'->delete();' . PHP_EOL;
-  // $str  .= '          ' . PHP_EOL;
-  // $str  .= '            # TABLE BITACORA' . PHP_EOL;
-  // $str  .= '            $this->savedBitacoraTrait( $'.$table_name.', "destroy") ;' . PHP_EOL;
-  // $str  .= '          ' . PHP_EOL;
-
-  // $str  .= '            $success = true;' . PHP_EOL;
-  // $str  .= '            $message = "Registro eliminado de la base de datos";' . PHP_EOL;
-  // $str  .= '          }' . PHP_EOL;
-  // $str  .= '          ' . PHP_EOL;
-  // $str  .= '          $data = $'.$table_name.';' . PHP_EOL;
-  // $str  .= '          ' . PHP_EOL;
-  // $str  .= '        }' . PHP_EOL;
-  // $str  .= '        else' . PHP_EOL;
-  // $str  .= '        {' . PHP_EOL;
-  // $str  .= '          $message = "¡El registro no exite o el identificador es incorrecto!";' . PHP_EOL;
-  // $str  .= '          $data = $request->all();' . PHP_EOL;
-  // $str  .= '        }' . PHP_EOL;
-
-  // $str  .= '      }' . PHP_EOL;
-  // $str  .= '      else' . PHP_EOL;
-  // $str  .= '      {' . PHP_EOL;
-  // $str  .= '        abort(404);' . PHP_EOL;
-  // $str  .= '      }' . PHP_EOL;
-
-  // // $str  .= '' . PHP_EOL;
-  // // $str  .= '        $data = ["message" => $message, "success" => $success, "errors"  => [], "data" => $data],];' . PHP_EOL;
-  // $str  .= '    ' . PHP_EOL;
-  // $str  .= '      return \Response::json([' . PHP_EOL;
-  // $str  .= '                "message" => $message,' . PHP_EOL;
-  // $str  .= '                "success"  => $success,' . PHP_EOL;
-  // $str  .= '                "errors"  => [],' . PHP_EOL;
-  // $str  .= '                "data"    => [$data],' . PHP_EOL;
-  // $str  .= '              ]);' . PHP_EOL;
-  // // $str  .= '        return $data;' . PHP_EOL;
-  // $str  .= '    ' . PHP_EOL;
+ 
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (\Throwable $e) ' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
@@ -644,7 +591,7 @@ function destroy($table_name, $class_name, $entities = array(), $prefix = "")
     $str  .= '        return response()->json(['.PHP_EOL;
     $str  .= '          "message" => "Operación fallida en el servidor",'.PHP_EOL;
     $str  .= '          "code"    => 500,'.PHP_EOL;
-    $str  .= '          "success"  => false,'.PHP_EOL;
+    $str  .= '          "success" => false,'.PHP_EOL;
     $str  .= '          "errors"  => [$e->getMessage()],'.PHP_EOL;
     $str  .= '          "data"    => []'.PHP_EOL;
     $str  .= '        ]);'.PHP_EOL;
@@ -674,9 +621,10 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '' . PHP_EOL;
 
   $str  .= '      $validator = \Validator::make($request->all(), [' . PHP_EOL;
-  $str  .= '        \'id\'     => \'required|numeric\',' . PHP_EOL;
-  $str  .= '        \'publicar\'     => \'required|numeric\',' . PHP_EOL;
+  $str  .= '        \'id\'       => \'required|numeric\',' . PHP_EOL;
+  $str  .= '        \'publicar\' => \'required|max:2\',' . PHP_EOL;
   $str  .= '      ]);' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
 
   $str  .= '      if ($validator->fails())' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
@@ -690,6 +638,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '            "data"    => [],' . PHP_EOL;
   $str  .= '            ]);' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
+  $str  .= '      }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
 
   $str  .= '      $id = $request->input("id");' . PHP_EOL;
@@ -710,8 +659,9 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '        if (!empty($'.$table_name.'))' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
     $str  .= '' . PHP_EOL;
+
     $str  .= '          # Values OLD FOR BITACORA' . PHP_EOL;
-    $str  .= '          $attributes_old = '.$table_name.'->getAttributes(); $'.$table_name.'->'. $field_publicar .' = $publicar;' . PHP_EOL;
+    $str  .= '          $attributes_old = $'.$table_name.'->getAttributes(); ' . PHP_EOL;
     $str  .= '' . PHP_EOL;
   $str  .= '          $'.$table_name.'->'. $field_publicar .' = $publicar;' . PHP_EOL;
   $str  .= '          $'.$table_name.'->save();' . PHP_EOL;
@@ -727,7 +677,7 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '        else' . PHP_EOL;
   $str  .= '        {' . PHP_EOL;
   $str  .= '          $message = "¡El registro no exite o el identificador es incorrecto!";' . PHP_EOL;
-  $str  .= '          $data = $request->all();' . PHP_EOL;
+   $str  .= '          $code = 400;' . PHP_EOL;
   $str  .= '        }' . PHP_EOL;
 
   $str  .= '        ' . PHP_EOL;
@@ -735,26 +685,35 @@ function updatePublish($table_name, $class_name, $entities = array(), $field_pub
   $str  .= '      else' . PHP_EOL;
   $str  .= '      {' . PHP_EOL;
   $str  .= '        $message = "¡El identificador es incorrecto!";' . PHP_EOL;
-  $str  .= '        $data = $request->all();' . PHP_EOL;
+  $str  .= '        $code = 400;' . PHP_EOL; 
+
   $str  .= '      }' . PHP_EOL;
-  $str  .= '' . PHP_EOL;
-  //$str  .= '      $data = ["message" => $message, "success" => $success, "data" =>[],];' . PHP_EOL;
-  $str  .='        return \Response::json([' . PHP_EOL;
-  $str  .='                "message" => $message,' . PHP_EOL;
-  $str  .='                "success"  => $success,' . PHP_EOL;
-  $str  .='                "errors"  => [],' . PHP_EOL;
-  $str  .='                "data"    => [$data],' . PHP_EOL;
-  $str  .='              ]);' . PHP_EOL;
+  $str  .= '' . PHP_EOL; 
+  $str  .= '      if ($request->ajax()) {'.PHP_EOL ;
+  $str  .= '        return response()->json(['.PHP_EOL ;
+  $str  .= '          "message" => $message,'.PHP_EOL ;
+  $str  .= '          "code"    => $code,'.PHP_EOL ;
+  $str  .= '          "success" => $success,'.PHP_EOL ;
+  $str  .= '          "errors"  => [],'.PHP_EOL ;
+  $str  .= '          "data"    => [],'.PHP_EOL ;
+  $str  .= '        ]);'.PHP_EOL ;
+  $str  .= '      };'.PHP_EOL ; 
   $str  .= '    ' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '    catch (\Exception $e)' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;
-  $str  .='        return \Response::json([' . PHP_EOL;
-  $str  .='                "message" => "Operación fallida en el servidor",' . PHP_EOL;
-  $str  .='                "success"  => false,' . PHP_EOL;
-  $str  .='                "errors"  => [$e->getMessage()],' . PHP_EOL;
-  $str  .='                "data"    => [],' . PHP_EOL;
-  $str  .='              ]);' . PHP_EOL;
+    $str  .= '' . PHP_EOL;
+    $str  .= '      if ($request->ajax()) {'.PHP_EOL;
+    $str  .= '        return response()->json(['.PHP_EOL;
+    $str  .= '          "message" => "Operación fallida en el servidor",'.PHP_EOL;
+    $str  .= '          "code"    => 500,'.PHP_EOL;
+    $str  .= '          "success" => false,'.PHP_EOL;
+    $str  .= '          "errors"  => [$e->getMessage()],'.PHP_EOL;
+    $str  .= '          "data"    => []'.PHP_EOL;
+    $str  .= '        ]);'.PHP_EOL;
+    $str  .= '      }'.PHP_EOL;
+    $str  .= '' . PHP_EOL;
+    $str  .= '      throw new \Exception($e->getMessage());' . PHP_EOL;
   $str  .= '    }' . PHP_EOL;
   $str  .= '' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;

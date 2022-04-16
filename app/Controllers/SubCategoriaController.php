@@ -256,7 +256,7 @@ class SubCategoriaController
         return response()->json([
           "message" => "Operación fallida en el servidor",
           "code"    => 500,
-          "success"  => false,
+          "success" => false,
           "errors"  => [$e->getMessage()],
           "data"    => []
         ]);
@@ -398,7 +398,7 @@ class SubCategoriaController
         return response()->json([
           "message" => "Operación fallida en el servidor",
           "code"    => 500,
-          "success"  => false,
+          "success" => false,
           "errors"  => [$e->getMessage()],
           "data"    => []
         ]);
@@ -417,9 +417,10 @@ class SubCategoriaController
       $message = "";
 
       $validator = \Validator::make($request->all(), [
-        'id'     => 'required|numeric',
-        'publicar'     => 'required|numeric',
+        'id'       => 'required|numeric',
+        'publicar' => 'required|max:2',
       ]);
+
       if ($validator->fails())
       {
         if ($request->ajax())
@@ -432,6 +433,7 @@ class SubCategoriaController
             "data"    => [],
             ]);
         }
+      }
 
       $id = $request->input("id");
       $publicar = $request->input("publicar");
@@ -450,7 +452,7 @@ class SubCategoriaController
         {
 
           # Values OLD FOR BITACORA
-          $attributes_old = sub_categoria->getAttributes(); $sub_categoria->publicar = $publicar;
+          $attributes_old = $sub_categoria->getAttributes(); 
 
           $sub_categoria->publicar = $publicar;
           $sub_categoria->save();
@@ -465,32 +467,41 @@ class SubCategoriaController
         else
         {
           $message = "¡El registro no exite o el identificador es incorrecto!";
-          $data = $request->all();
+          $code = 200;
         }
         
       }
       else
       {
         $message = "¡El identificador es incorrecto!";
-        $data = $request->all();
+        $code = 400;
       }
 
-        return \Response::json([
-                "message" => $message,
-                "success"  => $success,
-                "errors"  => [],
-                "data"    => [$data],
-              ]);
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => $message,
+          "code"    => $code,
+          "success" => $success,
+          "errors"  => [],
+          "data"    => [],
+        ]);
+      };
     
     }
     catch (\Exception $e)
     {
-        return \Response::json([
-                "message" => "Operación fallida en el servidor",
-                "success"  => false,
-                "errors"  => [$e->getMessage()],
-                "data"    => [],
-              ]);
+
+      if ($request->ajax()) {
+        return response()->json([
+          "message" => "Operación fallida en el servidor",
+          "code"    => 500,
+          "success" => false,
+          "errors"  => [$e->getMessage()],
+          "data"    => []
+        ]);
+      }
+
+      throw new \Exception($e->getMessage());
     }
 
   }

@@ -5,10 +5,10 @@
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="categoria_id">Categoria Id: </label>
-                    <input type="text" class="form-control  @error('categoria_id') is-invalid @enderror" name="categoria_id" id="categoria_id" placeholder="Categoria Id" value="{{ old('categoria_id', $sub_categoria->categoria_id ?? '') }}" >
-                    @error('categoria_id')
-                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
-                    @enderror
+                    <select class="form-select select2-box" name="categoria_id" id="categoria_id" placeholder="Categoria Id">
+                      <option value="" selected disabled hidden>Seleccionar </option> 
+                      <option value="text">text</option>
+                    </select>
                   </div>
                 </div>
 
@@ -35,7 +35,7 @@
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="glosa">Glosa: </label>
-                    <input type="text" class="form-control  @error('glosa') is-invalid @enderror" name="glosa" id="glosa" placeholder="Glosa" value="{{ old('glosa', $sub_categoria->glosa ?? '') }}" >
+                    <textarea class="form-control ckeditor  @error('glosa') is-invalid @enderror" name="glosa" id="glosa" placeholder="Glosa" cols="30" rows="6">{{ $sub_categoria->glosa }}</textarea>
                     @error('glosa')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror

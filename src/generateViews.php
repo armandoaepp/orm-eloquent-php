@@ -11,7 +11,7 @@ include 'views/formEditView.php' ;
 
 function generateView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array(), $fields_requireds = array())
 {
-  echo $table_name ."<br>";
+  // echo $table_name ."<br>";
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_plural = Str::plural($table_amigable) ;
 
