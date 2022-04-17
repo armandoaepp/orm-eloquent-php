@@ -3,7 +3,7 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Codigo </th> 
+                <th> Cod Mar </th> 
                 <th> Descripcion </th> 
                 <th> Glosa </th> 
                 <th width="50" title="Publicado">Publ.</th>
@@ -21,12 +21,12 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->codigo }} </td> 
+                <td> {{ $row->cod_mar }} </td> 
                 <td> {{ $row->descripcion }} </td> 
                 <td> {{ $row->glosa }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
-                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->publicar }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == 'S') checked @endif role="switch">
+                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->id  }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == 'S') checked @endif role="switch">
                   </div>
                 </td>
                 <td class="text-center">

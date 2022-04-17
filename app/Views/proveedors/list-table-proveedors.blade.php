@@ -3,11 +3,14 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Marca Id </th> 
-                <th> Código </th> 
-                <th> Descripcipón </th> 
-                <th> Glosa u Observación </th> 
-                <th width="50" title="Publicado">Publ.</th>
+                <th> Ruc </th> 
+                <th> Razón Social </th> 
+                <th> Nombre Comercial </th> 
+                <th> Condición </th> 
+                <th> Estado </th> 
+                <th> Domicilio Fiscal </th> 
+                <th> Ubigeo </th> 
+                <th> Observación </th> 
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -22,15 +25,14 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->marca_id }} </td> 
-                <td> {{ $row->cod_mod }} </td> 
-                <td> {{ $row->descripcion }} </td> 
+                <td> {{ $row->ruc }} </td> 
+                <td> {{ $row->razon_social }} </td> 
+                <td> {{ $row->nombre_comercial }} </td> 
+                <td> {{ $row->condicion_su }} </td> 
+                <td> {{ $row->estado_su }} </td> 
+                <td> {{ $row->domicilio_fiscal }} </td> 
+                <td> {{ $row->ubigeo_su }} </td> 
                 <td> {{ $row->glosa }} </td> 
-                <td class="text-center">
-                  <div class="form-check form-switch d-inline-block">
-                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->id  }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == 'S') checked @endif role="switch">
-                  </div>
-                </td>
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -47,10 +49,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.modelos.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar modelo: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.proveedors.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar proveedor: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.modelos.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar modelo: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.proveedors.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar proveedor: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

@@ -4,9 +4,9 @@
               <div class="row">
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="codigo">Codigo: </label>
-                    <input type="text" class="form-control @error('codigo') is-invalid @enderror" name="codigo" id="codigo" value="{{ old('codigo') }}" required placeholder="Codigo">
-                    @error('codigo')
+                    <label for="cod_mar">Cod Mar: </label>
+                    <input type="text" class="form-control @error('cod_mar') is-invalid @enderror" name="cod_mar" id="cod_mar" value="{{ old('cod_mar') }}" required placeholder="Cod Mar">
+                    @error('cod_mar')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
@@ -49,7 +49,7 @@
                 <div class="col-12 mb-2">
                   <div class="form-group">
                     <label for="imagen">Imagen:</label>
-                    <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="imagen" id="imagen" required placeholder="Imagen" accept="image/*">
+                    <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="imagen" id="imagen" required placeholder="Imagen" accept="image/*" onchange="imagesPreview(this)">
                   </div>
                 </div>
 

@@ -82,7 +82,7 @@ $html = '@php
 <!-- Start:: Section modal  -->
 @section(\'modal\')
   <x-modals.modal-create title="Nuevo '.ucwords($table_name).'">
-    @include(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.form-create-'.$table_name.'\')
+  {{-- @include(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.form-create-'.$table_name.'\') --}}
   </x-modals.modal-create>
 
   <x-modals.modal-edit title="Editar '.ucwords($table_name).'" />

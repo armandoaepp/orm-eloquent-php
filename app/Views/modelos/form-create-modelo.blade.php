@@ -5,18 +5,8 @@
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="marca_id">Marca Id: </label>
-                    <select class="form-select select2-box" name="marca_id" id="marca_id" placeholder="Marca Id">
-                      <option value="" selected disabled hidden>Seleccionar </option> 
-                      <option value="text">text</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-12 mb-2">
-                  <div class="form-group">
-                    <label for="codigo">Codigo: </label>
-                    <input type="text" class="form-control @error('codigo') is-invalid @enderror" name="codigo" id="codigo" value="{{ old('codigo') }}" required placeholder="Codigo">
-                    @error('codigo')
+                    <textarea class="form-control ckeditor @error('marca_id') is-invalid @enderror" name="marca_id" id="marca_id" placeholder="Marca Id" cols="30" rows="4">{{ old('marca_id') }}</textarea>
+                    @error('marca_id')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
@@ -24,8 +14,18 @@
 
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="descripcion">Descripcion: </label>
-                    <input type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" value="{{ old('descripcion') }}" required placeholder="Descripcion">
+                    <label for="cod_mod">Código: </label>
+                    <input type="text" class="form-control @error('cod_mod') is-invalid @enderror" name="cod_mod" id="cod_mod" value="{{ old('cod_mod') }}" required placeholder="Código">
+                    @error('cod_mod')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="descripcion">Descripcipón: </label>
+                    <input type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" value="{{ old('descripcion') }}" required placeholder="Descripcipón">
                     @error('descripcion')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
@@ -34,8 +34,8 @@
 
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="glosa">Glosa: </label>
-                    <textarea class="form-control ckeditor @error('glosa') is-invalid @enderror" name="glosa" id="glosa" placeholder="Glosa" cols="30" rows="4">{{ old('glosa') }}</textarea>
+                    <label for="glosa">Glosa u Observación: </label>
+                    <input type="text" class="form-control @error('glosa') is-invalid @enderror" name="glosa" id="glosa" value="{{ old('glosa') }}" required placeholder="Glosa u Observación">
                     @error('glosa')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror

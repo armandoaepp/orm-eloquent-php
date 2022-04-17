@@ -3,9 +3,17 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Marca Id </th> 
-                <th> Código </th> 
-                <th> Descripcipón </th> 
+                <th> Sede Id </th> 
+                <th> Min Código </th> 
+                <th> Descripción </th> 
+                <th> Código Largo </th> 
+                <th> Código de Barras </th> 
+                <th> Sub Categoria </th> 
+                <th> Categoria </th> 
+                <th> Familia </th> 
+                <th> Proveedor </th> 
+                <th> Modelo </th> 
+                <th> Marca </th> 
                 <th> Glosa u Observación </th> 
                 <th width="50" title="Publicado">Publ.</th>
                 <th width="50" title="Estado">Est.</th>
@@ -22,9 +30,17 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->marca_id }} </td> 
-                <td> {{ $row->cod_mod }} </td> 
+                <td> {{ $row->sede_id }} </td> 
+                <td> {{ $row->cod_min }} </td> 
                 <td> {{ $row->descripcion }} </td> 
+                <td> {{ $row->cod_lg }} </td> 
+                <td> {{ $row->cod_bar }} </td> 
+                <td> {{ $row->sub_categoria_id }} </td> 
+                <td> {{ $row->categoria_id }} </td> 
+                <td> {{ $row->familia_id }} </td> 
+                <td> {{ $row->proveedor_id }} </td> 
+                <td> {{ $row->modelo_id }} </td> 
+                <td> {{ $row->marca_id }} </td> 
                 <td> {{ $row->glosa }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
@@ -47,10 +63,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.modelos.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar modelo: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.productos.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar producto: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.modelos.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar modelo: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.productos.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar producto: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

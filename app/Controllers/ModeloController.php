@@ -84,7 +84,7 @@ class ModeloController
       $message = "";
 
       $marca_id = $request->input('marca_id');
-      $codigo = $request->input('codigo');
+      $cod_mod = $request->input('cod_mod');
       $descripcion = $request->input('descripcion');
       $glosa = $request->input('glosa');
       $publicar = $request->input('publicar');
@@ -93,7 +93,7 @@ class ModeloController
       # STORE
         $modelo = new Modelo();
         $modelo->marca_id = $marca_id;
-        $modelo->codigo = $codigo;
+        $modelo->cod_mod = $cod_mod;
         $modelo->descripcion = $descripcion;
         $modelo->glosa = $glosa;
         $modelo->publicar = $publicar;
@@ -168,7 +168,7 @@ class ModeloController
 
       $id = $request->input('id');
       $marca_id = $request->input('marca_id');
-      $codigo = $request->input('codigo');
+      $cod_mod = $request->input('cod_mod');
       $descripcion = $request->input('descripcion');
       $glosa = $request->input('glosa');
       $publicar = $request->input('publicar');
@@ -182,7 +182,7 @@ class ModeloController
 
         $modelo->id = $id;
         $modelo->marca_id = $marca_id;
-        $modelo->codigo = $codigo;
+        $modelo->cod_mod = $cod_mod;
         $modelo->descripcion = $descripcion;
         $modelo->glosa = $glosa;
         $modelo->publicar = $publicar;

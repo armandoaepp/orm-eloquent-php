@@ -4,9 +4,9 @@
               <div class="row">
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="codigo">Codigo: </label>
-                    <input type="text" class="form-control  @error('codigo') is-invalid @enderror" name="codigo" id="codigo" placeholder="Codigo" value="{{ old('codigo', $marca->codigo ?? '') }}" >
-                    @error('codigo')
+                    <label for="cod_mar">Cod Mar: </label>
+                    <input type="text" class="form-control  @error('cod_mar') is-invalid @enderror" name="cod_mar" id="cod_mar" placeholder="Cod Mar" value="{{ old('cod_mar', $marca->cod_mar ?? '') }}" >
+                    @error('cod_mar')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
@@ -55,17 +55,24 @@
                 </div>
                 <div class="col-12 mb-2">
                   <div class="form-group">
+                    <label for="imagen">Imagen:</label>
+                    <input data-file-img="images" data-id="preview-images-edit" type="file" class="form-control" name="imagen" id="imagen" required placeholder="Imagen" accept="image/*" onchange="imagesPreview(this)">
+                  </div>
+                </div>
+
+                <div class="col-12 mb-2">
+                  <div class="form-group">
                     <div class="input-group mb-2">
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="imagen">Nueva Imagen</label>
                       </div>
-                      <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="imagen" id="imagen" placeholder="Imagen" accept="image/*">
+                      <input data-file-img="images" data-id="preview-images-edit" type="file" class="form-control" name="imagen" id="imagen" placeholder="Imagen" accept="image/*" onchange="imagesPreview(this)"> 
                     </div>
                   </div>
                 </div>
 
                 <div class="col-12 mb-2">
-                  <div class="preview-img" data-img-preview="preview-images-id"></div>
+                  <div class="preview-img" data-img-preview="preview-images-edit"></div>
                 </div>
 
               </div>

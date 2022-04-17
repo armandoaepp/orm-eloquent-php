@@ -5,6 +5,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MarcaRequest extends FormRequest
 {
+
+  protected $table = "marca";
+
   /**
    * Determine if the user is authorized to make this request.
    *
@@ -14,7 +17,6 @@ class MarcaRequest extends FormRequest
   {
     return true;
   }
-  protected $table = "marca";
 
   /**
    * Get the validation rules that apply to the request.
@@ -24,7 +26,7 @@ class MarcaRequest extends FormRequest
   public function rules()
   {
     return [
-     'codigo'  => [],
+     'cod_mar'  => [],
      'descripcion'  => [],
      'glosa'  => [],
     ];
@@ -37,7 +39,7 @@ class MarcaRequest extends FormRequest
   public function attributes()
   {
     return [
-     'codigo'  => 'codigo',
+     'cod_mar'  => 'cod_mar',
      'descripcion'  => 'descripcion',
      'glosa'  => 'glosa',
     ];

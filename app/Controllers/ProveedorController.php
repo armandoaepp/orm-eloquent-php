@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Marca; 
+use App\Models\Proveedor; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class MarcaController
+class ProveedorController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class MarcaController
     try
     {
 
-      $data = Marca::get();
+      $data = Proveedor::get();
 
-      return view($this->prefixView.'.marcas.list-marcas')->with(compact('data'));
+      return view($this->prefixView.'.proveedors.list-proveedors')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class MarcaController
     try
     {
 
-      $data = Marca::orderBy('id', 'desc')->get();
+      $data = Proveedor::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.marcas.list-table-marcas')->with(compact('data'));
+      return view($this->prefixView.'.proveedors.list-table-proveedors')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class MarcaController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.marcas.form-create-marca');
+        return view($this->prefixView.'.proveedors.form-create-proveedor');
       }
 
-      return view($this->prefixView.'.marcas.new-marca');
+      return view($this->prefixView.'.proveedors.new-proveedor');
     
     }
     catch (\Exception $e)
@@ -76,39 +76,39 @@ class MarcaController
 
   }
 
-  public function store(MarcaStoreRequest $request )
+  public function store(ProveedorStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
-      $cod_mar = $request->input('cod_mar');
-      $descripcion = $request->input('descripcion');
+      $ruc = $request->input('ruc');
+      $razon_social = $request->input('razon_social');
+      $nombre_comercial = $request->input('nombre_comercial');
+      $condicion_su = $request->input('condicion_su');
+      $estado_su = $request->input('estado_su');
+      $domicilio_fiscal = $request->input('domicilio_fiscal');
+      $ubigeo_su = $request->input('ubigeo_su');
       $glosa = $request->input('glosa');
-      $imagen = $request->file('imagen');
-      $publicar = $request->input('publicar');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        ##################################################################################
-        $path_relative = "images/marcas/" ;
-        $name_file     = "imagen";
-        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
-        $imagen    = $image_url ;
-        ##################################################################################
-
-        $marca = new Marca();
-        $marca->cod_mar = $cod_mar;
-        $marca->descripcion = $descripcion;
-        $marca->glosa = $glosa;
-        $marca->publicar = $publicar;
-        $marca->estado = $estado;
+        $proveedor = new Proveedor();
+        $proveedor->ruc = $ruc;
+        $proveedor->razon_social = $razon_social;
+        $proveedor->nombre_comercial = $nombre_comercial;
+        $proveedor->condicion_su = $condicion_su;
+        $proveedor->estado_su = $estado_su;
+        $proveedor->domicilio_fiscal = $domicilio_fiscal;
+        $proveedor->ubigeo_su = $ubigeo_su;
+        $proveedor->glosa = $glosa;
+        $proveedor->estado = $estado;
         
-        $success = $marca->save();
+        $success = $proveedor->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "created") ;
+        $this->savedBitacoraTrait( $proveedor, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -122,7 +122,7 @@ class MarcaController
         ]);
       };
     
-      return redirect()->route('admin.marcas');
+      return redirect()->route('admin.proveedors');
     
     }
     catch (\Exception $e)
@@ -148,13 +148,13 @@ class MarcaController
     try
     {
 
-      $marca = Marca::find( $id );
+      $proveedor = Proveedor::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.marcas.form-edit-marca')->with(compact('marca'));
+        return view($this->prefixView .'.proveedors.form-edit-proveedor')->with(compact('proveedor'));
       }
 
-      return view($this->prefixView.'.marcas.edit-marca')->with(compact('marca'));
+      return view($this->prefixView.'.proveedors.edit-proveedor')->with(compact('proveedor'));
     
     }
     catch (\Exception $e)
@@ -164,7 +164,7 @@ class MarcaController
 
   }
 
-  public function update(Request $request )
+  public function update(ProveedorUpdateRequest $request )
   {
     try
     {
@@ -173,51 +173,36 @@ class MarcaController
       $message = "";
 
       $id = $request->input('id');
-      $cod_mar = $request->input('cod_mar');
-      $descripcion = $request->input('descripcion');
+      $ruc = $request->input('ruc');
+      $razon_social = $request->input('razon_social');
+      $nombre_comercial = $request->input('nombre_comercial');
+      $condicion_su = $request->input('condicion_su');
+      $estado_su = $request->input('estado_su');
+      $domicilio_fiscal = $request->input('domicilio_fiscal');
+      $ubigeo_su = $request->input('ubigeo_su');
       $glosa = $request->input('glosa');
-      $imagen = $request->file('imagen');
-      $img_bd     = $request->input('img_bd');
-      $publicar = $request->input('publicar');
 
       if (!empty($id))
       {
-        ##################################################################################
-        $path_relative = "images/marcas/" ;
-        $name_file     = "imagen";
-        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
-        
-        if(empty($image_url))
-        {
-          $image_url = $img_bd ;
-        }
-        
-        $imagen    = $image_url ;
-        ##################################################################################
-
-        $marca = Marca::find($id);
+        $proveedor = Proveedor::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $marca->getAttributes();
+        $attributes_old = $proveedor->getAttributes();
 
-        $marca->id = $id;
-        $marca->cod_mar = $cod_mar;
-        $marca->descripcion = $descripcion;
-        $marca->glosa = $glosa;
-        $marca->imagen = $imagen;
-        $marca->publicar = $publicar;
+        $proveedor->id = $id;
+        $proveedor->ruc = $ruc;
+        $proveedor->razon_social = $razon_social;
+        $proveedor->nombre_comercial = $nombre_comercial;
+        $proveedor->condicion_su = $condicion_su;
+        $proveedor->estado_su = $estado_su;
+        $proveedor->domicilio_fiscal = $domicilio_fiscal;
+        $proveedor->ubigeo_su = $ubigeo_su;
+        $proveedor->glosa = $glosa;
         
-        $success = $marca->save();
+        $success = $proveedor->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "update", $attributes_old) ;
-        
-        # remove imagen
-        if($imagen != $img_bd && $success )
-        {
-          if (file_exists($img_bd))
-            unlink($img_bd) ;
-        }
+        $this->savedBitacoraTrait( $proveedor, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -239,7 +224,7 @@ class MarcaController
         ]);
       };
 
-      return redirect()->route('admin.marcas');
+      return redirect()->route('admin.proveedors');
     
     }
     catch (\Exception $e)
@@ -277,19 +262,19 @@ class MarcaController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $marca = Marca::find( $id ) ;
+      $proveedor = Proveedor::find( $id ) ;
 
-      if (!empty($marca))
+      if (!empty($proveedor))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $marca->getAttributes();
+        $attributes_old = $proveedor->getAttributes();
 
-        $marca->estado = $estado;
-        $marca->save();
+        $proveedor->estado = $estado;
+        $proveedor->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $proveedor, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -355,15 +340,15 @@ class MarcaController
 
       $id = $request->input('id');
 
-      $marca = Marca::find( $id ) ;
+      $proveedor = Proveedor::find( $id ) ;
 
-      if (!empty($marca))
+      if (!empty($proveedor))
       {
 
-        $marca->delete();
+        $proveedor->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "destroy") ;
+        $this->savedBitacoraTrait( $proveedor, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -403,127 +388,12 @@ class MarcaController
 
   }
 
-  public function updatePublish(Request $request )
-  {
-    try
-    {
-      $success = false;
-      $message = "";
-
-      $validator = \Validator::make($request->all(), [
-        'id'       => 'required|numeric',
-        'publicar' => 'required|max:2',
-      ]);
-
-      if ($validator->fails())
-      {
-        if ($request->ajax())
-        {
-          return response()->json([
-            "message" => "Error al realizar operación",
-            "code"    => 400,
-            "success" => false,
-            "errors"  => $validator->errors()->all(),
-            "data"    => [],
-            ]);
-        }
-      }
-
-      $id = $request->input("id");
-      $publicar = $request->input("publicar");
-
-      if (!empty($id))
-      {
-
-        if ($publicar == "S") {
-          $message = "Registro PUBLICADO Correctamente";
-        } else {
-          $message = "Registro OCULTADO al Público Correctamente";
-        }
-
-        $marca = Marca::find($id);
-        if (!empty($marca))
-        {
-
-          # Values OLD FOR BITACORA
-          $attributes_old = $marca->getAttributes(); 
-
-          $marca->publicar = $publicar;
-          $marca->save();
-
-          # TABLE BITACORA
-          $this->savedBitacoraTrait( $marca, "update publicar", $attributes_old) ;
-
-          $success = true;
-          $code = 200;
-
-        }
-        else
-        {
-          $message = "¡El registro no exite o el identificador es incorrecto!";
-          $code = 400;
-        }
-        
-      }
-      else
-      {
-        $message = "¡El identificador es incorrecto!";
-        $code = 400;
-      }
-
-      if ($request->ajax()) {
-        return response()->json([
-          "message" => $message,
-          "code"    => $code,
-          "success" => $success,
-          "errors"  => [],
-          "data"    => [],
-        ]);
-      };
-    
-    }
-    catch (\Exception $e)
-    {
-
-      if ($request->ajax()) {
-        return response()->json([
-          "message" => "Operación fallida en el servidor",
-          "code"    => 500,
-          "success" => false,
-          "errors"  => [$e->getMessage()],
-          "data"    => []
-        ]);
-      }
-
-      throw new \Exception($e->getMessage());
-    }
-
-  }
-
-  public function getPublished(  $params = array()  )
-  {
-    try
-    {
-      extract($params) ;
-
-      $data = Marca::where("publicar", $publicar)->get();
-
-      return $data;
-    
-    }
-    catch (\Exception $e)
-    {
-      throw new \Exception($e->getMessage());
-    }
-
-  }
-
   public function find( $id )
   {
     try
     {
 
-      $data = Marca::find($id);
+      $data = Proveedor::find($id);
 
       return $data;
     

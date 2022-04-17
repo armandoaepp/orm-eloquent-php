@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Marca; 
+use App\Models\Producto; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class MarcaController
+class ProductoController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class MarcaController
     try
     {
 
-      $data = Marca::get();
+      $data = Producto::get();
 
-      return view($this->prefixView.'.marcas.list-marcas')->with(compact('data'));
+      return view($this->prefixView.'.productos.list-productos')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class MarcaController
     try
     {
 
-      $data = Marca::orderBy('id', 'desc')->get();
+      $data = Producto::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.marcas.list-table-marcas')->with(compact('data'));
+      return view($this->prefixView.'.productos.list-table-productos')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class MarcaController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.marcas.form-create-marca');
+        return view($this->prefixView.'.productos.form-create-producto');
       }
 
-      return view($this->prefixView.'.marcas.new-marca');
+      return view($this->prefixView.'.productos.new-producto');
     
     }
     catch (\Exception $e)
@@ -76,39 +76,51 @@ class MarcaController
 
   }
 
-  public function store(MarcaStoreRequest $request )
+  public function store(ProductoStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
-      $cod_mar = $request->input('cod_mar');
+      $sede_id = $request->input('sede_id');
+      $cod_min = $request->input('cod_min');
       $descripcion = $request->input('descripcion');
+      $cod_lg = $request->input('cod_lg');
+      $cod_bar = $request->input('cod_bar');
+      $url = $request->input('url');
+      $sub_categoria_id = $request->input('sub_categoria_id');
+      $categoria_id = $request->input('categoria_id');
+      $familia_id = $request->input('familia_id');
+      $proveedor_id = $request->input('proveedor_id');
+      $modelo_id = $request->input('modelo_id');
+      $marca_id = $request->input('marca_id');
       $glosa = $request->input('glosa');
-      $imagen = $request->file('imagen');
       $publicar = $request->input('publicar');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        ##################################################################################
-        $path_relative = "images/marcas/" ;
-        $name_file     = "imagen";
-        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
-        $imagen    = $image_url ;
-        ##################################################################################
-
-        $marca = new Marca();
-        $marca->cod_mar = $cod_mar;
-        $marca->descripcion = $descripcion;
-        $marca->glosa = $glosa;
-        $marca->publicar = $publicar;
-        $marca->estado = $estado;
+        $producto = new Producto();
+        $producto->sede_id = $sede_id;
+        $producto->cod_min = $cod_min;
+        $producto->descripcion = $descripcion;
+        $producto->cod_lg = $cod_lg;
+        $producto->cod_bar = $cod_bar;
+        $producto->url = $url;
+        $producto->sub_categoria_id = $sub_categoria_id;
+        $producto->categoria_id = $categoria_id;
+        $producto->familia_id = $familia_id;
+        $producto->proveedor_id = $proveedor_id;
+        $producto->modelo_id = $modelo_id;
+        $producto->marca_id = $marca_id;
+        $producto->glosa = $glosa;
+        $producto->publicar = $publicar;
+        $producto->estado = $estado;
         
-        $success = $marca->save();
+        $success = $producto->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "created") ;
+        $this->savedBitacoraTrait( $producto, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -122,7 +134,7 @@ class MarcaController
         ]);
       };
     
-      return redirect()->route('admin.marcas');
+      return redirect()->route('admin.productos');
     
     }
     catch (\Exception $e)
@@ -148,13 +160,13 @@ class MarcaController
     try
     {
 
-      $marca = Marca::find( $id );
+      $producto = Producto::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.marcas.form-edit-marca')->with(compact('marca'));
+        return view($this->prefixView .'.productos.form-edit-producto')->with(compact('producto'));
       }
 
-      return view($this->prefixView.'.marcas.edit-marca')->with(compact('marca'));
+      return view($this->prefixView.'.productos.edit-producto')->with(compact('producto'));
     
     }
     catch (\Exception $e)
@@ -164,7 +176,7 @@ class MarcaController
 
   }
 
-  public function update(Request $request )
+  public function update(ProductoUpdateRequest $request )
   {
     try
     {
@@ -173,51 +185,48 @@ class MarcaController
       $message = "";
 
       $id = $request->input('id');
-      $cod_mar = $request->input('cod_mar');
+      $sede_id = $request->input('sede_id');
+      $cod_min = $request->input('cod_min');
       $descripcion = $request->input('descripcion');
+      $cod_lg = $request->input('cod_lg');
+      $cod_bar = $request->input('cod_bar');
+      $url = $request->input('url');
+      $sub_categoria_id = $request->input('sub_categoria_id');
+      $categoria_id = $request->input('categoria_id');
+      $familia_id = $request->input('familia_id');
+      $proveedor_id = $request->input('proveedor_id');
+      $modelo_id = $request->input('modelo_id');
+      $marca_id = $request->input('marca_id');
       $glosa = $request->input('glosa');
-      $imagen = $request->file('imagen');
-      $img_bd     = $request->input('img_bd');
       $publicar = $request->input('publicar');
 
       if (!empty($id))
       {
-        ##################################################################################
-        $path_relative = "images/marcas/" ;
-        $name_file     = "imagen";
-        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
-        
-        if(empty($image_url))
-        {
-          $image_url = $img_bd ;
-        }
-        
-        $imagen    = $image_url ;
-        ##################################################################################
-
-        $marca = Marca::find($id);
+        $producto = Producto::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $marca->getAttributes();
+        $attributes_old = $producto->getAttributes();
 
-        $marca->id = $id;
-        $marca->cod_mar = $cod_mar;
-        $marca->descripcion = $descripcion;
-        $marca->glosa = $glosa;
-        $marca->imagen = $imagen;
-        $marca->publicar = $publicar;
+        $producto->id = $id;
+        $producto->sede_id = $sede_id;
+        $producto->cod_min = $cod_min;
+        $producto->descripcion = $descripcion;
+        $producto->cod_lg = $cod_lg;
+        $producto->cod_bar = $cod_bar;
+        $producto->url = $url;
+        $producto->sub_categoria_id = $sub_categoria_id;
+        $producto->categoria_id = $categoria_id;
+        $producto->familia_id = $familia_id;
+        $producto->proveedor_id = $proveedor_id;
+        $producto->modelo_id = $modelo_id;
+        $producto->marca_id = $marca_id;
+        $producto->glosa = $glosa;
+        $producto->publicar = $publicar;
         
-        $success = $marca->save();
+        $success = $producto->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "update", $attributes_old) ;
-        
-        # remove imagen
-        if($imagen != $img_bd && $success )
-        {
-          if (file_exists($img_bd))
-            unlink($img_bd) ;
-        }
+        $this->savedBitacoraTrait( $producto, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -239,7 +248,7 @@ class MarcaController
         ]);
       };
 
-      return redirect()->route('admin.marcas');
+      return redirect()->route('admin.productos');
     
     }
     catch (\Exception $e)
@@ -277,19 +286,19 @@ class MarcaController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $marca = Marca::find( $id ) ;
+      $producto = Producto::find( $id ) ;
 
-      if (!empty($marca))
+      if (!empty($producto))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $marca->getAttributes();
+        $attributes_old = $producto->getAttributes();
 
-        $marca->estado = $estado;
-        $marca->save();
+        $producto->estado = $estado;
+        $producto->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $producto, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -355,15 +364,15 @@ class MarcaController
 
       $id = $request->input('id');
 
-      $marca = Marca::find( $id ) ;
+      $producto = Producto::find( $id ) ;
 
-      if (!empty($marca))
+      if (!empty($producto))
       {
 
-        $marca->delete();
+        $producto->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $marca, "destroy") ;
+        $this->savedBitacoraTrait( $producto, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -441,18 +450,18 @@ class MarcaController
           $message = "Registro OCULTADO al Público Correctamente";
         }
 
-        $marca = Marca::find($id);
-        if (!empty($marca))
+        $producto = Producto::find($id);
+        if (!empty($producto))
         {
 
           # Values OLD FOR BITACORA
-          $attributes_old = $marca->getAttributes(); 
+          $attributes_old = $producto->getAttributes(); 
 
-          $marca->publicar = $publicar;
-          $marca->save();
+          $producto->publicar = $publicar;
+          $producto->save();
 
           # TABLE BITACORA
-          $this->savedBitacoraTrait( $marca, "update publicar", $attributes_old) ;
+          $this->savedBitacoraTrait( $producto, "update publicar", $attributes_old) ;
 
           $success = true;
           $code = 200;
@@ -506,7 +515,7 @@ class MarcaController
     {
       extract($params) ;
 
-      $data = Marca::where("publicar", $publicar)->get();
+      $data = Producto::where("publicar", $publicar)->get();
 
       return $data;
     
@@ -523,7 +532,7 @@ class MarcaController
     try
     {
 
-      $data = Marca::find($id);
+      $data = Producto::find($id);
 
       return $data;
     

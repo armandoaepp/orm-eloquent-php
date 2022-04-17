@@ -3,15 +3,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Marca extends Model
+class Producto extends Model
 {
-  protected $table = "marca";
+  protected $table = "producto";
 
   protected $fillable = [
-     'cod_mar',
+     'sede_id',
+     'cod_min',
      'descripcion',
+     'cod_lg',
+     'cod_bar',
+     'url',
+     'sub_categoria_id',
+     'categoria_id',
+     'familia_id',
+     'proveedor_id',
+     'modelo_id',
+     'marca_id',
      'glosa',
-     'imagen',
      'publicar',
      'estado',
   ];

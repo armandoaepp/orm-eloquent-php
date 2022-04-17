@@ -256,7 +256,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $table_plural = Str::plural($table_amigable) ;
 
   $str  = '' . PHP_EOL;
-  $str  .= '  public function update(Request $request )' . PHP_EOL;
+  $str  .= '  public function update('.$class_name.'UpdateRequest $request )' . PHP_EOL;
   $str  .= '  {' . PHP_EOL;
   $str  .= '    try' . PHP_EOL;
   $str  .= '    {' . PHP_EOL;

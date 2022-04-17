@@ -3,10 +3,10 @@ namespace App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ModeloRequest extends FormRequest
+class ProveedorRequest extends FormRequest
 {
 
-  protected $table = "modelo";
+  protected $table = "proveedor";
 
   /**
    * Determine if the user is authorized to make this request.
@@ -26,9 +26,13 @@ class ModeloRequest extends FormRequest
   public function rules()
   {
     return [
-     'marca_id'  => [],
-     'cod_mod'  => [],
-     'descripcion'  => [],
+     'ruc'  => [],
+     'razon_social'  => [],
+     'nombre_comercial'  => [],
+     'condicion_su'  => [],
+     'estado_su'  => [],
+     'domicilio_fiscal'  => [],
+     'ubigeo_su'  => [],
      'glosa'  => [],
     ];
   }
@@ -40,9 +44,13 @@ class ModeloRequest extends FormRequest
   public function attributes()
   {
     return [
-     'marca_id'  => 'marca_id',
-     'cod_mod'  => 'cod_mod',
-     'descripcion'  => 'descripcion',
+     'ruc'  => 'ruc',
+     'razon_social'  => 'razon_social',
+     'nombre_comercial'  => 'nombre_comercial',
+     'condicion_su'  => 'condicion_su',
+     'estado_su'  => 'estado_su',
+     'domicilio_fiscal'  => 'domicilio_fiscal',
+     'ubigeo_su'  => 'ubigeo_su',
      'glosa'  => 'glosa',
     ];
   }

@@ -9,7 +9,7 @@ class Modelo extends Model
 
   protected $fillable = [
      'marca_id',
-     'codigo',
+     'cod_mod',
      'descripcion',
      'glosa',
      'publicar',
