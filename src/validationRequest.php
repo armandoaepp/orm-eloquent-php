@@ -21,6 +21,9 @@ function generateValidationRequest($table_name, $class_name, $entities = array()
   $str  .= '' . PHP_EOL;
   $str  .= 'class '.$class_name.'Request extends FormRequest' . PHP_EOL;
   $str  .= '{' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+    $str  .= '  protected $table = "'.$table_name.'";' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
   $str  .= '  /**' . PHP_EOL;
   $str  .= '   * Determine if the user is authorized to make this request.' . PHP_EOL;
   $str  .= '   *' . PHP_EOL;
@@ -30,7 +33,7 @@ function generateValidationRequest($table_name, $class_name, $entities = array()
   $str  .= '  {' . PHP_EOL;
   $str  .= '    return true;' . PHP_EOL;
   $str  .= '  }' . PHP_EOL;
-  $str  .= '  protected $table = "'.$table_name.'";' . PHP_EOL;
+  
   $str  .= '' . PHP_EOL;
 
   // RULES

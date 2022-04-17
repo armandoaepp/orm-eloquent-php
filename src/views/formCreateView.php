@@ -117,7 +117,7 @@ $html = '            <form id="form-create" action="{{  route(\''.$GLOBALS["pref
                   $html .= '                <div class="col-12 mb-2">' . PHP_EOL;
                   $html .= '                  <div class="form-group">' . PHP_EOL;
                   $html .= '                    <label for="'. $name_file_imagen. '">Imagen:</label>' . PHP_EOL;
-                  $html .= '                    <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="'. $name_file_imagen. '" id="'. $name_file_imagen. '" required placeholder="Imagen" accept="image/*">' . PHP_EOL;
+                  $html .= '                    <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="'. $name_file_imagen. '" id="'. $name_file_imagen. '" required placeholder="Imagen" accept="image/*" onchange="imagesPreview(this)">' . PHP_EOL;
                   $html .= '                  </div>' . PHP_EOL;
                   $html .= '                </div>' . PHP_EOL;
                   $html .= '' . PHP_EOL;

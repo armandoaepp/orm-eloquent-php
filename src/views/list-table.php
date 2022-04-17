@@ -91,7 +91,7 @@ $html = '          <!--begin: Datatable -->
                 $name_publicar = (in_array("publicar", $fields_table) ) ? 'publicar' : $prefix."publicar" ;
                 $html .= '                <td class="text-center">'. PHP_EOL;
                 $html .= '                  <div class="form-check form-switch d-inline-block">'. PHP_EOL;
-                $html .= '                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->publicar }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == \'S\') checked @endif role="switch">'. PHP_EOL;
+                $html .= '                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->'.$fields_table[0].'  }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == \'S\') checked @endif role="switch">'. PHP_EOL;
                 $html .= '                  </div>'. PHP_EOL;
                 $html .= '                </td>'. PHP_EOL;
               }

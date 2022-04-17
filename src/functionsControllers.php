@@ -306,6 +306,7 @@ function update($table_name, $class_name, $entities = array(), $prefix = "", $ur
   $str  .= '' . PHP_EOL;
   $str  .= '        # For Bitacora Atributos Old;' . PHP_EOL;
   $str  .= '        $attributes_old = $'.$table_name.'->getAttributes();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
 
   foreach ($entities as $index => $entity)
   {
@@ -454,6 +455,8 @@ function delete($table_name, $class_name, $entities = array(), $prefix = "")
   $str  .= '' . PHP_EOL;
   $str  .= '        # For Bitacora Atributos Old;' . PHP_EOL;
   $str  .= '        $attributes_old = $'.$table_name.'->getAttributes();' . PHP_EOL;
+  $str  .= '' . PHP_EOL;
+
   $str  .= '        $'.$table_name.'->'.$name_estado.' = $estado;' . PHP_EOL;
   $str  .= '        $'.$table_name.'->save();' . PHP_EOL;
   $str  .= '' . PHP_EOL;

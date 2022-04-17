@@ -115,21 +115,30 @@ $html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix
                   $html .= '                  <img src="{{ url($'. $table_name .'->'.$name_file_imagen.') }}" class="img-fluid img-view-edit mb-2">' . PHP_EOL ;
                   $html .= '                  <hr>' . PHP_EOL ;
                   $html .= '                  @endif' . PHP_EOL ;
-
                   $html .= '                </div>' . PHP_EOL ;
+
+                  $html .= '                <div class="col-12 mb-2">' . PHP_EOL;
+                  $html .= '                  <div class="form-group">' . PHP_EOL;
+                  $html .= '                    <label for="'. $name_file_imagen. '">Imagen:</label>' . PHP_EOL;
+                  $html .= '                    <input data-file-img="images" data-id="preview-images-edit" type="file" class="form-control" name="'. $name_file_imagen. '" id="'. $name_file_imagen. '" required placeholder="Imagen" accept="image/*" onchange="imagesPreview(this)">' . PHP_EOL;
+                  $html .= '                  </div>' . PHP_EOL;
+                  $html .= '                </div>' . PHP_EOL;
+                  $html .= '' . PHP_EOL;
+
+
                   $html .= '                <div class="col-12 mb-2">' . PHP_EOL ;
                   $html .= '                  <div class="form-group">' . PHP_EOL ;
                   $html .= '                    <div class="input-group mb-2">' . PHP_EOL ;
                   $html .= '                      <div class="input-group-prepend">' . PHP_EOL ;
                   $html .= '                        <label class="input-group-text" for="'.$name_file_imagen.'">Nueva Imagen</label>' . PHP_EOL ;
                   $html .= '                      </div>' . PHP_EOL ;
-                  $html .= '                      <input data-file-img="images" data-id="preview-images-id" type="file" class="form-control" name="'.$name_file_imagen.'" id="'.$name_file_imagen.'" placeholder="Imagen" accept="image/*">' . PHP_EOL ;
+                  $html .= '                      <input data-file-img="images" data-id="preview-images-edit" type="file" class="form-control" name="'.$name_file_imagen.'" id="'.$name_file_imagen.'" placeholder="Imagen" accept="image/*" onchange="imagesPreview(this)"> ' . PHP_EOL ;
                   $html .= '                    </div>' . PHP_EOL ;
                   $html .= '                  </div>' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL ;
                   $html .= '' . PHP_EOL ;
                   $html .= '                <div class="col-12 mb-2">' . PHP_EOL ;
-                  $html .= '                  <div class="preview-img" data-img-preview="preview-images-id"></div>' . PHP_EOL ;
+                  $html .= '                  <div class="preview-img" data-img-preview="preview-images-edit"></div>' . PHP_EOL ;
                   $html .= '                </div>' . PHP_EOL;
 
               }
