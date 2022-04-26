@@ -12,7 +12,7 @@ function fieldsNotSaveInController($item, $prefix = "")
 
   $item = strtolower( trim($item) ) ;
 
-  $items = array('id', 'imagen', 'created_at','updated_at') ;
+  $items = array('id', 'imagen', 'created_at','updated_at', 'user_id_ins', 'user_id_upd') ;
 
   if ( in_array($item, $items) )
   {
@@ -31,7 +31,7 @@ function fieldsNotUpdateInController($item, $prefix = "")
 
   $item = strtolower( trim($item) ) ;
 
-  $items = array('imagen', 'estado','status','created_at','updated_at') ;
+  $items = array('imagen', 'estado','status','created_at','updated_at', 'user_id_ins', 'user_id_upd') ;
 
   if ( in_array($item, $items) )
   {
@@ -50,7 +50,7 @@ function fieldsNotUpdateClassInController($item, $prefix = "")
 
   $item = strtolower( trim($item) ) ;
 
-  $items = array('estado','status','created_at','updated_at') ;
+  $items = array('estado','status','created_at','updated_at','user_id_ins', 'user_id_upd') ;
 
   if ( in_array($item, $items) )
   {
