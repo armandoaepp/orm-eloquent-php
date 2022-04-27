@@ -42,7 +42,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-12 mb-2">
+              {{--   <div class="col-md-12 mb-2">
                   <div class="form-group">
                     <label for="per_tipo">Tipo: </label>
                     <input type="text" class="form-control @error('per_tipo') is-invalid @enderror" name="per_tipo" id="per_tipo" value="{{ old('per_tipo') }}" required placeholder="Tipo">
@@ -50,7 +50,7 @@
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>
-                </div>
+                </div> --}}
 
 
               </div>
