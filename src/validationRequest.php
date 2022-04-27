@@ -95,12 +95,11 @@ function fieldNotIncludeInValidationRequest($item, $prefix = "")
   {
     $item = revemoPrefix($item, $prefix)  ;
   }
-
-  //echo $item ." - $prefix - fieldsNotSaveInController <br>" ;
+ 
 
   $item = strtolower( trim($item) ) ;
 
-  $items = array('id', 'imagen', 'created_at','updated_at','estado','publicar','jerarquia','per_id_padre') ;
+  $items = array('id', 'imagen', 'created_at','updated_at','estado','publicar','jerarquia', 'principal','per_id_padre', 'sede_id', 'user_id_reg', 'user_id_upd') ;
 
   if ( in_array($item, $items) )
   {
