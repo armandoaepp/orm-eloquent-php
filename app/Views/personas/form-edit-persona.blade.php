@@ -4,8 +4,8 @@
               <div class="row">
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="sede_id">Sede Id: </label>
-                    <input type="text" class="form-control  @error('sede_id') is-invalid @enderror" name="sede_id" id="sede_id" placeholder="Sede Id" value="{{ old('sede_id', $persona->sede_id ?? '') }}" >
+                    <label for="sede_id">Sede: </label>
+                    <input type="text" class="form-control  @error('sede_id') is-invalid @enderror" name="sede_id" id="sede_id" placeholder="Sede" value="{{ old('sede_id', $persona->sede_id ?? '') }}" >
                     @error('sede_id')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
@@ -34,8 +34,8 @@
 
                 <div class="col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="fecha_nac">Fecha Nac: </label>
-                    <input type="text" class="form-control  @error('fecha_nac') is-invalid @enderror" name="fecha_nac" id="fecha_nac" placeholder="Fecha Nac" value="{{ old('fecha_nac', $persona->fecha_nac ?? '') }}" >
+                    <label for="fecha_nac">Fecha Nac.: </label>
+                    <input type="text" class="form-control  @error('fecha_nac') is-invalid @enderror" name="fecha_nac" id="fecha_nac" placeholder="Fecha Nac." value="{{ old('fecha_nac', $persona->fecha_nac ?? '') }}" >
                     @error('fecha_nac')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
@@ -47,6 +47,26 @@
                     <label for="per_tipo">Tipo: </label>
                     <input type="text" class="form-control  @error('per_tipo') is-invalid @enderror" name="per_tipo" id="per_tipo" placeholder="Tipo" value="{{ old('per_tipo', $persona->per_tipo ?? '') }}" >
                     @error('per_tipo')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="user_id_reg">User Id Reg: </label>
+                    <input type="text" class="form-control  @error('user_id_reg') is-invalid @enderror" name="user_id_reg" id="user_id_reg" placeholder="User Id Reg" value="{{ old('user_id_reg', $persona->user_id_reg ?? '') }}" >
+                    @error('user_id_reg')
+                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="user_id_upd">User Id Upd: </label>
+                    <input type="text" class="form-control  @error('user_id_upd') is-invalid @enderror" name="user_id_upd" id="user_id_upd" placeholder="User Id Upd" value="{{ old('user_id_upd', $persona->user_id_upd ?? '') }}" >
+                    @error('user_id_upd')
                     <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror
                   </div>

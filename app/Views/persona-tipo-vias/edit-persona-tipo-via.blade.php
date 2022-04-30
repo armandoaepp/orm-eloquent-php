@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Per Tipo Vias
+  Persona Tipo Vias
 @endsection
 
 @section('content')
@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.per-tipo-vias') }}" class="">
-        <i class="fa fa-align-justify"></i> Per Tipo Vias
+      <a href="{{ route('admin.persona-tipo-vias') }}" class="">
+        <i class="fa fa-align-justify"></i> Persona Tipo Vias
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Per Tipo Via
+      Editar Persona Tipo Via
       </span>
     </li>
   </ol>
@@ -40,11 +40,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Per Tipo Via
+          <i class="fa fa-align-justify"></i> Editar Persona Tipo Via
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin.per-tipo-vias.form-create-per_tipo_via')
+            @include('admin.persona-tipo-vias.form-edit-persona_tipo_via')
           </div>
         </div>
       </div>
@@ -58,4 +58,5 @@
 
 
 @section('script')
+
 @endsection

@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\PerTipoVia; 
+use App\Models\PersonaDocIdentidad; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class PerTipoViaController
+class PersonaDocIdentidadController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class PerTipoViaController
     try
     {
 
-      $data = PerTipoVia::get();
+      $data = PersonaDocIdentidad::get();
 
-      return view($this->prefixView.'.per-tipo-vias.list-per-tipo-vias')->with(compact('data'));
+      return view($this->prefixView.'.persona-doc-identidads.list-persona-doc-identidads')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class PerTipoViaController
     try
     {
 
-      $data = PerTipoVia::orderBy('id', 'desc')->get();
+      $data = PersonaDocIdentidad::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.per-tipo-vias.list-table-per-tipo-vias')->with(compact('data'));
+      return view($this->prefixView.'.persona-doc-identidads.list-table-persona-doc-identidads')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class PerTipoViaController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.per-tipo-vias.form-create-per-tipo-via');
+        return view($this->prefixView.'.persona-doc-identidads.form-create-persona-doc-identidad');
       }
 
-      return view($this->prefixView.'.per-tipo-vias.new-per-tipo-via');
+      return view($this->prefixView.'.persona-doc-identidads.new-persona-doc-identidad');
     
     }
     catch (\Exception $e)
@@ -76,29 +76,43 @@ class PerTipoViaController
 
   }
 
-  public function store(PerTipoViaStoreRequest $request )
+  public function store(PersonaDocIdentidadStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
-      $cod_tv = $request->input('cod_tv');
-      $abrv_via = $request->input('abrv_via');
-      $descripcion = $request->input('descripcion');
+      $persona_id = $request->input('persona_id');
+      $tipo_identidad_id = $request->input('tipo_identidad_id');
+      $num_doc = $request->input('num_doc');
+      $is_principal = $request->input('is_principal');
+      $fecha_emision = $request->input('fecha_emision');
+      $fecha_caducidad = $request->input('fecha_caducidad');
+      $imagen = $request->file('imagen');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $per_tipo_via = new PerTipoVia();
-        $per_tipo_via->cod_tv = $cod_tv;
-        $per_tipo_via->abrv_via = $abrv_via;
-        $per_tipo_via->descripcion = $descripcion;
-        $per_tipo_via->estado = $estado;
+        ##################################################################################
+        $path_relative = "images/persona_doc_identidads/" ;
+        $name_file     = "imagen";
+        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
+        $imagen    = $image_url ;
+        ##################################################################################
+
+        $persona_doc_identidad = new PersonaDocIdentidad();
+        $persona_doc_identidad->persona_id = $persona_id;
+        $persona_doc_identidad->tipo_identidad_id = $tipo_identidad_id;
+        $persona_doc_identidad->num_doc = $num_doc;
+        $persona_doc_identidad->is_principal = $is_principal;
+        $persona_doc_identidad->fecha_emision = $fecha_emision;
+        $persona_doc_identidad->fecha_caducidad = $fecha_caducidad;
+        $persona_doc_identidad->estado = $estado;
         
-        $success = $per_tipo_via->save();
+        $success = $persona_doc_identidad->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $per_tipo_via, "created") ;
+        $this->savedBitacoraTrait( $persona_doc_identidad, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -112,7 +126,7 @@ class PerTipoViaController
         ]);
       };
     
-      return redirect()->route('admin.per-tipo-vias');
+      return redirect()->route('admin.persona-doc-identidads');
     
     }
     catch (\Exception $e)
@@ -138,13 +152,13 @@ class PerTipoViaController
     try
     {
 
-      $per_tipo_via = PerTipoVia::find( $id );
+      $persona_doc_identidad = PersonaDocIdentidad::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.per-tipo-vias.form-edit-per-tipo-via')->with(compact('per_tipo_via'));
+        return view($this->prefixView .'.persona-doc-identidads.form-edit-persona-doc-identidad')->with(compact('persona_doc_identidad'));
       }
 
-      return view($this->prefixView.'.per-tipo-vias.edit-per-tipo-via')->with(compact('per_tipo_via'));
+      return view($this->prefixView.'.persona-doc-identidads.edit-persona-doc-identidad')->with(compact('persona_doc_identidad'));
     
     }
     catch (\Exception $e)
@@ -154,7 +168,7 @@ class PerTipoViaController
 
   }
 
-  public function update(PerTipoViaUpdateRequest $request )
+  public function update(PersonaDocIdentidadUpdateRequest $request )
   {
     try
     {
@@ -163,26 +177,55 @@ class PerTipoViaController
       $message = "";
 
       $id = $request->input('id');
-      $cod_tv = $request->input('cod_tv');
-      $abrv_via = $request->input('abrv_via');
-      $descripcion = $request->input('descripcion');
+      $persona_id = $request->input('persona_id');
+      $tipo_identidad_id = $request->input('tipo_identidad_id');
+      $num_doc = $request->input('num_doc');
+      $is_principal = $request->input('is_principal');
+      $fecha_emision = $request->input('fecha_emision');
+      $fecha_caducidad = $request->input('fecha_caducidad');
+      $imagen = $request->file('imagen');
+      $img_bd     = $request->input('img_bd');
 
       if (!empty($id))
       {
-        $per_tipo_via = PerTipoVia::find($id);
+        ##################################################################################
+        $path_relative = "images/persona_doc_identidads/" ;
+        $name_file     = "imagen";
+        $image_url     = UploadFiles::uploadFile($request, $name_file , $path_relative);
+        
+        if(empty($image_url))
+        {
+          $image_url = $img_bd ;
+        }
+        
+        $imagen    = $image_url ;
+        ##################################################################################
+
+        $persona_doc_identidad = PersonaDocIdentidad::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $per_tipo_via->getAttributes();
+        $attributes_old = $persona_doc_identidad->getAttributes();
 
-        $per_tipo_via->id = $id;
-        $per_tipo_via->cod_tv = $cod_tv;
-        $per_tipo_via->abrv_via = $abrv_via;
-        $per_tipo_via->descripcion = $descripcion;
+        $persona_doc_identidad->id = $id;
+        $persona_doc_identidad->persona_id = $persona_id;
+        $persona_doc_identidad->tipo_identidad_id = $tipo_identidad_id;
+        $persona_doc_identidad->num_doc = $num_doc;
+        $persona_doc_identidad->is_principal = $is_principal;
+        $persona_doc_identidad->fecha_emision = $fecha_emision;
+        $persona_doc_identidad->fecha_caducidad = $fecha_caducidad;
+        $persona_doc_identidad->imagen = $imagen;
         
-        $success = $per_tipo_via->save();
+        $success = $persona_doc_identidad->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $per_tipo_via, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $persona_doc_identidad, "update", $attributes_old) ;
+        
+        # remove imagen
+        if($imagen != $img_bd && $success )
+        {
+          if (file_exists($img_bd))
+            unlink($img_bd) ;
+        }
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -204,7 +247,7 @@ class PerTipoViaController
         ]);
       };
 
-      return redirect()->route('admin.per-tipo-vias');
+      return redirect()->route('admin.persona-doc-identidads');
     
     }
     catch (\Exception $e)
@@ -242,19 +285,19 @@ class PerTipoViaController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $per_tipo_via = PerTipoVia::find( $id ) ;
+      $persona_doc_identidad = PersonaDocIdentidad::find( $id ) ;
 
-      if (!empty($per_tipo_via))
+      if (!empty($persona_doc_identidad))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $per_tipo_via->getAttributes();
+        $attributes_old = $persona_doc_identidad->getAttributes();
 
-        $per_tipo_via->estado = $estado;
-        $per_tipo_via->save();
+        $persona_doc_identidad->estado = $estado;
+        $persona_doc_identidad->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $per_tipo_via, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $persona_doc_identidad, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -320,15 +363,15 @@ class PerTipoViaController
 
       $id = $request->input('id');
 
-      $per_tipo_via = PerTipoVia::find( $id ) ;
+      $persona_doc_identidad = PersonaDocIdentidad::find( $id ) ;
 
-      if (!empty($per_tipo_via))
+      if (!empty($persona_doc_identidad))
       {
 
-        $per_tipo_via->delete();
+        $persona_doc_identidad->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $per_tipo_via, "destroy") ;
+        $this->savedBitacoraTrait( $persona_doc_identidad, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -373,7 +416,7 @@ class PerTipoViaController
     try
     {
 
-      $data = PerTipoVia::find($id);
+      $data = PersonaDocIdentidad::find($id);
 
       return $data;
     

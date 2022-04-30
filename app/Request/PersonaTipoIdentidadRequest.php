@@ -3,10 +3,10 @@ namespace App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PerTipoViaRequest extends FormRequest
+class PersonaTipoIdentidadRequest extends FormRequest
 {
 
-  protected $table = "per_tipo_via";
+  protected $table = "persona_tipo_identidad";
 
   /**
    * Determine if the user is authorized to make this request.
@@ -26,8 +26,8 @@ class PerTipoViaRequest extends FormRequest
   public function rules()
   {
     return [
-     'cod_tv'  => [],
-     'abrv_via'  => [],
+     'cod_ti'  => [],
+     'abreviatura'  => [],
      'descripcion'  => [],
     ];
   }
@@ -39,8 +39,8 @@ class PerTipoViaRequest extends FormRequest
   public function attributes()
   {
     return [
-     'cod_tv'  => 'cod_tv',
-     'abrv_via'  => 'abrv_via',
+     'cod_ti'  => 'cod_ti',
+     'abreviatura'  => 'abreviatura',
      'descripcion'  => 'descripcion',
     ];
   }

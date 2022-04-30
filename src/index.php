@@ -105,7 +105,7 @@ if (!empty($_GET["table"])) {
                         <option value="color">Color</option>
                         <option value="datetime-local">Datetime-Local</option>
                         <option value="file">File</option>
-                        <option value="hidden">Didden</option>
+                        <option value="hidden">Hidden</option>
                         <option value="image">Image</option>
                         <option value="month">Month</option>
                         <option value="number">Number</option>

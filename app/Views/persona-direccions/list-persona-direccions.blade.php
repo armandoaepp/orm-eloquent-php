@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Personas
+  Persona Direccions
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Personas
+      Persona Direccions
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route('admin.personas'.list-table) }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route('admin.persona-direccions'.list-table) }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route('admin.personas.create') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" id="btn-create" data-href="{{ route('admin.persona-direccions.create') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -45,11 +45,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de personas
+          <i class="fa fa-align-justify"></i> Lista de persona-direccions
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include('admin.personas.list-table-personas')
+           @include('admin.persona-direccions.list-table-persona-direccions')
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Persona">
-  {{-- @include('admin.personas.form-create-persona') --}}
+  <x-modals.modal-create title="Nuevo Persona_direccion">
+  {{-- @include('admin.persona-direccions.form-create-persona_direccion') --}}
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Persona" />
+  <x-modals.modal-edit title="Editar Persona_direccion" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.personas.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Persona" url="{{ route('admin.personas.destroy') }}" />  
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.persona-direccions.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Persona-direccion" url="{{ route('admin.persona-direccions.destroy') }}" />  
 @endsection
 
 <!-- Start:: Section script  -->

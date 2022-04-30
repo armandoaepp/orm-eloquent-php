@@ -3,9 +3,10 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Código </th> 
-                <th> Abreviatura </th> 
-                <th> Descripción </th> 
+                <th> Persona Id </th> 
+                <th> Tipo </th> 
+                <th> Es Principal </th> 
+                <th> Jerarquía </th> 
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -20,9 +21,10 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->cod_tv }} </td> 
-                <td> {{ $row->abrv_via }} </td> 
-                <td> {{ $row->descripcion }} </td> 
+                <td> {{ $row->persona_id }} </td> 
+                <td> {{ $row->tipo }} </td> 
+                <td> {{ $row->is_principal }} </td> 
+                <td> {{ $row->jerarquia }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -39,10 +41,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.per-tipo-vias.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar per_tipo_via: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.persona-imagens.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar persona_imagen: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.per-tipo-vias.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar per_tipo_via: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.persona-imagens.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar persona_imagen: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

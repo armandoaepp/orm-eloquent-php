@@ -3,13 +3,15 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Sede </th> 
-                <th> Nombre </th> 
-                <th> Apellidos </th> 
-                <th> Fecha Nac. </th> 
-                <th> Tipo </th> 
-                <th> User Id Reg </th> 
-                <th> User Id Upd </th> 
+                <th> Persona Id </th> 
+                <th> Tipo Documento </th> 
+                <th> Número Doc. </th> 
+                <th> Apellido Paterno </th> 
+                <th> Apellido Materno </th> 
+                <th> Nombres </th> 
+                <th> Full Name </th> 
+                <th> Sexo </th> 
+                <th> Estado Civil </th> 
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -24,13 +26,15 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->sede_id }} </td> 
-                <td> {{ $row->per_nombre }} </td> 
-                <td> {{ $row->per_apellidos }} </td> 
-                <td> {{ $row->fecha_nac }} </td> 
-                <td> {{ $row->per_tipo }} </td> 
-                <td> {{ $row->user_id_reg }} </td> 
-                <td> {{ $row->user_id_upd }} </td> 
+                <td> {{ $row->persona_id }} </td> 
+                <td> {{ $row->tipo_identidad_id }} </td> 
+                <td> {{ $row->num_doc }} </td> 
+                <td> {{ $row->ape_paterno }} </td> 
+                <td> {{ $row->ape_materno }} </td> 
+                <td> {{ $row->nombres }} </td> 
+                <td> {{ $row->full_name }} </td> 
+                <td> {{ $row->sexo }} </td> 
+                <td> {{ $row->estado_civil_id }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -47,10 +51,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.personas.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar persona: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.persona-naturals.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar persona_natural: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.personas.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar persona: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.persona-naturals.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar persona_natural: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

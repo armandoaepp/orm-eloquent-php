@@ -57,7 +57,7 @@ $html = '@php
         Listar
       </a>
       <a href="#" id="btn-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-secondary btn-sm" type="button">
-        <i class="fas fa-file"></i>
+        <i class="fa fa-file-o"></i>
         Nuevo
       </a>
     </div>

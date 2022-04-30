@@ -3,13 +3,12 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Sede </th> 
-                <th> Nombre </th> 
-                <th> Apellidos </th> 
-                <th> Fecha Nac. </th> 
-                <th> Tipo </th> 
-                <th> User Id Reg </th> 
-                <th> User Id Upd </th> 
+                <th> Persona Id </th> 
+                <th> Tipo Teléfono </th> 
+                <th> Teléfono </th> 
+                <th> Observación </th> 
+                <th> Es Principal </th> 
+                <th> Jerarquía </th> 
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -24,13 +23,12 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->sede_id }} </td> 
-                <td> {{ $row->per_nombre }} </td> 
-                <td> {{ $row->per_apellidos }} </td> 
-                <td> {{ $row->fecha_nac }} </td> 
-                <td> {{ $row->per_tipo }} </td> 
-                <td> {{ $row->user_id_reg }} </td> 
-                <td> {{ $row->user_id_upd }} </td> 
+                <td> {{ $row->persona_id }} </td> 
+                <td> {{ $row->tipo_telefono_id }} </td> 
+                <td> {{ $row->telefono }} </td> 
+                <td> {{ $row->observación }} </td> 
+                <td> {{ $row->is_principal }} </td> 
+                <td> {{ $row->jerarquia }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -47,10 +45,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.personas.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar persona: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.persona-telefonos.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar persona_telefono: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.personas.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar persona: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.persona-telefonos.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar persona_telefono: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

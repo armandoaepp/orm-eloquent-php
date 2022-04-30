@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Per Tipo Vias
+  Persona Doc Identidads
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Per Tipo Vias
+      Persona Doc Identidads
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route('admin.per-tipo-vias') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route('admin.persona-doc-identidads'.list-table) }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route('admin.per-tipo-vias.create') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" id="btn-create" data-href="{{ route('admin.persona-doc-identidads.create') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-file"></i>
         Nuevo
       </a>
@@ -45,11 +45,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de per-tipo-vias
+          <i class="fa fa-align-justify"></i> Lista de persona-doc-identidads
         </div>
         <div class="card-body">
          <div id="wrap-table" class="table-responsive">
-           @include('admin.per-tipo-vias.list-table-per-tipo-vias')
+           @include('admin.persona-doc-identidads.list-table-persona-doc-identidads')
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Per_tipo_via">
-  {{-- @include('admin.per-tipo-vias.form-create-per_tipo_via') --}}
+  <x-modals.modal-create title="Nuevo Persona_doc_identidad">
+  {{-- @include('admin.persona-doc-identidads.form-create-persona_doc_identidad') --}}
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Per_tipo_via" />
+  <x-modals.modal-edit title="Editar Persona_doc_identidad" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.per-tipo-vias.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Per-tipo-via" url="{{ route('admin.per-tipo-vias.destroy') }}" />  
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.persona-doc-identidads.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Persona-doc-identidad" url="{{ route('admin.persona-doc-identidads.destroy') }}" />  
 @endsection
 
 <!-- Start:: Section script  -->

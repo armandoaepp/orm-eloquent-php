@@ -51,12 +51,12 @@ $html = '@php
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\'.list-table) }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
       <a href="#" id="btn-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-primary btn-sm" type="button">
-        <i class="fas fa-file"></i>
+        <i class="fa fa-file-o"></i>
         Nuevo
       </a>
     </div>

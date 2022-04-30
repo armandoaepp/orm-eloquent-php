@@ -17,7 +17,7 @@ function generateFormEditView($table_name, $class_name, $entities = array(), $fi
 
 $html = '';
 
-$html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_friendly_plural.'.update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
+$html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_friendly_plural.'.update\') }}" method="POST" enctype="multipart/form-data">
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $'. $table_name .'->'.$fields_table[0].' }}">
               <div class="row">' . PHP_EOL;
