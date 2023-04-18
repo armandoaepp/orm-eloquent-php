@@ -10,8 +10,9 @@ $capsule = new Capsule;
 $capsule->addConnection([
  'driver'    => 'mysql',
  'host'      => 'localhost',
- 'database'  => 'db_sys_rrhh',
+//  'database'  => 'db_sys_rrhh',
 //  'database'  => 'db_sys_productos',
+ 'database'  => 'db_clidoctor',
  'username'  => 'root',
  'password'  => '',
  'charset'   => 'utf8',
