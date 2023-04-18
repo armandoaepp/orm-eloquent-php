@@ -36,7 +36,7 @@ if (!empty($_GET["table"])) {
     <div class="container">
 
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-auto">
           <ul>
 
             <?php
@@ -54,7 +54,7 @@ if (!empty($_GET["table"])) {
           </ul>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md">
 
           <form id="form1" action="generate.php" method="post">
             <h4> Generate: <strong class="text-primary"><?php echo $table_name; ?></strong>
@@ -105,7 +105,7 @@ if (!empty($_GET["table"])) {
                         <option value="color">Color</option>
                         <option value="datetime-local">Datetime-Local</option>
                         <option value="file">File</option>
-                        <option value="hidden">Didden</option>
+                        <option value="hidden">Hidden</option>
                         <option value="image">Image</option>
                         <option value="month">Month</option>
                         <option value="number">Number</option>

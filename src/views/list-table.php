@@ -18,7 +18,7 @@ function generateListTable($table_name, $class_name, $entities = array(), $field
   $fields_col = array_column($entities, 'Field');
 
 $html = '          <!--begin: Datatable -->
-          <table id="dataTableLists" class="table table-sm table-hover table-bordered" style="width: 100%;">
+          <table data-table-id="list-table" class="table fill-table table-sm table-hover table-bordered" style="width: 100%;">
             <thead>
               <tr class="bg-light text-uppercase">' . PHP_EOL;
               for ($i=0; $i < count( $heads_table) ; $i++)

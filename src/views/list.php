@@ -51,12 +51,12 @@ $html = '@php
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'\') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-table-reload="list-table" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.list-table\') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-primary btn-sm" type="button">
-        <i class="fas fa-file"></i>
+      <a href="#" data-btn-open="modal-create" data-href="{{ route(\''.$GLOBALS["prefix_route"].'.'.$table_plural.'.create\') }}" class="btn btn-outline-primary btn-sm" type="button">
+        <i class="fa fa-file-o"></i>
         Nuevo
       </a>
     </div>
@@ -67,7 +67,7 @@ $html = '@php
           <i class="fa fa-align-justify"></i> Lista de '.$table_plural.'
         </div>
         <div class="card-body">
-         <div id="wrap-table" class="table-responsive">
+         <div id="wrap-table" data-wrap-table="list-table" class="table-responsive">
            @include(\'admin.'.$table_plural.'.list-table-'.$table_plural.'\')
           </div>
         </div>

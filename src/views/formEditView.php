@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Str;
 
-function generateFormEditView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array() )
+function generateFormEditView($table_name, $class_name, $entities = array(), $fields_table, $heads_table = array() , $tipo_inputs = array(), $fields_requireds = array() )
 {
   $table_amigable = App\Helpers\UrlHelper::urlFriendly($table_name);
   $table_amigable_sin_guion = str_replace ('-', ' ', $table_amigable);
@@ -17,7 +17,7 @@ function generateFormEditView($table_name, $class_name, $entities = array(), $fi
 
 $html = '';
 
-$html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_friendly_plural.'.update\',[\'id\' => $'. $table_name .'->'.$fields_table[0].']) }}" method="POST" enctype="multipart/form-data">
+$html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix_route'].'.'.$table_friendly_plural.'.update\') }}" method="POST" enctype="multipart/form-data">
               @csrf @method("put")
               <input type="hidden" class="form-control" name="id" id="id" value="{{ $'. $table_name .'->'.$fields_table[0].' }}">
               <div class="row">' . PHP_EOL;
@@ -36,6 +36,7 @@ $html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix
 
                 if ( !verificarItemForm($fields_table[$i], $prefix) )
                 {
+                  $required = in_array($fields_table[$i], $fields_requireds ) ? 'required' : '';
 
                   if($tipo_inputs[$i] == 'textarea')
                   {
@@ -68,7 +69,7 @@ $html .= '            <form id="form-edit" action="{{ route(\''.$GLOBALS['prefix
                     $html .= '                  <div class="form-group">' . PHP_EOL;
                     $html .= '                    <label for="' . $fields_table[$i] . '">' . $field_item  . ': </label>' . PHP_EOL;
                     // $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ $'. $table_name .'->'.$fields_table[$i].' }}" >' . PHP_EOL;
-                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control  @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ old(\'' . $fields_table[$i] .'\', $'. $table_name .'->'.$fields_table[$i].' ?? \'\') }}" >' . PHP_EOL;
+                    $html .= '                    <input type="' . $tipo_inputs[$i] .'" class="form-control  @error(\'' . $fields_table[$i] .'\') is-invalid @enderror" name="' . $fields_table[$i] .'" id="' . $fields_table[$i] .'" placeholder="' . $field_item  .'" value="{{ old(\'' . $fields_table[$i] .'\', $'. $table_name .'->'.$fields_table[$i].' ?? \'\') }}" '. $required .'>' . PHP_EOL;
                     $html .= '                    @error(\'' . $fields_table[$i] .'\')' . PHP_EOL;
                     $html .= '                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>' . PHP_EOL;
                     $html .= '                    @enderror' . PHP_EOL;
