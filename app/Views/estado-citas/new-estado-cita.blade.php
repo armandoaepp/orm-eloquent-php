@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Pacientes
+  Estado Citas
 @endsection
 
 @section('content')
@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.pacientes') }}" class="">
-        <i class="fa fa-align-justify"></i> Pacientes
+      <a href="{{ route('admin.estado-citas') }}" class="">
+        <i class="fa fa-align-justify"></i> Estado Citas
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Paciente
+      Nuevo Estado Cita
       </span>
     </li>
   </ol>
@@ -40,11 +40,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Paciente
+          <i class="fa fa-align-justify"></i> Nuevo Estado Cita
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin.pacientes.form-create-paciente')
+            @include('admin.estado-citas.form-create-estado_cita')
           </div>
         </div>
       </div>

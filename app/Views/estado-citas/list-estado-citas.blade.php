@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Modalidads
+  Estado Citas
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Modalidads
+      Estado Citas
       </span>
     </li>
   </ol>
@@ -32,12 +32,12 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-reload="list-table" data-href="{{ route('admin.modalidads') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-table-reload="list-table" data-href="{{ route('admin.estado-citas.list-table') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" id="btn-create" data-href="{{ route('admin.modalidads.create') }}" class="btn btn-outline-primary btn-sm" type="button">
-        <i class="fas fa-file"></i>
+      <a href="#" data-btn-open="modal-create" data-href="{{ route('admin.estado-citas.create') }}" class="btn btn-outline-primary btn-sm" type="button">
+        <i class="fa fa-file-o"></i>
         Nuevo
       </a>
     </div>
@@ -45,11 +45,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de modalidads
+          <i class="fa fa-align-justify"></i> Lista de estado-citas
         </div>
         <div class="card-body">
-         <div id="wrap-table" class="table-responsive">
-           @include('admin.modalidads.list-table-modalidads')
+         <div id="wrap-table" data-wrap-table="list-table" class="table-responsive">
+           @include('admin.estado-citas.list-table-estado-citas')
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Modalidad">
-  {{-- @include('admin.modalidads.form-create-modalidad') --}}
+  <x-modals.modal-create title="Nuevo Estado_cita">
+  {{-- @include('admin.estado-citas.form-create-estado_cita') --}}
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Modalidad" />
+  <x-modals.modal-edit title="Editar Estado_cita" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.modalidads.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Modalidad" url="{{ route('admin.modalidads.destroy') }}" />  
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.estado-citas.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Estado-cita" url="{{ route('admin.estado-citas.destroy') }}" />  
 @endsection
 
 <!-- Start:: Section script  -->

@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\Paciente; 
+use App\Models\EstadoCita; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class PacienteController
+class EstadoCitaController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class PacienteController
     try
     {
 
-      $data = Paciente::get();
+      $data = EstadoCita::get();
 
-      return view($this->prefixView.'.pacientes.list-pacientes')->with(compact('data'));
+      return view($this->prefixView.'.estado-citas.list-estado-citas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class PacienteController
     try
     {
 
-      $data = Paciente::orderBy('id', 'desc')->get();
+      $data = EstadoCita::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.pacientes.list-table-pacientes')->with(compact('data'));
+      return view($this->prefixView.'.estado-citas.list-table-estado-citas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class PacienteController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.pacientes.form-create-paciente');
+        return view($this->prefixView.'.estado-citas.form-create-estado-cita');
       }
 
-      return view($this->prefixView.'.pacientes.new-paciente');
+      return view($this->prefixView.'.estado-citas.new-estado-cita');
     
     }
     catch (\Exception $e)
@@ -76,41 +76,25 @@ class PacienteController
 
   }
 
-  public function store(PacienteStoreRequest $request )
+  public function store(EstadoCitaStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
-      $sede_id = $request->input('sede_id');
-      $persona_id = $request->input('persona_id');
-      $codigo = $request->input('codigo');
-      $num_doc = $request->input('num_doc');
-      $apellidos = $request->input('apellidos');
-      $nombres = $request->input('nombres');
-      $telefono = $request->input('telefono');
-      $direccion = $request->input('direccion');
-      $sexo = $request->input('sexo');
+      $descripcion = $request->input('descripcion');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $paciente = new Paciente();
-        $paciente->sede_id = $sede_id;
-        $paciente->persona_id = $persona_id;
-        $paciente->codigo = $codigo;
-        $paciente->num_doc = $num_doc;
-        $paciente->apellidos = $apellidos;
-        $paciente->nombres = $nombres;
-        $paciente->telefono = $telefono;
-        $paciente->direccion = $direccion;
-        $paciente->sexo = $sexo;
-        $paciente->estado = $estado;
+        $estado_cita = new EstadoCita();
+        $estado_cita->descripcion = $descripcion;
+        $estado_cita->estado = $estado;
         
-        $success = $paciente->save();
+        $success = $estado_cita->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $paciente, "created") ;
+        $this->savedBitacoraTrait( $estado_cita, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -124,7 +108,7 @@ class PacienteController
         ]);
       };
     
-      return redirect()->route('admin.pacientes');
+      return redirect()->route('admin.estado-citas');
     
     }
     catch (\Exception $e)
@@ -150,13 +134,13 @@ class PacienteController
     try
     {
 
-      $paciente = Paciente::find( $id );
+      $estado_cita = EstadoCita::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.pacientes.form-edit-paciente')->with(compact('paciente'));
+        return view($this->prefixView .'.estado-citas.form-edit-estado-cita')->with(compact('estado_cita'));
       }
 
-      return view($this->prefixView.'.pacientes.edit-paciente')->with(compact('paciente'));
+      return view($this->prefixView.'.estado-citas.edit-estado-cita')->with(compact('estado_cita'));
     
     }
     catch (\Exception $e)
@@ -166,7 +150,7 @@ class PacienteController
 
   }
 
-  public function update(PacienteUpdateRequest $request )
+  public function update(EstadoCitaUpdateRequest $request )
   {
     try
     {
@@ -175,38 +159,22 @@ class PacienteController
       $message = "";
 
       $id = $request->input('id');
-      $sede_id = $request->input('sede_id');
-      $persona_id = $request->input('persona_id');
-      $codigo = $request->input('codigo');
-      $num_doc = $request->input('num_doc');
-      $apellidos = $request->input('apellidos');
-      $nombres = $request->input('nombres');
-      $telefono = $request->input('telefono');
-      $direccion = $request->input('direccion');
-      $sexo = $request->input('sexo');
+      $descripcion = $request->input('descripcion');
 
       if (!empty($id))
       {
-        $paciente = Paciente::find($id);
+        $estado_cita = EstadoCita::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $paciente->getAttributes();
+        $attributes_old = $estado_cita->getAttributes();
 
-        $paciente->id = $id;
-        $paciente->sede_id = $sede_id;
-        $paciente->persona_id = $persona_id;
-        $paciente->codigo = $codigo;
-        $paciente->num_doc = $num_doc;
-        $paciente->apellidos = $apellidos;
-        $paciente->nombres = $nombres;
-        $paciente->telefono = $telefono;
-        $paciente->direccion = $direccion;
-        $paciente->sexo = $sexo;
+        $estado_cita->id = $id;
+        $estado_cita->descripcion = $descripcion;
         
-        $success = $paciente->save();
+        $success = $estado_cita->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $paciente, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $estado_cita, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -228,7 +196,7 @@ class PacienteController
         ]);
       };
 
-      return redirect()->route('admin.pacientes');
+      return redirect()->route('admin.estado-citas');
     
     }
     catch (\Exception $e)
@@ -266,19 +234,19 @@ class PacienteController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $paciente = Paciente::find( $id ) ;
+      $estado_cita = EstadoCita::find( $id ) ;
 
-      if (!empty($paciente))
+      if (!empty($estado_cita))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $paciente->getAttributes();
+        $attributes_old = $estado_cita->getAttributes();
 
-        $paciente->estado = $estado;
-        $paciente->save();
+        $estado_cita->estado = $estado;
+        $estado_cita->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $paciente, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $estado_cita, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -344,15 +312,15 @@ class PacienteController
 
       $id = $request->input('id');
 
-      $paciente = Paciente::find( $id ) ;
+      $estado_cita = EstadoCita::find( $id ) ;
 
-      if (!empty($paciente))
+      if (!empty($estado_cita))
       {
 
-        $paciente->delete();
+        $estado_cita->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $paciente, "destroy") ;
+        $this->savedBitacoraTrait( $estado_cita, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -397,7 +365,7 @@ class PacienteController
     try
     {
 
-      $data = Paciente::find($id);
+      $data = EstadoCita::find($id);
 
       return $data;
     

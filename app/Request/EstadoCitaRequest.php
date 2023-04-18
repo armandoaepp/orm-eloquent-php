@@ -3,10 +3,10 @@ namespace App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ModalidadRequest extends FormRequest
+class EstadoCitaRequest extends FormRequest
 {
 
-  protected $table = "modalidad";
+  protected $table = "estado_cita";
 
   /**
    * Determine if the user is authorized to make this request.

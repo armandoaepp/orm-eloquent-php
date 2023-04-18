@@ -1,13 +1,9 @@
           <!--begin: Datatable -->
-          <table id="dataTableLists" class="table table-sm table-hover table-bordered" style="width: 100%;">
+          <table data-table-id="list-table" class="table table-list table-sm table-hover table-bordered" style="width: 100%;">
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Tipo Especialidad </th> 
-                <th> Código </th> 
                 <th> Descripción </th> 
-                <th> Observación </th> 
-                <th width="50" title="Publicado">Publ.</th>
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -22,15 +18,7 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
-                <td> {{ $row->tipo_especialidad_id }} </td> 
-                <td> {{ $row->cod_esp }} </td> 
                 <td> {{ $row->descripcion }} </td> 
-                <td> {{ $row->observacion }} </td> 
-                <td class="text-center">
-                  <div class="form-check form-switch d-inline-block">
-                    <input type="checkbox" onchange="publish(this);" class="switch-publish form-check-input" value="{{ $row->id  }}" data-publish="{{ $row->publicar }}" id="publish-{{ $loop->index }}" @if($row->publicar == 'S') checked @endif role="switch">
-                  </div>
-                </td>
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -47,10 +35,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.especialidads.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar especialidad: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.estado-citas.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar estado_cita: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.especialidads.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar especialidad: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.estado-citas.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar estado_cita: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

@@ -11,10 +11,6 @@ $capsule->addConnection([
  'driver'    => 'mysql',
  'host'      => 'localhost',
 //  'database'  => 'db_sys_rrhh',
-<<<<<<< HEAD
-//  'database'  => 'db_sys_productos',
-=======
->>>>>>> acc4bd2b9355186ff6107cfa397de6e8b7dafacc
  'database'  => 'db_clidoctor',
  'username'  => 'root',
  'password'  => '',

@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Modalidads
+  Estado Citas
 @endsection
 
 @section('content')
@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.modalidads') }}" class="">
-        <i class="fa fa-align-justify"></i> Modalidads
+      <a href="{{ route('admin.estado-citas') }}" class="">
+        <i class="fa fa-align-justify"></i> Estado Citas
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Modalidad
+      Editar Estado Cita
       </span>
     </li>
   </ol>
@@ -40,11 +40,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Modalidad
+          <i class="fa fa-align-justify"></i> Editar Estado Cita
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin.modalidads.form-create-modalidad')
+            @include('admin.estado-citas.form-edit-estado_cita')
           </div>
         </div>
       </div>
@@ -58,4 +58,5 @@
 
 
 @section('script')
+
 @endsection
