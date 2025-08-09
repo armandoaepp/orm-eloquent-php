@@ -8,11 +8,11 @@ namespace App\Controllers;
   * email: armandoaepp@gmail.com
 */
 
-use App\Models\EstadoCita; 
+use App\Models\ConceptoPlanilla; 
 use App\Traits\BitacoraTrait;
 use App\Traits\UploadFiles;
 
-class EstadoCitaController
+class ConceptoPlanillaController
 {
   use BitacoraTrait, UploadFiles;
 
@@ -28,9 +28,9 @@ class EstadoCitaController
     try
     {
 
-      $data = EstadoCita::get();
+      $data = ConceptoPlanilla::get();
 
-      return view($this->prefixView.'.estado-citas.list-estado-citas')->with(compact('data'));
+      return view($this->prefixView.'.concepto-planillas.list-concepto-planillas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -45,9 +45,9 @@ class EstadoCitaController
     try
     {
 
-      $data = EstadoCita::orderBy('id', 'desc')->get();
+      $data = ConceptoPlanilla::orderBy('id', 'desc')->get();
 
-      return view($this->prefixView.'.estado-citas.list-table-estado-citas')->with(compact('data'));
+      return view($this->prefixView.'.concepto-planillas.list-table-concepto-planillas')->with(compact('data'));
     
     }
     catch (\Exception $e)
@@ -63,10 +63,10 @@ class EstadoCitaController
     {
 
       if ($request->ajax()) {
-        return view($this->prefixView.'.estado-citas.form-create-estado-cita');
+        return view($this->prefixView.'.concepto-planillas.form-create-concepto-planilla');
       }
 
-      return view($this->prefixView.'.estado-citas.new-estado-cita');
+      return view($this->prefixView.'.concepto-planillas.new-concepto-planilla');
     
     }
     catch (\Exception $e)
@@ -76,25 +76,37 @@ class EstadoCitaController
 
   }
 
-  public function store(EstadoCitaStoreRequest $request )
+  public function store(ConceptoPlanillaStoreRequest $request )
   {
     try
     {
       $success = false;
       $message = "";
 
+      $empleado_id = $request->input('empleado_id');
+      $periodo_id = $request->input('periodo_id');
+      $tipo_concepto_id = $request->input('tipo_concepto_id');
+      $fecha = $request->input('fecha');
+      $monto = $request->input('monto');
       $descripcion = $request->input('descripcion');
+      $estado_pagado = $request->input('estado_pagado');
       $estado = !empty($request->input('estado')) ? $request->input('estado') : 1;
 
       # STORE
-        $estado_cita = new EstadoCita();
-        $estado_cita->descripcion = $descripcion;
-        $estado_cita->estado = $estado;
+        $concepto_planilla = new ConceptoPlanilla();
+        $concepto_planilla->empleado_id = $empleado_id;
+        $concepto_planilla->periodo_id = $periodo_id;
+        $concepto_planilla->tipo_concepto_id = $tipo_concepto_id;
+        $concepto_planilla->fecha = $fecha;
+        $concepto_planilla->monto = $monto;
+        $concepto_planilla->descripcion = $descripcion;
+        $concepto_planilla->estado_pagado = $estado_pagado;
+        $concepto_planilla->estado = $estado;
         
-        $success = $estado_cita->save();
+        $success = $concepto_planilla->save();
         
       # TABLE BITACORA
-        $this->savedBitacoraTrait( $estado_cita, "created") ;
+        $this->savedBitacoraTrait( $concepto_planilla, "created") ;
         
       $message = "Datos Registrados Correctamente";
         
@@ -108,7 +120,7 @@ class EstadoCitaController
         ]);
       };
     
-      return redirect()->route('admin.estado-citas');
+      return redirect()->route('admin.concepto-planillas');
     
     }
     catch (\Exception $e)
@@ -134,13 +146,13 @@ class EstadoCitaController
     try
     {
 
-      $estado_cita = EstadoCita::find( $id );
+      $concepto_planilla = ConceptoPlanilla::find( $id );
 
       if ($request->ajax()) {
-        return view($this->prefixView .'.estado-citas.form-edit-estado-cita')->with(compact('estado_cita'));
+        return view($this->prefixView .'.concepto-planillas.form-edit-concepto-planilla')->with(compact('concepto_planilla'));
       }
 
-      return view($this->prefixView.'.estado-citas.edit-estado-cita')->with(compact('estado_cita'));
+      return view($this->prefixView.'.concepto-planillas.edit-concepto-planilla')->with(compact('concepto_planilla'));
     
     }
     catch (\Exception $e)
@@ -150,7 +162,7 @@ class EstadoCitaController
 
   }
 
-  public function update(EstadoCitaUpdateRequest $request )
+  public function update(ConceptoPlanillaUpdateRequest $request )
   {
     try
     {
@@ -159,22 +171,34 @@ class EstadoCitaController
       $message = "";
 
       $id = $request->input('id');
+      $empleado_id = $request->input('empleado_id');
+      $periodo_id = $request->input('periodo_id');
+      $tipo_concepto_id = $request->input('tipo_concepto_id');
+      $fecha = $request->input('fecha');
+      $monto = $request->input('monto');
       $descripcion = $request->input('descripcion');
+      $estado_pagado = $request->input('estado_pagado');
 
       if (!empty($id))
       {
-        $estado_cita = EstadoCita::find($id);
+        $concepto_planilla = ConceptoPlanilla::find($id);
 
         # For Bitacora Atributos Old;
-        $attributes_old = $estado_cita->getAttributes();
+        $attributes_old = $concepto_planilla->getAttributes();
 
-        $estado_cita->id = $id;
-        $estado_cita->descripcion = $descripcion;
+        $concepto_planilla->id = $id;
+        $concepto_planilla->empleado_id = $empleado_id;
+        $concepto_planilla->periodo_id = $periodo_id;
+        $concepto_planilla->tipo_concepto_id = $tipo_concepto_id;
+        $concepto_planilla->fecha = $fecha;
+        $concepto_planilla->monto = $monto;
+        $concepto_planilla->descripcion = $descripcion;
+        $concepto_planilla->estado_pagado = $estado_pagado;
         
-        $success = $estado_cita->save();
+        $success = $concepto_planilla->save();
         
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $estado_cita, "update", $attributes_old) ;
+        $this->savedBitacoraTrait( $concepto_planilla, "update", $attributes_old) ;
         
         $message = "Datos Actualizados Correctamente";
         $code = 200;
@@ -196,7 +220,7 @@ class EstadoCitaController
         ]);
       };
 
-      return redirect()->route('admin.estado-citas');
+      return redirect()->route('admin.concepto-planillas');
     
     }
     catch (\Exception $e)
@@ -234,19 +258,19 @@ class EstadoCitaController
         $message = "Registro Desactivo Correctamente";
       }
 
-      $estado_cita = EstadoCita::find( $id ) ;
+      $concepto_planilla = ConceptoPlanilla::find( $id ) ;
 
-      if (!empty($estado_cita))
+      if (!empty($concepto_planilla))
       {
 
         # For Bitacora Atributos Old;
-        $attributes_old = $estado_cita->getAttributes();
+        $attributes_old = $concepto_planilla->getAttributes();
 
-        $estado_cita->estado = $estado;
-        $estado_cita->save();
+        $concepto_planilla->estado = $estado;
+        $concepto_planilla->save();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $estado_cita, "update estado", $attributes_old) ;
+        $this->savedBitacoraTrait( $concepto_planilla, "update estado", $attributes_old) ;
         
         $success = true;
         $code = 200;
@@ -312,15 +336,15 @@ class EstadoCitaController
 
       $id = $request->input('id');
 
-      $estado_cita = EstadoCita::find( $id ) ;
+      $concepto_planilla = ConceptoPlanilla::find( $id ) ;
 
-      if (!empty($estado_cita))
+      if (!empty($concepto_planilla))
       {
 
-        $estado_cita->delete();
+        $concepto_planilla->delete();
 
         # TABLE BITACORA
-        $this->savedBitacoraTrait( $estado_cita, "destroy") ;
+        $this->savedBitacoraTrait( $concepto_planilla, "destroy") ;
         
         $success = true;
         $code = 200;
@@ -365,7 +389,7 @@ class EstadoCitaController
     try
     {
 
-      $data = EstadoCita::find($id);
+      $data = ConceptoPlanilla::find($id);
 
       return $data;
     

@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Estado Citas
+  Concepto Planillas
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Estado Citas
+      Concepto Planillas
       </span>
     </li>
   </ol>
@@ -32,11 +32,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mb-3">
-      <a href="#" data-table-reload="list-table" data-href="{{ route('admin.estado-citas.list-table') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-table-reload="list-table" data-href="{{ route('admin.concepto-planillas.list-table') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fas fa-list-ul"></i>
         Listar
       </a>
-      <a href="#" data-btn-open="modal-create" data-href="{{ route('admin.estado-citas.create') }}" class="btn btn-outline-primary btn-sm" type="button">
+      <a href="#" data-btn-open="modal-create" data-href="{{ route('admin.concepto-planillas.create') }}" class="btn btn-outline-primary btn-sm" type="button">
         <i class="fa fa-file-o"></i>
         Nuevo
       </a>
@@ -45,11 +45,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Lista de estado-citas
+          <i class="fa fa-align-justify"></i> Lista de concepto-planillas
         </div>
         <div class="card-body">
          <div id="wrap-table" data-wrap-table="list-table" class="table-responsive">
-           @include('admin.estado-citas.list-table-estado-citas')
+           @include('admin.concepto-planillas.list-table-concepto-planillas')
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
 
 <!-- Start:: Section modal  -->
 @section('modal')
-  <x-modals.modal-create title="Nuevo Estado_cita">
-  {{-- @include('admin.estado-citas.form-create-estado_cita') --}}
+  <x-modals.modal-create title="Nuevo Concepto_planilla">
+  {{-- @include('admin.concepto-planillas.form-create-concepto_planilla') --}}
   </x-modals.modal-create>
 
-  <x-modals.modal-edit title="Editar Estado_cita" />
+  <x-modals.modal-edit title="Editar Concepto_planilla" />
 
-  <x-forms.form-post form-id="form-delete" url="{{ route('admin.estado-citas.delete') }}" class="d-none" />
-  <x-forms.form-destroy table="Estado-cita" url="{{ route('admin.estado-citas.destroy') }}" />  
+  <x-forms.form-post form-id="form-delete" url="{{ route('admin.concepto-planillas.delete') }}" class="d-none" />
+  <x-forms.form-destroy table="Concepto-planilla" url="{{ route('admin.concepto-planillas.destroy') }}" />  
 @endsection
 
 <!-- Start:: Section script  -->

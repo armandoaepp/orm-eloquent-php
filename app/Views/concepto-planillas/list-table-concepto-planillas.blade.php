@@ -3,7 +3,15 @@
             <thead>
               <tr class="bg-light text-uppercase">
                 <th width="50"> Id </th> 
-                <th> Descripción </th> 
+                <th> Empleado Id </th> 
+                <th> Periodo Id </th> 
+                <th> Tipo Concepto Id </th> 
+                <th> Fecha </th> 
+                <th> Monto </th> 
+                <th> Descripcion </th> 
+                <th> Estado Pagado </th> 
+                <th> User Id Reg </th> 
+                <th> User Id Upd </th> 
                 <th width="50" title="Estado">Est.</th>
                 <th width="50"> Acciones </th>
               </tr>
@@ -18,7 +26,15 @@
 
               <tr @if ($row->estado== 0) class="row-disabled" @endif>
                 <td> {{ str_pad($row->id, 3, "0", STR_PAD_LEFT) }} </td> 
+                <td> {{ $row->empleado_id }} </td> 
+                <td> {{ $row->periodo_id }} </td> 
+                <td> {{ $row->tipo_concepto_id }} </td> 
+                <td> {{ $row->fecha }} </td> 
+                <td> {{ $row->monto }} </td> 
                 <td> {{ $row->descripcion }} </td> 
+                <td> {{ $row->estado_pagado }} </td> 
+                <td> {{ $row->user_id_reg }} </td> 
+                <td> {{ $row->user_id_upd }} </td> 
                 <td class="text-center">
                   <div class="form-check form-switch d-inline-block">
                     <input type="checkbox" onchange="desactivar(this);" class="switch-delete form-check-input" value="{{ $row->id }}" data-estado="{{ $row->estado }}" id="delete-{{ $loop->index }}" @if ($row->estado == 1) checked @endif role="switch">
@@ -35,10 +51,10 @@
                       </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.estado-citas.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar estado_cita: {{ $title }}" type="button">
+                      <a  class="dropdown-item btn-action" href="#" data-href="{{ route('admin.concepto-planillas.edit',['id' => $row->id]) }}" onclick="openModalEdit(this);event.preventDefault();" title="Editar concepto_planilla: {{ $title }}" type="button">
                         <i class="far fa-edit"></i> Editar
                       </a>
-                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.estado-citas.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar estado_cita: {{ $title }}" data-title="{{ $title }}" type="button" >
+                      <a class="dropdown-item btn-action" href="#" data-href="{{ route('admin.concepto-planillas.destroy') }}" onclick="openModalDestroy(this);event.preventDefault();"  data-id="{{$row->id}}"   title="Borrar concepto_planilla: {{ $title }}" data-title="{{ $title }}" type="button" >
                         <i class="far fa-trash-alt"></i> Borrar Registro
                       </a>
                     </div>

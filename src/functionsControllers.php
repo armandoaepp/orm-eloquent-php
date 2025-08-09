@@ -117,7 +117,7 @@ function store($table_name, $class_name, $entities = array(), $prefix = "", $url
             } else {
                 $str .= '      $' . $entity->Field . ' = $request->input(\'' . $entity->Field . '\');' . PHP_EOL;
             }
-        } elseif ($entity->Field == "imagen" || $entity->Field == $prefix . "imagen") {
+        } elseif ($entity->Field == "imagen" || $entity->Field == $prefix . "imagen" || $entity->Field == "archivo" || $entity->Field == $prefix . "archivo") {
             $str .= '      $' . $entity->Field . ' = $request->file(\'' . $entity->Field . '\');' . PHP_EOL;
             $name_imagen = $entity->Field;
         }

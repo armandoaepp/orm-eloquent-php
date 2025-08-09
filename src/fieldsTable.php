@@ -12,7 +12,7 @@ function fieldsNotSaveInController($item, $prefix = "")
 
   $item = strtolower( trim($item) ) ;
 
-  $items = array('id', 'imagen', 'created_at','updated_at', 'user_id_reg', 'user_id_upd') ;
+  $items = array('id', 'imagen', 'file', 'archivo', 'created_at','updated_at', 'user_id_reg', 'user_id_upd') ;
 
   if ( in_array($item, $items) )
   {

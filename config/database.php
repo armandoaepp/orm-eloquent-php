@@ -8,20 +8,24 @@ $capsule = new Capsule;
 
 //Indicamos en el siguiente array los datos de configuración de la BD
 $capsule->addConnection([
- 'driver'    => 'mysql',
- 'host'      => 'localhost',
-//  'database'  => 'db_sys_rrhh',
- 'database'  => 'db_clidoctor',
- 'username'  => 'root',
- 'password'  => '',
- 'charset'   => 'utf8',
- 'collation' => 'utf8_unicode_ci',
- 'prefix'    => '',
+  'driver'    => 'mysql',
+  'host'      => 'localhost',
+  //  'database'  => 'stk_maquinpe',
+  //  'database'  => 'db_senati',
+  // 'database'  => 'stk_maquinpe',
+  'database'  => 'stk_maquinpe_v2',
+  //  'database'  => 'maquinpe_db_web',
+  'username'  => 'root',
+  'password'  => '',
+  'charset'   => 'utf8',
+  'collation' => 'utf8_unicode_ci',
+  'prefix'    => '',
 ]);
 
 // Set the event dispatcher used by Eloquent models... (optional)
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
+
 $capsule->setEventDispatcher(new Dispatcher(new Container));
 
 // Make this Capsule instance available globally via static methods... (optional)

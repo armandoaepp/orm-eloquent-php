@@ -7,7 +7,7 @@
 @extends('layouts.app-admin')
 
 @section('title')
-  Estado Citas
+  Concepto Planillas
 @endsection
 
 @section('content')
@@ -21,14 +21,14 @@
     </li>
 
     <li class="breadcrumb-item" aria-current="page">
-      <a href="{{ route('admin.estado-citas') }}" class="">
-        <i class="fa fa-align-justify"></i> Estado Citas
+      <a href="{{ route('admin.concepto-planillas') }}" class="">
+        <i class="fa fa-align-justify"></i> Concepto Planillas
       </a>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <span>
-      Nuevo Estado Cita
+      Nuevo Concepto Planilla
       </span>
     </li>
   </ol>
@@ -40,11 +40,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-white">
-          <i class="fa fa-align-justify"></i> Nuevo Estado Cita
+          <i class="fa fa-align-justify"></i> Nuevo Concepto Planilla
         </div>
         <div class="card-body">
           <div class="col-12">
-            @include('admin.estado-citas.form-create-estado_cita')
+            @include('admin.concepto-planillas.form-create-concepto_planilla')
           </div>
         </div>
       </div>

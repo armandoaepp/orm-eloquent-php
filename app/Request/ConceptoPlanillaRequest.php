@@ -3,10 +3,10 @@ namespace App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EstadoCitaRequest extends FormRequest
+class ConceptoPlanillaRequest extends FormRequest
 {
 
-  protected $table = "estado_cita";
+  protected $table = "concepto_planilla";
 
   /**
    * Determine if the user is authorized to make this request.
@@ -26,7 +26,13 @@ class EstadoCitaRequest extends FormRequest
   public function rules()
   {
     return [
+     'empleado_id'  => [],
+     'periodo_id'  => [],
+     'tipo_concepto_id'  => [],
+     'fecha'  => [],
+     'monto'  => [],
      'descripcion'  => [],
+     'estado_pagado'  => [],
     ];
   }
   /**
@@ -37,7 +43,13 @@ class EstadoCitaRequest extends FormRequest
   public function attributes()
   {
     return [
+     'empleado_id'  => 'empleado_id',
+     'periodo_id'  => 'periodo_id',
+     'tipo_concepto_id'  => 'tipo_concepto_id',
+     'fecha'  => 'fecha',
+     'monto'  => 'monto',
      'descripcion'  => 'descripcion',
+     'estado_pagado'  => 'estado_pagado',
     ];
   }
 
